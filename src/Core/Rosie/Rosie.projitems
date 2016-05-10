@@ -13,4 +13,30 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\SQLite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\SQLiteAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Devices\Handlers\IDeviceHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Devices\Handlers\WebRequestHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\SetDeviceStateExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\LocalWebServer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Models\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\PathAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\DeviceResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\HueApiResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\SetDeviceStateRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Router.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\Route.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\RouteT.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Devices\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)WebServer\" />
+  </ItemGroup>
 </Project>

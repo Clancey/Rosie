@@ -7,17 +7,18 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Rosie.Server</RootNamespace>
     <AssemblyName>Rosie.Server</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;Azure;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ExternalConsole>true</ExternalConsole>
+    <ExternalConsole>false</ExternalConsole>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -28,10 +29,34 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RosieService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure\Rosie.AzureIoT.Net\Rosie.AzureIoT.Net.csproj">
+      <Project>{D9EE4768-F1FE-4311-87F0-E8ADB4844550}</Project>
+      <Name>Rosie.AzureIoT.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Echo\Rosie.Echo.Net\Rosie.Echo.Net.csproj">
+      <Project>{A7C205F8-F18B-423E-914F-E8DD3C02121B}</Project>
+      <Name>Rosie.Echo.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\ZWave\Rosie.ZWave.Net\Rosie.ZWave.Net.csproj">
+      <Project>{13BD0334-20B2-4341-B50C-07174771DA0B}</Project>
+      <Name>Rosie.ZWave.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Core\Rosie.Net\Rosie.Net.csproj">
+      <Project>{50DD7935-C200-43D8-9C55-733992A5A2F5}</Project>
+      <Name>Rosie.Net</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

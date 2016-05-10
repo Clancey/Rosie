@@ -8,4 +8,20 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Rosie.Echo</Import_RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)EchoDiscoveryService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MessageTemplates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Api\Hue\ApiRootRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Api\Hue\ApiUserRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Api\Hue\GetLightRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Api\Hue\GetLightsRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Api\Hue\PutLightRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Api\SetupRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\AmazonEchoWebServer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)WebServer\" />
+    <Folder Include="$(MSBuildThisFileDirectory)WebServer\Api\" />
+    <Folder Include="$(MSBuildThisFileDirectory)WebServer\Api\Hue\" />
+  </ItemGroup>
 </Project>
