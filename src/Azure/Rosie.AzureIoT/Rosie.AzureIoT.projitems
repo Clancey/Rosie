@@ -10,5 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AzureDeviceManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DeviceAzureKey.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DeviceDatabaseExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AzureDeviceMonitor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AzureDeviceUpdater.cs" />
   </ItemGroup>
 </Project>

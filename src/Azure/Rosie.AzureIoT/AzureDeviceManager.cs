@@ -13,32 +13,56 @@ namespace Rosie.AzureIoT
 		static string AzureIoTUrl {
 			get { return Rosie.Settings.GetSecretString ();}
 		}
-		public void Init ()
+		public Task Init ()
 		{
-			this.Init (AzureIoTUrl);
+			return this.Init (AzureIoTUrl);
 		}
-		public void Init (string connectionString)
+		public async Task Init (string connectionString)
 		{
 			registryManager = RegistryManager.CreateFromConnectionString (connectionString);
-			AddDevice (Settings.DeviceId).Wait();
+			await DeviceDatabase.Shared.DatabaseConnection.CreateTableAsync<DeviceAzureKey> ();
+			await AddDevice (Settings.DeviceId);
 		}
 
 
-		public async Task AddDevice (string deviceId)
+		public async Task<bool> AddDevice (string deviceId)
 		{
-			ADevice device;
 			try {
-				device = await registryManager.AddDeviceAsync (new ADevice (deviceId));
-			} catch (DeviceAlreadyExistsException) {
-				device = await registryManager.GetDeviceAsync (deviceId);
+				ADevice device;
+				try {
+					device = await registryManager.AddDeviceAsync (new ADevice (deviceId));
+				} catch (DeviceAlreadyExistsException) {
+					device = await registryManager.GetDeviceAsync (deviceId);
+				}
+				var key = new DeviceAzureKey { Id = deviceId, Key = device.Authentication.SymmetricKey.PrimaryKey };
+				await DeviceDatabase.Shared.DatabaseConnection.InsertOrReplaceAsync (key);
+				return true;
+			} catch (Exception ex) {
+				//TODO: Log
+				Console.WriteLine (ex);
 			}
-			Console.WriteLine ("Generated device key: {0}", device.Authentication.SymmetricKey.PrimaryKey);
-
+			return false;
 		}
 
-		public Task AddDevice (Device device)
+		public Task<bool> AddDevice (Device device)
 		{
 			return AddDevice (device.Id);
+		}
+
+		public Task<DeviceAzureKey> GetDeviceKey (Device device)
+		{
+			return GetDeviceKey (device.Id);
+		}
+
+		public async Task<DeviceAzureKey> GetDeviceKey (string deviceId)
+		{
+			var key = await DeviceDatabase.Shared.GetAzureKey (deviceId);
+			if (key != null)
+				return key;
+			if(!(await AddDevice (deviceId)))
+			   return null;
+			return await DeviceDatabase.Shared.GetAzureKey (deviceId);
+			
 		}
 
 	}

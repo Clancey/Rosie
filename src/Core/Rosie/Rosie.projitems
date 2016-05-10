@@ -24,7 +24,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SetDeviceStateExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\LocalWebServer.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Models\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\PathAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\DeviceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\HueApiResponse.cs" />
@@ -32,11 +31,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Router.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\Route.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\RouteT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceGroup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)Devices\" />
     <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
     <Folder Include="$(MSBuildThisFileDirectory)WebServer\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
   </ItemGroup>
 </Project>

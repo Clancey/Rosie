@@ -18,7 +18,7 @@ namespace Rosie
 		public DeviceDatabase (string databasePath)
 		{
 			DatabaseConnection = new SQLiteAsyncConnection (databasePath, true);
-			var s = DatabaseConnection.CreateTableAsync<Device> ().Result;
+			var s = DatabaseConnection.CreateTablesAsync<Device,DeviceGroup,DeviceKeyGrouping> ().Result;
 		}
 
 		public static DeviceDatabase Shared { get; set; } = new DeviceDatabase ();

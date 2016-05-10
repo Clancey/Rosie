@@ -22,6 +22,8 @@ namespace Rosie
 
 		public string Name { get; set; }
 
+		public string Description { get; set; }
+
 		public DeviceType DeviceType { get; set; } = DeviceType.Switch;
 
 		public string OffUrl { get; set; }
