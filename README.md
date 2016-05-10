@@ -29,6 +29,15 @@ This is just a json file with Key Value Pairs. It's a place to put your API keys
 	"Foo":"bar"
 }`
 
+Raspberry Pi
+===========
+Make sure you have the latest Mono Installed
+
+Make sure you create the isolated storage directory 
+
+`sudo mkdir /usr/share/.isolated-storage`
+`sudo chmod 757 -R /usr/share/.isolated-storage/`
+
 
 Future Plans
 ===========
