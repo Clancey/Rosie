@@ -9,6 +9,7 @@ namespace Rosie.Server
 	{
 		public static void Main (string [] args)
 		{
+			//DeviceDatabase.Shared.TestUpdates ();
 #if DEBUG
 			//The debugger cannot launch a service, so we handle it oursleves
 			if (Debugger.IsAttached) {

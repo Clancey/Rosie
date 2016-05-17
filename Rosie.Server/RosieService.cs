@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define Azure
+#define Node
+
+using System;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
@@ -24,15 +27,22 @@ namespace Rosie
 		protected override void OnStart (string [] args)
 		{
 			Console.WriteLine ("Amazon Echo Service Started");
-
+			Init ();
 			LocalServer.Shared.Start ();
 			EchoDiscoveryService.Shared.StartListening ();
+			base.OnStart (args);
+		}
+
+		async void Init ()
+		{
+
 
 #if Azure
-			Rosie.AzureIoT.AzureDeviceManager.Shared.Init ();
+			await Rosie.AzureIoT.AzureDeviceManager.Shared.Init ();
 #endif
-
-			base.OnStart (args);
+#if Node
+			await Rosie.Node.NodeManager.Shared.Init ();
+#endif
 		}
 		protected override void OnStop ()
 		{

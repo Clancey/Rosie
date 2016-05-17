@@ -20,7 +20,11 @@ namespace Rosie
 			}
 			set { SetString (value);}
 		}
-
+		public static string ZWavePort {
+			get { return GetString ("/dev/tty.usbmodem1411");}
+			set { GetString (value);}
+		}
+		#region Helpers
 		public static ISettings AppSettings { get; } = CrossSettings.Current;
 
 		public static string GetSecretString (string defaultValue = "", [CallerMemberName] string memberName = "")
@@ -94,6 +98,7 @@ namespace Rosie
 				                   .Where(x=> !string.IsNullOrWhiteSpace(x))
 				                   .FirstOrDefault();
 		}
+		#endregion
 	}
 }
 

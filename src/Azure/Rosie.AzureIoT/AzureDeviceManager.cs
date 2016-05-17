@@ -20,21 +20,25 @@ namespace Rosie.AzureIoT
 		public async Task Init (string connectionString)
 		{
 			registryManager = RegistryManager.CreateFromConnectionString (connectionString);
+			//deviceJobClient = JobClient.CreateFromConnectionString (connectionString);
 			await DeviceDatabase.Shared.DatabaseConnection.CreateTableAsync<DeviceAzureKey> ();
-			await AddDevice (Settings.DeviceId);
+			var device = new Device { Id = Settings.DeviceId,Description = System.Environment.MachineName };
+			await AddDevice (device);
 		}
 
 
-		public async Task<bool> AddDevice (string deviceId)
+		public async Task<bool> AddDevice (Device device)
 		{
 			try {
-				ADevice device;
+				ADevice adevice;
 				try {
-					device = await registryManager.AddDeviceAsync (new ADevice (deviceId));
+					adevice = await registryManager.AddDeviceAsync (new ADevice (device.Id));
 				} catch (DeviceAlreadyExistsException) {
-					device = await registryManager.GetDeviceAsync (deviceId);
+					adevice = await registryManager.GetDeviceAsync (device.Id);
 				}
-				var key = new DeviceAzureKey { Id = deviceId, Key = device.Authentication.SymmetricKey.PrimaryKey };
+				adevice.Status = DeviceStatus.Enabled;
+				//await PopulateProperties (adevice,device);
+				var key = new DeviceAzureKey { Id = device.Id, Key = adevice.Authentication.SymmetricKey.PrimaryKey };
 				await DeviceDatabase.Shared.DatabaseConnection.InsertOrReplaceAsync (key);
 				return true;
 			} catch (Exception ex) {
@@ -44,26 +48,29 @@ namespace Rosie.AzureIoT
 			return false;
 		}
 
-		public Task<bool> AddDevice (Device device)
-		{
-			return AddDevice (device.Id);
-		}
+		//JobClient deviceJobClient;
+		//public async Task PopulateProperties (ADevice adevice, Device device)
+		//{
+		//	if (adevice.GetDeviceDescription () != device.Description) {
+		//		await adevice.SetDeviceDescription (device.Description);
+		//	}
+		//}
 
-		public Task<DeviceAzureKey> GetDeviceKey (Device device)
-		{
-			return GetDeviceKey (device.Id);
-		}
+		//public Task SetDeviceProperty (string deviceId, string deviceProperty, object value)
+		//{
+		//	return deviceJobClient.ScheduleDevicePropertyWriteAsync (Guid.NewGuid ().ToString (), deviceId, deviceProperty, value);
+		//}
 
-		public async Task<DeviceAzureKey> GetDeviceKey (string deviceId)
+		public async  Task<DeviceAzureKey> GetDeviceKey (Device device)
 		{
-			var key = await DeviceDatabase.Shared.GetAzureKey (deviceId);
+			var key = await DeviceDatabase.Shared.GetAzureKey (device.Id);
 			if (key != null)
 				return key;
-			if(!(await AddDevice (deviceId)))
-			   return null;
-			return await DeviceDatabase.Shared.GetAzureKey (deviceId);
-			
+			if (!(await AddDevice (device)))
+				return null;
+			return await DeviceDatabase.Shared.GetAzureKey (device.Id);
 		}
+
 
 	}
 }

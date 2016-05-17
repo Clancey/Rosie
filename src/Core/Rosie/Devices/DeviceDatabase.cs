@@ -18,7 +18,7 @@ namespace Rosie
 		public DeviceDatabase (string databasePath)
 		{
 			DatabaseConnection = new SQLiteAsyncConnection (databasePath, true);
-			var s = DatabaseConnection.CreateTablesAsync<Device,DeviceGroup,DeviceKeyGrouping> ().Result;
+			var s = DatabaseConnection.CreateTablesAsync<Device,DeviceGroup,DeviceKeyGrouping, DeviceState> ().Result;
 		}
 
 		public static DeviceDatabase Shared { get; set; } = new DeviceDatabase ();
@@ -34,6 +34,22 @@ namespace Rosie
 				Id = "476b66f1-29fe-42fe-bb9c-d17421bf5f1e",
 			},
 		};
+
+		//public async void TestUpdates ()
+		//{
+		//	try {
+		//		var device = TestDevices [0];
+		//		var update = new DeviceState { DeviceId = device.Id, Key = "Temperature", Value = 70, DataType = DataTypes.Decimal, DataFormat = "F" };
+		//		var json = update.ToSimpleObject ().ToJson ();
+		//		await DatabaseConnection.InsertOrReplaceAsync (update);
+		//		var resp = await DatabaseConnection.Table<DeviceState> ().Where (x => x.DeviceId == device.Id).ToListAsync();
+
+		//		Console.WriteLine (resp [0]);
+		//	} catch (Exception ex) {
+		//		Console.WriteLine (ex);
+		//	}
+
+		//}
 
 		public Task<Device> GetDevice (string id)
 		{

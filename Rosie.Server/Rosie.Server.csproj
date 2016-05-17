@@ -14,7 +14,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;Azure;</DefineConstants>
+    <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>false</ExternalConsole>
@@ -56,6 +56,10 @@
     <ProjectReference Include="..\src\Core\Rosie.Net\Rosie.Net.csproj">
       <Project>{50DD7935-C200-43D8-9C55-733992A5A2F5}</Project>
       <Name>Rosie.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Rosie.Node\Rosie.Node.Net\Rosie.Node.Net.csproj">
+      <Project>{2391DDC2-5BE5-4E36-93FC-3EDBFFC0C56C}</Project>
+      <Name>Rosie.Node.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

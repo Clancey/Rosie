@@ -8,4 +8,9 @@
   <PropertyGroup Label="Configuration">
     <Import_RootNamespace>Rosie.ZWave</Import_RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ZWaveManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ZWaveNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ZWaveCommandTypes.cs" />
+  </ItemGroup>
 </Project>

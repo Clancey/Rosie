@@ -48,9 +48,9 @@ namespace Rosie.Echo
 					IsListening = true;
 					while (IsListening) {
 						try {
-							Console.WriteLine ("Waiting for discovery ping");
+							//Console.WriteLine ("Waiting for discovery ping");
 							byte [] bytes = listener.Receive (ref groupEP);
-							Console.WriteLine ("Recieved from: " + groupEP.Address.ToString ());
+							//Console.WriteLine ("Recieved from: " + groupEP.Address.ToString ());
 
 							var json = Encoding.ASCII.GetString (bytes, 0, bytes.Length);
 							//Console.WriteLine (json);

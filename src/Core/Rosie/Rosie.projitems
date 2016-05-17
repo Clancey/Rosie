@@ -33,6 +33,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\RouteT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceGroup.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceUpdate.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Devices\LocalDeviceLogDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
