@@ -34,3 +34,5 @@ Thumbs.db
 #dotCover
 *.dotCover
 src/Core/Rosie/Secrets.json
+
+[Nn]ode_modules/
