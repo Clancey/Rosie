@@ -11,38 +11,9 @@ change zwavePort variable to your Controllers port. I have suggested values for 
 
 Securing the API
 ===============
-If you want to secure the API, uncomment the following code. You can do tru OAuth, or just a generic apiKey.
-The rosie client is setup for a generic apiKey
+The rosie client is setup for a generic apiKey. To set the API key, add a Secrets.json file with the following:
 
 
-	//route middleware to verify a token
-    router.use(function(req, res, next) {
-
-    // check header or url parameters or post parameters for token
-    var token = req.query["apikey"] || req.headers['x-access-token'];
-
-    // decode token
-    if (token) {
-
-        // verifies secret and checks exp
-        // jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
-        //   if (err) {
-        //     return res.json({ success: false, message: 'Failed to authenticate token.' });    
-        //   } else {
-            // if everything is good, save to request for use in other routes
-            //req.decoded = decoded;    
-            next();
-        //   }
-        // });
-
-    } else {
-
-        // if there is no token
-        // return an error
-        return res.status(403).send({ 
-            success: false, 
-            message: 'No token provided.' 
-        });
-        
-    }
-    });
+	{
+		"apiKey":"foo"
+	}
