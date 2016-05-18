@@ -34,8 +34,8 @@ namespace Rosie.Node
 			int tryCount = 0;
 			while (!IsConnected && tryCount < ConnectRetryCount) {
 				try {
-					
-
+					return (await Task.WhenAll ( SetupNodeApi (),
+					                             SetupSockets ())).All(x=> x);
 				} catch (Exception ex) {
 					Console.WriteLine (ex);
 				}
