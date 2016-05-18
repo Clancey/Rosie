@@ -203,8 +203,8 @@ router.use(function(req, res, next) {
       //Load apikey from disk
       if(apiKey == undefined)
       {
-        var secrets = JSON.parse(fs.readFileSync("Secrets.json"));
-        apiKey = sec.apiKey;
+        var secrets = require("./Secrets.json");
+        apiKey = secrets.apiKey;
       }
       
       if(token == apiKey)
