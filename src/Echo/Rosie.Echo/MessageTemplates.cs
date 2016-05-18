@@ -9,11 +9,11 @@ namespace Rosie.Server.Echo
 			string discoveryTemplate = "HTTP/1.1 200 OK\r\n" +
 				"CACHE-CONTROL: max-age=86400\r\n" +
 				"EXT:\r\n" +
-				$"LOCATION: http://{serverip}:{serverport}/upnp/amazon-ha-bridge/setup.xml\r\n" +
+				$"LOCATION: http://{serverip}:{serverport}/upnp/Rosie/setup.xml\r\n" +
 				"OPT: \"http://schemas.upnp.org/upnp/1/0/\"; ns=01\r\n" +
 				$"01-NLS: {uuid}\r\n" +
 				"ST: urn:schemas-upnp-org:device:basic:1\r\n" +
-				"USN: uuid:Socket-1_0-221438K0100073::urn:Belkin:device:**\r\n\r\n";
+				"USN: uuid:Socket-1_0-221438K0100073::urn:schemas-upnp-org:device:basic:1\r\n\r\n";
 			return discoveryTemplate;
 		}
 
@@ -28,7 +28,7 @@ namespace Rosie.Server.Echo
 				$"<URLBase>http://{serverip}:{serverPort}/</URLBase>\n" + //hostname string
 				"<device>\n" +
 				"<deviceType>urn:schemas-upnp-org:device:Basic:1</deviceType>\n" +
-				$"<friendlyName>Amazon-Echo-HA-Bridge ({serverip})</friendlyName>\n" +
+				$"<friendlyName>Rosie ({serverip})</friendlyName>\n" +
 				"<manufacturer>Royal Philips Electronics</manufacturer>\n" +
 				"<manufacturerURL>http://www.armzilla..com</manufacturerURL>\n" +
 				"<modelDescription>Hue Emulator for Amazon Echo bridge</modelDescription>\n" +

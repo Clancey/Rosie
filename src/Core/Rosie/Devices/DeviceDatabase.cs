@@ -17,6 +17,7 @@ namespace Rosie
 
 		public DeviceDatabase (string databasePath)
 		{
+			//System.IO.File.Delete (databasePath);
 			DatabaseConnection = new SQLiteAsyncConnection (databasePath, true);
 			var s = DatabaseConnection.CreateTablesAsync<Device,DeviceGroup,DeviceKeyGrouping, DeviceState> ().Result;
 		}
@@ -51,6 +52,11 @@ namespace Rosie
 
 		//}
 
+		public Task InsertDeviceState (DeviceState state)
+		{
+			return DatabaseConnection.InsertOrReplaceAsync (state);
+		}
+
 		public Task<Device> GetDevice (string id)
 		{
 			return DatabaseConnection.Table<Device> ().Where (x => x.Id == id).FirstOrDefaultAsync ();
@@ -61,9 +67,15 @@ namespace Rosie
 			return DatabaseConnection.Table<Device> ().ToListAsync ();
 		}
 
+		public Task<List<Device>> GetEchoDevices ()
+		{
+
+			return DatabaseConnection.Table<Device> ().Where(x=> x.Discoverable && x.DeviceType != DeviceType.Unknown).ToListAsync ();
+		}
+
 		public async Task<bool> InsertDevice (Device device)
 		{
-			var s = await DatabaseConnection.InsertAsync (device);
+			var s = await DatabaseConnection.InsertOrReplaceAsync (device);
 			return s > 0;
 		}
 

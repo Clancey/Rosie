@@ -24,6 +24,17 @@ namespace Rosie
 			get { return GetString ("/dev/tty.usbmodem1411");}
 			set { GetString (value);}
 		}
+
+		public static string EchoDeviceId {
+			get {
+				var value = GetString ();
+				if (string.IsNullOrWhiteSpace (value))
+					value = EchoDeviceId = Guid.NewGuid ().ToString();
+				return value;
+			}
+			set { SetString (value); }
+		}
+
 		#region Helpers
 		public static ISettings AppSettings { get; } = CrossSettings.Current;
 

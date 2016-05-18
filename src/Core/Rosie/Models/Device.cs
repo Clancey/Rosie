@@ -12,8 +12,10 @@ namespace Rosie
 
 	public enum DeviceType
 	{
+		Unknown,
 		Switch,
 		Thermostat,
+		Sensor,
 	}
 	public class Device
 	{
@@ -23,6 +25,20 @@ namespace Rosie
 		public string Name { get; set; }
 
 		public string Description { get; set; }
+
+		public string Location { get; set; }
+
+		public string Manufacturer { get; set; }
+
+		public string ManufacturerId { get; set; }
+
+		public string Product { get; set; }
+
+		public string ProductType { get; set; }
+
+		public string ProductId { get; set; }
+
+		public string Type { get; set; }
 
 		public DeviceType DeviceType { get; set; } = DeviceType.Switch;
 
@@ -34,6 +50,8 @@ namespace Rosie
 
 		[Indexed]
 		public string Service { get; set; } = WebRequestHandler.Identifier;
+
+		public bool Discoverable { get; set; } = true;
 
 	}
 }

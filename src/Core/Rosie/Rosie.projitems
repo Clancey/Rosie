@@ -37,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\LocalDeviceLogDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\Enum.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />

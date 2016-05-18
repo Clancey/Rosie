@@ -14,7 +14,7 @@ namespace Rosie.Server.Routes.Echo
 
 		public override async Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
-			var devices = await DeviceDatabase.Shared.GetAllDevices ();
+			var devices = await DeviceDatabase.Shared.GetEchoDevices ();
 			var resp = await new HueApiResponse {
 				Lights = devices.ToDictionary (x => x.Id, x => new DeviceResponse { Name = x.Name, Uniqueid = x.Id }),
 			}.ToJsonAsync ();

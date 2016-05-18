@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Rosie.Node
@@ -49,6 +50,9 @@ namespace Rosie.Node
 
 		[JsonProperty ("max")]
 		public int Max { get; set; }
+
+		[JsonProperty ("values")]
+		public List<string> Values { get; set; }
 
 		[JsonProperty ("value")]
 		public object Value { get; set; }

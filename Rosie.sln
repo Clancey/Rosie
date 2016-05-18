@@ -29,9 +29,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rosie.AzureIoT.Net", "src\A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Node", "Node", "{6212249F-9AC3-49A5-A2B0-48C71D9EF5B5}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rosie.Node", "Rosie.Node\Rosie.Node.shproj", "{EA1C2902-A162-4FCF-9C93-250B84ECEC73}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rosie.Node", "src\Node\Rosie.Node\Rosie.Node.shproj", "{EA1C2902-A162-4FCF-9C93-250B84ECEC73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rosie.Node.Net", "Rosie.Node\Rosie.Node.Net\Rosie.Node.Net.csproj", "{2391DDC2-5BE5-4E36-93FC-3EDBFFC0C56C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rosie.Node.Net", "src\Node\Rosie.Node.Net\Rosie.Node.Net.csproj", "{2391DDC2-5BE5-4E36-93FC-3EDBFFC0C56C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

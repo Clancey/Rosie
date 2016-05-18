@@ -10,7 +10,7 @@ namespace Rosie.Echo
 {
 	public class EchoDiscoveryService
 	{
-
+		public bool DebugMode { get; set;}
 		public const int DiscoveryPort = 1900;
 		public const string MultiCastAddress = "239.255.255.250";
 
@@ -48,11 +48,12 @@ namespace Rosie.Echo
 					IsListening = true;
 					while (IsListening) {
 						try {
-							//Console.WriteLine ("Waiting for discovery ping");
+							Log ("Waiting for discovery ping");
 							byte [] bytes = listener.Receive (ref groupEP);
-							//Console.WriteLine ("Recieved from: " + groupEP.Address.ToString ());
+							Log ($"Recieved from: {groupEP.Address}");
 
 							var json = Encoding.ASCII.GetString (bytes, 0, bytes.Length);
+
 							//Console.WriteLine (json);
 							if (!IsListening)
 								return;
@@ -80,7 +81,7 @@ namespace Rosie.Echo
 
 		public static string GetDeviceId ()
 		{
-			return "4061666B-8AEE-488C-BB37-877828E8992F";
+			return Settings.EchoDeviceId;
 		}
 
 		public static IPAddress GetAddress ()
@@ -133,7 +134,7 @@ namespace Rosie.Echo
 
 		bool isSSDPDiscovery (string body)
 		{
-			if (body != null && body.StartsWith ("M-SEARCH * HTTP/1.1") && body.Contains ("MAN: \"ssdp:discover\"")) {
+			if (body != null && body.StartsWith ("M-SEARCH * HTTP/1.1") && body.IndexOf ("MAN: \"ssdp:discover\"", StringComparison.CurrentCultureIgnoreCase) > -1) {
 				return true;
 			}
 			return false;
@@ -142,7 +143,14 @@ namespace Rosie.Echo
 		public void SendMessage (string message, IPEndPoint source)
 		{
 			var data = Encoding.UTF8.GetBytes (message);
+			Log ($"Sending to: {source.Address} - {message}");
 			listener.Send (data, data.Length, source);
+		}
+
+		void Log (string message)
+		{
+			if (DebugMode)
+				Console.WriteLine (message);
 		}
 
 	}

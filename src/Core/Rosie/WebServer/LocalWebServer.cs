@@ -28,9 +28,10 @@ namespace Rosie.Server
 {
 	public class LocalServer
 	{
+		public bool DebugMode { get; set; }
 		public static LocalServer Shared { get; set; } = new LocalServer ();
 		private readonly HttpListener _listener = new HttpListener();
-		public const int DefaultWebServerPort = 8080;
+		public const int DefaultWebServerPort = 8081;
 		public LocalServer(int webServerPort = DefaultWebServerPort)
 		{
 			if (!HttpListener.IsSupported)
@@ -40,13 +41,17 @@ namespace Rosie.Server
 				$"http://*:{webServerPort}/",
 			};
 
-			foreach (string s in prefixes)
-				_listener.Prefixes.Add(s);
-
+			foreach (string s in prefixes) {
+				Log ($"Listening on: {s}");
+				_listener.Prefixes.Add (s);
+			}
+			init ();
 			_listener.Start();
-			RegisterRoutes();
 		}
-
+		void init ()
+		{
+			RegisterRoutes ();
+		}
 		public virtual void RegisterRoutes()
 		{
 			
@@ -96,8 +101,8 @@ namespace Rosie.Server
 			try{
 				var path = request?.Url?.LocalPath;
 
-				path = path.TrimStart ('/');
-				Console.WriteLine("Path: {0}",path);
+				path = path?.TrimStart ('/');
+				Log ($"Request from: {request.RemoteEndPoint.Address} Path: {path}");
 				var route = Router.GetRoute(path);
 				if(!route.SupportsMethod(context.Request.HttpMethod)) {
 					context.Response.StatusCode = 405;
@@ -113,6 +118,12 @@ namespace Rosie.Server
 				context.Response.StatusCode = 404;
 				return;
 			}
+		}
+
+		void Log (string message)
+		{
+			if (DebugMode)
+				Console.WriteLine (message);
 		}
 
 	}

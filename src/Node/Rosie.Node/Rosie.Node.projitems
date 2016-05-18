@@ -14,8 +14,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\NodeDevice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)NodeManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NodeValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NodeDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NodeCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NodeDeviceCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\NodeValueUpdated.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\NodeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
   </ItemGroup>
 </Project>

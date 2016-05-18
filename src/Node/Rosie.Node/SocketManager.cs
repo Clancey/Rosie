@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using Quobject.SocketIoClientDotNet.Client;
+using Newtonsoft.Json;
 
 namespace Rosie.Node
 {
 	class SocketManager
 	{
+		public bool DebugMode { get; set; }
 		public bool Connected { get; private set; }
 
 		public Action StatusChanged { get; set; }
 
 		static Socket socket;
+
+		public Action<NodeValueUpdate> NodeValueUpdated;
 
 		public async Task<bool> Connect (string server = "http://localhost:3000")
 		{
@@ -35,7 +40,9 @@ namespace Rosie.Node
 				StatusChanged?.Invoke ();
 			});
 			socket.On ("node-added", (data) => {
+				Console.WriteLine ("Node Added");
 				Console.WriteLine (data);
+
 				//var obj = (JContainer)data;
 				//var sessionId = (string)obj ["sessionId"];
 				//Console.WriteLine ("Touch from session: {0}", sessionId);
@@ -45,76 +52,46 @@ namespace Rosie.Node
 				//});
 			});
 			socket.On ("node-naming", (data) => {
-				Console.WriteLine (data);
+				Log ($"Node Naming: {data}");
 				
 			});
 			socket.On ("node-available", (data) => {
-				Console.WriteLine (data);
+				Log ($"Node Available: {data}");
 
 			});
 			socket.On ("node-ready", (data) => {
-				Console.WriteLine (data);
+				Log ($"Node Ready: {data}");
 
 			});
 			socket.On ("node-event", (data) => {
-				Console.WriteLine (data);
+				Log ($"Node event: {data}");
 
 			});
 
 			socket.On ("scene-event", (data) => {
-
-				Console.WriteLine (data);
+				Log ($"Scene event: {data}");
 			});
 
 			socket.On ("value-added", (data) => {
-				Console.WriteLine (data);
+
+				Log ($"Node Value Added: {data}");
+
+				var obj = ((JObject)data).ToObject<NodeValueUpdate> ();
+				NodeValueUpdated?.Invoke (obj);
 
 			});
 			socket.On ("notification", (data) => {
-
-				Console.WriteLine (data);
+				Log ($"Node Notification: {data}");
 			});
 
-			//socket.On ("screenshot-received", (data) => {
-			//	try {
-			//		var obj = (JContainer)data;
-			//		var session = (string)obj ["sessionId"];
-			//		SocketServer.ForSession (session).ScreenShotReceived (obj);
-			//	} catch (Exception ex) {
-			//		Console.WriteLine (ex);
-			//	}
-			//});
-			//socket.On ("load-app", (data) => {
-			//	var obj = (JContainer)data;
-			//	var sessionId = (string)obj ["sessionId"];
-			//	var path = (string)obj ["path"];
-			//	DeviceService.ForSession (sessionId).UploadApk (path);
-			//});
-			//socket.On ("connect-to-device", async (data) => {
-			//	Console.WriteLine (data);
-			//	var obj = (JContainer)data;
-			//	var id = (string)obj ["clientid"];
-			//	var deviceId = (string)obj ["device"];
-			//	var service = DeviceService.CreateForDevice (deviceId);
-			//	await service.Connect ();
-			//	var jobj = new JObject ();
-			//	jobj.Add ("clientid", id);
-			//	jobj.Add ("deviceId", deviceId);
-			//	jobj.Add ("screenWidth", service.Device.ScreenWidth);
-			//	jobj.Add ("screenHeight", service.Device.ScreenHeight);
-			//	jobj.Add ("sessionId", service.SessionId);
-			//	socket.Emit ("device-connected", jobj);
-			//});
-			//socket.On ("check-available", (data) => SendAvailableDevices ());
-
-			//socket.On ("client-disconnected", async (data) => {
-			//	var obj = (JContainer)data;
-			//	var sessionId = (string)obj ["sessionId"];
-			//	DeviceService.ShutDown (sessionId);
-			//	SocketServer.ShutDown (sessionId);
-			//});
 			var success = await tcs.Task;
 			return success;
+		}
+
+		void Log (string message)
+		{
+			if (DebugMode)
+				Console.WriteLine (message);
 		}
 	}
 }

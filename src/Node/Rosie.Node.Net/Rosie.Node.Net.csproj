@@ -28,22 +28,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleAuth">
+      <HintPath>..\..\..\packages\Clancey.SimpleAuth.1.0.18\lib\net45\SimpleAuth.dll</HintPath>
+    </Reference>
     <Reference Include="WebSocket4Net">
-      <HintPath>..\..\packages\WebSocket4Net.0.14.1\lib\net45\WebSocket4Net.dll</HintPath>
+      <HintPath>..\..\..\packages\WebSocket4Net.0.14.1\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="EngineIoClientDotNet">
-      <HintPath>..\..\packages\EngineIoClientDotNet.0.9.22\lib\net45\EngineIoClientDotNet.dll</HintPath>
+      <HintPath>..\..\..\packages\EngineIoClientDotNet.0.9.22\lib\net45\EngineIoClientDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
     <Reference Include="SocketIoClientDotNet">
-      <HintPath>..\..\packages\SocketIoClientDotNet.0.9.13\lib\net45\SocketIoClientDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="SimpleAuth">
-      <HintPath>..\..\packages\Clancey.SimpleAuth.1.0.17\lib\net45\SimpleAuth.dll</HintPath>
+      <HintPath>..\..\..\packages\SocketIoClientDotNet.0.9.13\lib\net45\SocketIoClientDotNet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -53,11 +53,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Core\Rosie.Net\Rosie.Net.csproj">
+    <ProjectReference Include="..\..\Core\Rosie.Net\Rosie.Net.csproj">
       <Project>{50DD7935-C200-43D8-9C55-733992A5A2F5}</Project>
       <Name>Rosie.Net</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\Rosie.Node.projitems" Label="Shared" Condition="Exists('..\Rosie.Node.projitems')" />
+  <Import Project="..\Rosie.Node\Rosie.Node.projitems" Label="Shared" Condition="Exists('..\Rosie.Node\Rosie.Node.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

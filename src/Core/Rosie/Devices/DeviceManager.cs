@@ -35,16 +35,20 @@ namespace Rosie
 				Device = device,
 				Request = state,
 			};
-
+			if(events != null)
 			foreach (var e in events) {
-				handled = await Task.Run(()=> (e as SetDeviceStateHandler)?.Invoke (this, args) ?? false);
-				if (handled)
-					return args.Success;
+				try {
+					handled = await Task.Run (() => (e as SetDeviceStateHandler)?.Invoke (this, args) ?? false);
+					if (handled)
+						return args.Success;
+				} catch (Exception ex) {
+					Console.WriteLine (ex);
+				}
 			}
 
 
 			var handlerList = GetHandlerList (device.Service ?? WebRequestHandler.Identifier);
-			for (var i = handlerList.Count - 1; i > 0; i--) {
+			for (var i = handlerList.Count - 1; i >= 0; i--) {
 				var handler = handlerList [i];
 				handled = await handler.HandleRequest (device, state);
 				if (handled)
@@ -54,6 +58,12 @@ namespace Rosie
 			return false;
 		}
 
+
+		public Task UpdateCurrentState (DeviceState state)
+		{
+			//TODO: Push updates
+			return DeviceDatabase.Shared.InsertDeviceState (state);
+		}
 
 		Dictionary<string, List<IDeviceHandler>> handlers = new Dictionary<string, List<IDeviceHandler>> ();
 
