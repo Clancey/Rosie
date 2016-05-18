@@ -39,6 +39,12 @@ Make sure you create the isolated storage directory
 `sudo chmod 757 -R /usr/share/.isolated-storage/`
 
 
+ZWave (Node)
+===========
+It turns out ZWave in C#/Mono is harder than it should be. Long term I will bind to OpenZwave via CppSharp.
+
+For now, there is a node app you can run that will proxy via openzwave-shared
+
 Future Plans
 ===========
 * Home Kit Support (Maybe via https://github.com/nfarina/homebridge )
