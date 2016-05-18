@@ -126,6 +126,15 @@ namespace SQLite
 				}
 			});
 		}
+		public Task<int> InsertAsync (object item, Type type)
+		{
+			return Task.Factory.StartNew (() => {
+				var conn = GetConnection ();
+				using (conn.Lock ()) {
+					return conn.Insert (item,type);
+				}
+			});
+		}
 
 		public Task<int> InsertOrReplaceAsync (object item)
 		{

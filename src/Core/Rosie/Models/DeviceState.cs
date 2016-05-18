@@ -5,13 +5,21 @@ namespace Rosie
 {
 	public class DeviceState : DeviceUpdate
 	{
-		[PrimaryKey]
 		public override string Id {
 			get {
-				return $"{DeviceId} - {Key}";
+				return base.Id;
 			}
 			set {
 				base.Id = value;
+			}
+		}
+		[PrimaryKey]
+		public string DeviceStateId {
+			get {
+				return  $"{DeviceId} - {Key}";
+			}
+			set {
+				
 			}
 		}
 	}

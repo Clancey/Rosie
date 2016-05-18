@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Devices\LocalDeviceLogDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Enum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\IDeviceLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Logging\SqliteDeviceLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
