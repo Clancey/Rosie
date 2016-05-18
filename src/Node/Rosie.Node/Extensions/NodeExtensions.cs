@@ -9,8 +9,10 @@ namespace Rosie.Node
 		{
 			var command = await update.GetNodeCommand ();
 			var node = await NodeDatabase.Shared.GetDevice (update.NodeId);
+			if (update.Value.Label == "Luminance")
+				Console.WriteLine ($"Luminance: {update.Value.Value}");
 			var statusKey = command.StatusKey ();
-			var dataType = command.GetDataType ();
+			var dataType = command.GetDataType (update);
 			return new DeviceState {
 				DeviceId = node.Id,
 				DataType = dataType,
@@ -52,30 +54,28 @@ namespace Rosie.Node
 			return $"Unknown ({commandId})";
 		}
 
-		public static DataTypes GetDataType (this NodeCommand command)
+		public static DataTypes GetDataType (this NodeCommand command, NodeValueUpdate update)
 		{
 			var commandId = command?.Id;
 			switch (commandId) {
 			case "37 - 0":
 			case "39 - 0":
 				return DataTypes.Bool;
-			//case "117 - 0":
-			//	return "Protection";
-			//case "32 - 0":
-			//	return "Basic";
-			//case "48 - 0":
-			//	return "Sensor";
-			//case "49 - 1":
-			//	return "Temperature";
-			//case "49 - 3":
-			//	return "Luminance";
-			//case "49 - 25":
-			//	return "Seismic Intensity";
-			//case "113 - 10":
-			//	return "Burglar";
-			//case "128 - 0":
-			//	return "Battery Level";
+			case "49 - 1":
+				return DataTypes.Decimal;
 			}
+			if (update.Value.Values != null)
+				return DataTypes.List;
+			var s = update.Value.Value?.ToString ();
+			if (string.IsNullOrEmpty (s))
+				return DataTypes.String;
+			
+			int i;
+			if (int.TryParse (s, out i))
+				return DataTypes.Int;
+			double d;
+			if (double.TryParse (s, out d))
+				return DataTypes.Decimal;
 			return DataTypes.String;
 		}
 	}
