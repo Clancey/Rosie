@@ -21,6 +21,22 @@ namespace Rosie
 			RegisterHandler<WebRequestHandler> ();
 		}
 
+		public Task<bool> AddDevice (Device device)
+		{
+			if (DeviceLogHandlers.Any ()) {
+				Task.Run (async () => {
+					foreach (var handler in DeviceLogHandlers) {
+						try {
+							await handler.AddDevice (device);
+						} catch (Exception ex) {
+							Console.WriteLine (ex);
+						}
+					}
+				});
+			}
+			return DeviceDatabase.Shared.InsertDevice (device);
+		}
+
 		public delegate bool SetDeviceStateHandler (object sender, SetDeviceArgs args);
 
 		public event SetDeviceStateHandler SetDeviceEvent;
@@ -58,10 +74,19 @@ namespace Rosie
 			return false;
 		}
 
-
 		public Task UpdateCurrentState (DeviceState state)
 		{
-			//TODO: Push updates
+			if (DeviceLogHandlers.Any ()) {
+				Task.Run (async () => {
+					foreach (var handler in DeviceLogHandlers) {
+						try {
+							await handler.DeviceUpdate (state);
+						} catch (Exception ex) {
+							Console.WriteLine (ex);
+						}
+					}
+				});
+			}
 			return DeviceDatabase.Shared.InsertDeviceState (state);
 		}
 
@@ -86,6 +111,19 @@ namespace Rosie
 				handlers [service] = handlerList = new List<IDeviceHandler> ();
 			return handlerList;
 		}
+
+		List<IDeviceLogger> DeviceLogHandlers = new List<IDeviceLogger> ();
+		public void RegisterDeviceLogHandler<T> () where T : IDeviceLogger
+		{
+			var handler = (T)Activator.CreateInstance (typeof (T));
+			RegisterHandler (handler);
+		}
+
+		public void RegisterHandler (IDeviceLogger handler)
+		{
+			DeviceLogHandlers.Add (handler);
+		}
+
 	}
 }
 

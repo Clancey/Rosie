@@ -100,7 +100,7 @@ namespace Rosie.Node
 				DeviceType = FromNodeType (nodeDevice.Type),
 			};
 			device.Discoverable = !string.IsNullOrWhiteSpace (device.Name);
-			await DeviceDatabase.Shared.InsertDevice (device);
+			await DeviceManager.Shared.AddDevice (device);
 			nodeDevice.NodeId = nodeId;
 			await NodeDatabase.Shared.InsertDevice (nodeDevice);
 
