@@ -16,6 +16,7 @@ namespace Rosie
 		List = 5,
 		Short = 6,
 		Raw = 7,
+		String = 8,
 	}
 	public class DeviceUpdate
 	{
@@ -152,7 +153,11 @@ namespace Rosie
 			case DataTypes.Short:
 				shortValue = Convert.ToInt16(Value);
 				return;
+			case DataTypes.String:
+				stringValue = value?.ToString ();
+				return;
 			}
+			throw new NotImplementedException ();
 		}
 
 		public virtual object ToSimpleObject ()

@@ -76,7 +76,7 @@ namespace Rosie.Node
 			//case "128 - 0":
 			//	return "Battery Level";
 			}
-			return DataTypes.Raw;
+			return DataTypes.String;
 		}
 	}
 }
