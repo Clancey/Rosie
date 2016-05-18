@@ -7,7 +7,8 @@
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
-
+var fs = require("fs");
+var apiKey = undefined;
 
 var os = require('os');
 
@@ -192,36 +193,38 @@ var port = process.env.PORT || 8080;        // set our port
 var router = express.Router();              // get an instance of the express Router
 
 // route middleware to verify a token
-// router.use(function(req, res, next) {
+router.use(function(req, res, next) {
 
-//   // check header or url parameters or post parameters for token
-//   var token = req.query["apikey"] || req.headers['x-access-token'];
+  // check header or url parameters or post parameters for token
+  var token = req.query["apikey"] || req.headers['apikey'];
 
-//   // decode token
-//   if (token) {
+  // decode token
+  if (token) {
+      //Load apikey from disk
+      if(apiKey == undefined)
+      {
+        var secrets = require("./Secrets.json");
+        apiKey = secrets.apiKey;
+      }
+      
+      if(token == apiKey)
+      {  
+        next(); 
+      }
+      else{
+          return res.json({ success: false, message: 'Failed to authenticate token.' });   
+      }
+  } else {
 
-//     // verifies secret and checks exp
-//     // jwt.verify(token, app.get('superSecret'), function(err, decoded) {      
-//     //   if (err) {
-//     //     return res.json({ success: false, message: 'Failed to authenticate token.' });    
-//     //   } else {
-//         // if everything is good, save to request for use in other routes
-//         //req.decoded = decoded;    
-//         next();
-//     //   }
-//     // });
-
-//   } else {
-
-//     // if there is no token
-//     // return an error
-//     return res.status(403).send({ 
-//         success: false, 
-//         message: 'No token provided.' 
-//     });
+    // if there is no token
+    // return an error
+    return res.status(403).send({ 
+        success: false, 
+        message: 'No token provided.' 
+    });
     
-//   }
-// });
+  }
+});
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {

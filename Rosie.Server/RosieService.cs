@@ -36,7 +36,7 @@ namespace Rosie
 
 		async void Init ()
 		{
-
+			DeviceManager.Shared.RegisterDeviceLogHandler<SqliteDeviceLogger> ();
 
 #if Azure
 			await Rosie.AzureIoT.AzureDeviceManager.Shared.Init ();
