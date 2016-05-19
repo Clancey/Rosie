@@ -49,6 +49,7 @@ zwave.on('node added', function(nodeid) {
         loc: '',
         classes: {},
         ready: false,
+        nodeid: nodeid
     };
     zwave.refreshNodeInfo(nodeid);
 });
