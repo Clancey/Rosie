@@ -68,8 +68,14 @@ namespace Rosie.Node
 				await Connect ();
 			};
 			sockets.NodeValueUpdated = async (nodeUpdate) => {
-				var update = await nodeUpdate.ToDeviceUpdate ();
-				await DeviceManager.Shared.UpdateCurrentState (update);
+				try {
+					var update = await nodeUpdate.ToDeviceUpdate ();
+					if (update == null)
+						return;
+					await DeviceManager.Shared.UpdateCurrentState (update);
+				} catch (Exception ex) {
+					Console.WriteLine (ex);
+				}
 			};
 			return await sockets.Connect (NodeServerUrl);
 		}

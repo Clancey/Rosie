@@ -35,7 +35,7 @@ namespace Rosie.Node
 				Max = x.Max,
 				Min = x.Min,
 				Units = x.Units,
-				Values = x.Values.ToJson (),
+				Values =  x.Values?.ToJson (),
 				Genre = Enum.Parse<CommandGenre> (x.Genre),
 			}).ToList ();
 			await DatabaseConnection.InsertOrReplaceAllAsync (commands);

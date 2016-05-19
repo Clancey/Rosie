@@ -8,9 +8,9 @@ namespace Rosie.Node
 		public static async Task<DeviceState> ToDeviceUpdate (this NodeValueUpdate update)
 		{
 			var command = await update.GetNodeCommand ();
+			if (command.ShouldIgnore ())
+				return null;
 			var node = await NodeDatabase.Shared.GetDevice (update.NodeId);
-			if (update.Value.Label == "Luminance")
-				Console.WriteLine ($"Luminance: {update.Value.Value}");
 			var statusKey = command.StatusKey ();
 			var dataType = command.GetDataType (update);
 			return new DeviceState {
@@ -25,6 +25,19 @@ namespace Rosie.Node
 		{
 			var command = await NodeDatabase.Shared.DatabaseConnection.Table<NodeCommand> ().Where (x => x.ClassId == update.Value.ClassId && x.Index == update.Value.Index).FirstOrDefaultAsync ();
 			return command;
+		}
+
+		public static bool ShouldIgnore (this NodeCommand command)
+		{
+			var commandId = command?.Id;
+			switch (commandId) {
+			case "113 - 0":
+			case "113 - 1":
+			case "113 - 2":
+				return true;
+				default:
+				return false;
+			}
 		}
 
 		public static string StatusKey (this NodeCommand command)

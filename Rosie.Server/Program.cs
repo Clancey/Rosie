@@ -12,14 +12,14 @@ namespace Rosie.Server
 			//DeviceDatabase.Shared.TestUpdates ();
 #if DEBUG
 			//The debugger cannot launch a service, so we handle it oursleves
-			if (Debugger.IsAttached) {
+			//if (Debugger.IsAttached) {
 				Task.Run (() => {
 					(new RosieService ()).Start ();
 				});
 				while (true) {
 					Thread.Sleep (10000);
 				}
-			}
+			//}
 #endif
 
 			var ServicesToRun = new System.ServiceProcess.ServiceBase []
