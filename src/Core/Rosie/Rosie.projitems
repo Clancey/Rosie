@@ -14,9 +14,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Data\Settings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\SQLite.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\Handlers\IDeviceHandler.cs" />
@@ -31,22 +28,18 @@
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Router.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\Route.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\RouteT.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\Device.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceGroup.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceUpdate.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\DeviceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Devices\LocalDeviceLogDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\Enum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\IDeviceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\SqliteDeviceLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)Devices\" />
     <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
     <Folder Include="$(MSBuildThisFileDirectory)WebServer\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Logging\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
   </ItemGroup>
 </Project>

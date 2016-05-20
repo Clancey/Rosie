@@ -49,7 +49,10 @@ namespace Rosie
 		public BriConversionType ConversionType { get; set; }
 
 		[Indexed]
-		public string Service { get; set; } = WebRequestHandler.Identifier;
+		public string Service { get; set; }
+		#if !__MOBILE__
+		= WebRequestHandler.Identifier;
+		#endif
 
 		public bool Discoverable { get; set; } = true;
 
