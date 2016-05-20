@@ -43,24 +43,6 @@
       <HintPath>..\..\..\packages\Microsoft.Azure.Devices.1.0.6\lib\net451\Microsoft.Azure.Devices.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="DotNetty.Common">
-      <HintPath>..\..\..\packages\DotNetty.Common-signed.0.2.3\lib\net45\DotNetty.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetty.Buffers">
-      <HintPath>..\..\..\packages\DotNetty.Buffers-signed.0.2.3\lib\net45\DotNetty.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetty.Handlers">
-      <HintPath>..\..\..\packages\DotNetty.Handlers-signed.0.2.3\lib\net45\DotNetty.Handlers.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetty.Transport">
-      <HintPath>..\..\..\packages\DotNetty.Transport-signed.0.2.3\lib\net45\DotNetty.Transport.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetty.Codecs">
-      <HintPath>..\..\..\packages\DotNetty.Codecs-signed.0.2.3\lib\net45\DotNetty.Codecs.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetty.Codecs.Mqtt">
-      <HintPath>..\..\..\packages\DotNetty.Codecs.Mqtt-signed.0.2.3\lib\net45\DotNetty.Codecs.Mqtt.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Security">
       <HintPath>..\..\..\packages\Mono.Security.3.2.3.0\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
@@ -72,9 +54,6 @@
     </Reference>
     <Reference Include="PCLCrypto">
       <HintPath>..\..\..\packages\PCLCrypto.1.0.86\lib\net40-Client\PCLCrypto.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Devices.Client">
-      <HintPath>..\..\..\packages\Microsoft.Azure.Devices.Client.1.0.7\lib\net45\Microsoft.Azure.Devices.Client.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

@@ -16,10 +16,10 @@ var os = require('os');
 //var zwavePort = '/dev/tty.usbmodem1421';
 
 //Windows
-var zwavePort = '\\\\.\\COM4';
+//var zwavePort = '\\\\.\\COM4';
 
 //Raspbery Pi
-//var zwavePort = '/dev/ttyACM0';
+var zwavePort = '/dev/ttyACM0';
  
 var OZW = require('openzwave-shared');
 var zwave = new OZW({
