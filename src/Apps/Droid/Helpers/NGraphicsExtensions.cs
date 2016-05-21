@@ -11,12 +11,6 @@ namespace Rosie
 		static readonly IPlatform Platform = new AndroidPlatform ();
 		static readonly double Scale = (double)Xamarin.Forms.Forms.Context.Resources.DisplayMetrics.Density;
 
-		//public static void LoadSvg(this ImageView imageView, string svg)
-		//{
-		//	var s = imageView..Size;
-		//	LoadSvg(imageView, svg, new Size(s.Width, s.Height),renderingMode);
-		//}
-
 		public static void LoadSvg (this ImageView imageView, string svg, Size size)
 		{
 			var image = svg.LoadImageFromSvg (size);

@@ -51,6 +51,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\FormsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Locations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Images.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\SvgImageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
@@ -58,5 +59,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Pages\" />
     <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Controls\" />
   </ItemGroup>
 </Project>
