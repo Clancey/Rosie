@@ -12,6 +12,12 @@ namespace Rosie
 			get { return GetString ("ApiKey"); }
 			set { SetString (value);}
 		}
+
+		public static Usage CurrentUsage {
+			get { return (Usage)GetInt ((int)Usage.Medium);}
+			set { SetInt ((int)value); }
+		}
+
 		#region Helpers
 		public static ISettings AppSettings { get; } = CrossSettings.Current;
 

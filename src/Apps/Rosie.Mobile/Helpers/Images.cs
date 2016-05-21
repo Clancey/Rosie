@@ -12,7 +12,10 @@ namespace Rosie.Mobile
 			ImageHelper.SaveImage (svg, size, cachedImage);
 			return cachedImage;
 		}
-		public const string OverviewImageName = "overview.svg";
+		public static string CurrentOverviewImageName => Settings.CurrentUsage == Usage.Low ? OverviewImageNameLow : Settings.CurrentUsage == Usage.Medium ? OverviewImageNameMedium : OverviewImageNameHigh;
+		public const string OverviewImageNameLow = "overview-low.svg";
+		public const string OverviewImageNameMedium = "overview-med.svg";
+		public const string OverviewImageNameHigh = "overview-high.svg";
 	}
 }
 
