@@ -116,6 +116,12 @@
       <HintPath>..\..\..\packages\Xam.Plugins.Settings.2.1.0\lib\Xamarin.iOS10\Plugin.Settings.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
+    <Reference Include="NGraphics">
+      <HintPath>..\..\..\packages\NGraphics.0.4.0\lib\Xamarin.iOS10\NGraphics.dll</HintPath>
+    </Reference>
+    <Reference Include="NGraphics.iOS">
+      <HintPath>..\..\..\packages\NGraphics.0.4.0\lib\Xamarin.iOS10\NGraphics.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json" />
@@ -135,7 +141,14 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\NGraphicsExtensions.cs" />
+    <Compile Include="Helpers\ImageHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rosie.Resources\Rosie.Resources.csproj">
+      <Project>{A8F398D2-9145-4D1A-AF80-5DBC8CC9B4C1}</Project>
+      <Name>Rosie.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\Core\Rosie.Models\Rosie.Models.projitems" Label="Shared" Condition="Exists('..\..\Core\Rosie.Models\Rosie.Models.projitems')" />
   <Import Project="..\Rosie.Mobile\Rosie.Mobile.projitems" Label="Shared" Condition="Exists('..\Rosie.Mobile\Rosie.Mobile.projitems')" />

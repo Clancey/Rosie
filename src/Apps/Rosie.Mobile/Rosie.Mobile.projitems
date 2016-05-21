@@ -49,11 +49,14 @@
       <DependentUpon>RoomsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\FormsExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Locations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Images.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
     <Folder Include="$(MSBuildThisFileDirectory)Pages\" />
     <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
   </ItemGroup>
 </Project>
