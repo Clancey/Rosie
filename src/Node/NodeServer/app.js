@@ -24,9 +24,9 @@ var zwavePort = '/dev/ttyACM0';
 var secrets = require("./Secrets.json");
 var OZW = require('openzwave-shared');
 var zwave = new OZW({
-    Logging: true,
-    ConsoleOutput: true,
-    NetworkKey: secret.ZwaveNetworkKey
+    Logging: false,
+    ConsoleOutput: false,
+    NetworkKey: secrets.ZwaveNetworkKey
 });
 
 var nodes = [];
@@ -236,7 +236,7 @@ router.get('/', function(req, res) {
 router.route('/device')
     .get(function (req,res) {
         var nodeId = req.query['nodeId'];
-        if(nodeid == undefined)
+        if(nodeId == undefined)
         {
             res.json({error:'Query parameter "nodeId" is required'});
             return;
@@ -254,9 +254,57 @@ router.route('/device')
         res.json({success:true});
     });
 
-router.route('Neighbors')
-.get(function (req,res) {
-   zwave.getNeighbors(); 
+router.route('/device/:nodeId')
+    .get(function(req,res) {
+        var node = nodes[nodeId];
+        res.json(node);  
+    });
+    
+router.route('/device/:nodeId/name')
+    .get(function(req,res) {
+        var nodeId = req.params.nodeId;
+        var node = nodes[nodeId];
+        res.json({name:node.name});  
+    })
+     .post(function(req, res) {         
+        var nodeId = req.params.nodeId;
+        var name = req.body.name;        
+        var node = nodes[nodeId];
+        node.name = name;
+        zwave.setNodeName(nodeId,name);  
+        res.json({success:true});
+     });
+     
+     
+    
+router.route('/device/:nodeId/location')
+    .get(function(req,res) {
+        var nodeId = req.params.nodeId;
+        var node = nodes[nodeId];
+        res.json({name:node.loc});  
+    })
+     .post(function(req, res) {         
+        var nodeId = req.params.nodeId;
+        var location = req.body.location;        
+        var node = nodes[nodeId];
+        node.loc = location;
+        zwave.setNodeLocation(nodeId,location);  
+        zwave.refreshNodeInfo(nodeid);
+        res.json({success:true});
+     });
+
+router.route('/devices/add')
+    .post(function(req,res){
+        var secured = req.body.secured;
+        if(secured == undefined)
+        {
+            secured = false;
+        }
+        zwave.addNode(secured);
+        
+        res.json({success:true});
+    });
+
 });
 
 router.route('/devices')
