@@ -49,9 +49,25 @@
       <DependentUpon>RoomsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\FormsExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\Locations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Images.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\SvgImageView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\RosieApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\RosieSockets.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Locations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\NotificationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ArrayExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\BaseNotify.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EventHandlerExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\IEnumberableExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Spinner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\EventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DeviceListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\DeviceViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\OverviewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DeviceOverviewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RoomsListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\BasePage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />

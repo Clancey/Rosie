@@ -21,11 +21,12 @@ var os = require('os');
 //Raspbery Pi
 var zwavePort = '/dev/ttyACM0';
  
+var secrets = require("./Secrets.json");
 var OZW = require('openzwave-shared');
 var zwave = new OZW({
     Logging: true,
     ConsoleOutput: true,
-    ConfigPath: 'C:\\Projects\\HelloNode\\config\\'
+    NetworkKey: secret.ZwaveNetworkKey
 });
 
 var nodes = [];
@@ -204,7 +205,7 @@ router.use(function(req, res, next) {
       //Load apikey from disk
       if(apiKey == undefined)
       {
-        var secrets = require("./Secrets.json");
+        secrets = require("./Secrets.json");
         apiKey = secrets.apiKey;
       }
       

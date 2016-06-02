@@ -12,6 +12,10 @@ namespace Rosie
 			get { return GetString ("ApiKey"); }
 			set { SetString (value);}
 		}
+		public static string ApiUrl {
+			get { return GetString (); }
+			set { SetString (value); }
+		}
 
 		public static Usage CurrentUsage {
 			get { return (Usage)GetInt ((int)Usage.Medium);}

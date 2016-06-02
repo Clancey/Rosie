@@ -26,6 +26,7 @@ namespace Rosie
 
 		public string Description { get; set; }
 
+		[Indexed]
 		public string Location { get; set; }
 
 		public string Manufacturer { get; set; }
@@ -55,7 +56,6 @@ namespace Rosie
 		#endif
 
 		public bool Discoverable { get; set; } = true;
-
 	}
 }
 

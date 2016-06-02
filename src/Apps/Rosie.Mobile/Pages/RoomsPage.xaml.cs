@@ -5,11 +5,12 @@ using Xamarin.Forms;
 
 namespace Rosie.Mobile
 {
-	public partial class RoomsPage : ContentPage
+	public partial class RoomsPage : BasePage
 	{
 		public RoomsPage ()
 		{
 			InitializeComponent ();
+			BindingContext = new RoomsListViewModel ();
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Rosie
 				base.Id = value;
 			}
 		}
+
 		[PrimaryKey]
 		public string DeviceStateId {
 			get {
@@ -22,6 +23,8 @@ namespace Rosie
 				
 			}
 		}
+
+		public string GroupType { get; set; }
 	}
 }
 

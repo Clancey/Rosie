@@ -5,15 +5,12 @@ using Xamarin.Forms;
 
 namespace Rosie.Mobile
 {
-	public partial class DevicesPage : ContentPage
+	public partial class DevicesPage : BasePage
 	{
 		public DevicesPage ()
 		{
 			InitializeComponent ();
-		}
-		protected override void OnAppearing ()
-		{
-			base.OnAppearing ();
+			BindingContext = new DeviceListViewModel ();
 		}
 	}
 }
