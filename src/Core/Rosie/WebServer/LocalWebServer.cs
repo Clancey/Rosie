@@ -28,6 +28,7 @@ namespace Rosie.Server
 {
 	public class LocalServer
 	{
+		public Router Router = new Router ();
 		public bool DebugMode { get; set; }
 		public static LocalServer Shared { get; set; } = new LocalServer ();
 		private readonly HttpListener _listener = new HttpListener();

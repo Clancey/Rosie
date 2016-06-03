@@ -12,14 +12,14 @@ namespace Rosie.Server
 	public abstract class Route
 	{
 		public string Path { get; set; }
-		public static void Enable<T>()
+		public static void Enable<T>(LocalServer server)
 		{
 			var type = typeof(T);
 			var path = type.GetCustomAttributes(true).OfType<PathAttribute>().FirstOrDefault();
 			if (path == null)
 				throw new Exception("Cannot automatically regiseter Route without Path attribute");
 			var route = (Route)Activator.CreateInstance(type);
-			Router.AddRoute(path.Path, route); 
+			server.Router.AddRoute(path.Path, route); 
 		}
 		public abstract bool SupportsMethod (string method);
 

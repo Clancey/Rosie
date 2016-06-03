@@ -4,19 +4,12 @@ using System.Linq;
 
 namespace Rosie.Server
 {
-	public static class Router
+	public class Router
 	{
-		static Router()
-		{
-			//Register Default Routes
-//			routes = new Dictionary<string, NativeRoute>{
-//				{SessionRoute.RouteKey, new SessionRoute ()},
-//			};
-		}
 
-		static Dictionary<string,Route> routes = new Dictionary<string, Route>();
-		static Dictionary<string, Route> matchedRoutes = new Dictionary<string, Route> ();
-		public static void AddRoute(string path,Route route)
+		Dictionary<string,Route> routes = new Dictionary<string, Route>();
+		Dictionary<string, Route> matchedRoutes = new Dictionary<string, Route> ();
+		public void AddRoute(string path,Route route)
 		{
 			route.Path = path;
 			routes [path.ToLower ()] = route;
@@ -33,7 +26,7 @@ namespace Rosie.Server
 			matchedRoutes [path] = route;
 		}
 
-		public static Route GetRoute (string path)
+		public Route GetRoute (string path)
 		{
 			Route route;
 			if (!routes.TryGetValue (path.ToLower (), out route)) {
@@ -62,7 +55,7 @@ namespace Rosie.Server
 			return route;
 		}
 
-		public static void AddRoute<T>() where T : Route
+		public void AddRoute<T>() where T : Route
 		{
 			var type = typeof(T);
 			var path = type.GetCustomAttributes(true).OfType<PathAttribute>().FirstOrDefault();
