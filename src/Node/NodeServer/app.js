@@ -313,8 +313,6 @@ router.route('/devices/remove')
         res.json({success:true});
     });  
 
-});
-
 router.route('/devices')
 
     // get all the devices (accessed at GET api/devices)
