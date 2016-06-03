@@ -26,6 +26,8 @@ var OZW = require('openzwave-shared');
 var zwave = new OZW({
     Logging: false,
     ConsoleOutput: false,
+    Logging: true,
+    ConsoleOutput: true,
     NetworkKey: secrets.ZwaveNetworkKey
 });
 
@@ -304,6 +306,12 @@ router.route('/devices/add')
         
         res.json({success:true});
     });
+  
+router.route('/devices/remove')
+    .post(function(req,res){     
+        zwave.removeNode();        
+        res.json({success:true});
+    });  
 
 });
 
