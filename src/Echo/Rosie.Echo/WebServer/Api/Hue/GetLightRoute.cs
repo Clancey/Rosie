@@ -5,6 +5,10 @@ namespace Rosie.Server.Routes.Echo
 	[Path ("api/{userId}/lights/{lightId}")]
 	public class GetLightRoute : Route
 	{
+		public GetLightRoute ()
+		{
+			IsSecured = false;
+		}
 		public override bool SupportsMethod (string method) => method == "GET";
 
 		public override async Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)

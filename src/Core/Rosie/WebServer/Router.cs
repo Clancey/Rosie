@@ -29,7 +29,7 @@ namespace Rosie.Server
 		public Route GetRoute (string path)
 		{
 			Route route;
-			if (!routes.TryGetValue (path.ToLower (), out route)) {
+			if (!routes.TryGetValue (path.Trim('/').ToLower (), out route)) {
 				var matches = matchedRoutes.Where (x => path.ToLower().IsMatch (x.Key.ToLower())).ToList ();
 				if (matches.Count == 0)
 					return null;
@@ -65,7 +65,7 @@ namespace Rosie.Server
 				throw new Exception("Cannot automatically regiseter Route without Path attribute");
 			var route = (Route)Activator.CreateInstance(type);
 
-			AddRoute(path.Path.TrimStart('/'), route); 
+			AddRoute(path.Path.Trim('/'), route); 
 		}
 
 	}

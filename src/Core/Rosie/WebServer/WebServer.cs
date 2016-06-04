@@ -107,7 +107,10 @@ namespace Rosie.Server
 					context.Response.StatusCode = 405;
 					return;
 				}
-
+				if (!(await route.CheckAuthentication (context))) {
+					context.Response.StatusCode = 403;
+					return;
+				}
 				context.Response.ContentType = route.ContentType;
 				await route.ProcessReponse (context);
 			}

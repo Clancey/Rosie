@@ -11,6 +11,7 @@ namespace Rosie.Server
 {
 	public abstract class Route
 	{
+		public virtual bool IsSecured { get; set; } = true;
 		public string Path { get; set; }
 		public static void Enable<T>(WebServer server)
 		{
@@ -110,6 +111,31 @@ namespace Rosie.Server
 		public virtual Task<byte[]> GetResponseBytes (string method,HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			return Task.FromResult<byte[]>(null);
+		}
+
+		public virtual Task<bool> CheckAuthentication (HttpListenerContext context)
+		{
+			if (!IsSecured)
+				return Task.FromResult(true);
+			try {
+				string inKey = null;
+				var apikey = Settings.GetSecretString (null,"NodeServerApiKey");
+				var header = context.Request.Headers.AllKeys.FirstOrDefault (x => x.ToLower () == "apikey");
+				if (!string.IsNullOrWhiteSpace (header))
+					inKey = context.Request.Headers [header];
+				else {
+					var key = context.Request.QueryString.AllKeys.FirstOrDefault (x => x.ToLower () == "apikey");
+					if (string.IsNullOrWhiteSpace (key))
+						return Task.FromResult (false);
+
+					inKey = context.Request.QueryString [key];
+				}
+				return Task.FromResult (apikey == inKey);
+			} catch (Exception ex) {
+				Console.WriteLine (ex);
+			}
+			return Task.FromResult (false);
+
 		}
 
 	}

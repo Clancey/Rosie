@@ -6,6 +6,10 @@ namespace Rosie.Server.Routes.Echo
 	[Path ("api/{userId}/lights/{lightId}/state")]
 	public class PutLightRoute : Route
 	{
+		public PutLightRoute ()
+		{
+			IsSecured = false;
+		}
 
 		public override bool SupportsMethod (string method) => method == "PUT";
 

@@ -7,6 +7,7 @@ namespace Rosie.Server.Routes.Echo
 	{
 		public ApiRootRoute ()
 		{
+			IsSecured = false;
 		}
 		public override bool SupportsMethod (string method) => method == "GET";
 

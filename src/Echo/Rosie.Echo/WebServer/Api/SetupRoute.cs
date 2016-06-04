@@ -11,7 +11,7 @@ namespace Rosie.Server.Routes.Echo
 	{
 		public SetupRoute ()
 		{
-
+			IsSecured = false;
 		}
 
 		#region implemented abstract members of Route
