@@ -30,7 +30,9 @@ namespace Rosie.Server
 		{
 			Route route;
 			if (!routes.TryGetValue (path.ToLower (), out route)) {
-				var matches = matchedRoutes.Where (x => path.IsMatch (x.Key)).ToList ();
+				var matches = matchedRoutes.Where (x => path.ToLower().IsMatch (x.Key.ToLower())).ToList ();
+				if (matches.Count == 0)
+					return null;
 				if (matches.Count == 1) {
 					route = matches.First ().Value;
 				}
