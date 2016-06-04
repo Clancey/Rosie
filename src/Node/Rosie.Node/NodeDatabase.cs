@@ -20,10 +20,14 @@ namespace Rosie.Node
 
 		internal async Task InsertDevice (NodeDevice nodeDevice)
 		{
+			if (string.IsNullOrWhiteSpace (nodeDevice.PerferedCommand)) {
+				var oldDevice = await GetDevice (nodeDevice.Id);
+				nodeDevice.PerferedCommand = oldDevice.PerferedCommand;
+			}
 			await DatabaseConnection.InsertOrReplaceAsync (nodeDevice);
-			var nodeValues = nodeDevice.Classes.SelectMany (x => x.Value.Select (y => y.Value)).ToList ();
-			var commands = nodeValues.Select (x => new NodeCommand { ClassId = x.ClassId, Index = x.Index, Genre = Enum.Parse<CommandGenre> (x.Genre), Description = x.Label }).ToList ();
-			var grouped = nodeValues.Select (x => new NodeDeviceCommands {
+			var nodeValues = nodeDevice.Classes?.SelectMany (x => x.Value.Select (y => y.Value)).ToList ();
+			var commands = nodeValues?.Select (x => new NodeCommand { ClassId = x.ClassId, Index = x.Index, Genre = Enum.Parse<CommandGenre> (x.Genre), Description = x.Label }).ToList ();
+			var grouped = nodeValues?.Select (x => new NodeDeviceCommands {
 				ClassId = x.ClassId,
 				Index = x.Index,
 				Instance = x.Instance,
@@ -38,8 +42,10 @@ namespace Rosie.Node
 				Values =  x.Values?.ToJson (),
 				Genre = Enum.Parse<CommandGenre> (x.Genre),
 			}).ToList ();
-			await DatabaseConnection.InsertOrReplaceAllAsync (commands);
-			await DatabaseConnection.InsertOrReplaceAllAsync (grouped);
+			if(commands != null)
+				await DatabaseConnection.InsertOrReplaceAllAsync (commands);
+			if(grouped != null)
+				await DatabaseConnection.InsertOrReplaceAllAsync (grouped);
 			//var commands = nodeDevice.Classes.Select(x=> new NodeCommand{CommandId = x.Key, 
 		}
 
@@ -54,6 +60,14 @@ namespace Rosie.Node
 		public Task<NodeDevice> GetDevice (int nodeId)
 		{
 
+			return DatabaseConnection.Table<NodeDevice> ().Where (x => x.NodeId == nodeId).FirstOrDefaultAsync ();
+		}
+
+		public Task<NodeDevice> GetDevice (string deviceId)
+		{
+			var parts = deviceId.Split(new [] { "-" },StringSplitOptions.RemoveEmptyEntries);
+			var d = parts [1];
+			var nodeId = int.Parse (d);
 			return DatabaseConnection.Table<NodeDevice> ().Where (x => x.NodeId == nodeId).FirstOrDefaultAsync ();
 		}
 	}

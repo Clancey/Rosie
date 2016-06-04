@@ -59,7 +59,7 @@ namespace Rosie.Echo
 								return;
 							MessageReceived (json, (IPEndPoint)listener.Client.LocalEndPoint, groupEP);
 						} catch (Exception e) {
-							Console.WriteLine (e.ToString ());
+							//Console.WriteLine (e.ToString ());
 						}
 					}
 					listener.Close ();

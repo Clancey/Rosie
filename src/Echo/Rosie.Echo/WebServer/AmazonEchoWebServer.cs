@@ -4,10 +4,10 @@ using Rosie.Server.Routes.Echo;
 
 namespace Rosie.Echo
 {
-	public class AmazonEchoWebServer : LocalServer
+	public class AmazonEchoWebServer : WebServer
 	{
 
-		public static AmazonEchoWebServer SharedEcho { get; set; } = new AmazonEchoWebServer ();
+		public static AmazonEchoWebServer Shared { get; set; } = new AmazonEchoWebServer ();
 		public const int EchoWebServerPort = 8082;
 
 		public AmazonEchoWebServer (int webserverPort = EchoWebServerPort) : base(webserverPort)

@@ -19,9 +19,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\NodeDeviceCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\NodeValueUpdated.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\NodeExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Routes\NodeDevicesRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Routes\NodeDeviceRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Routes\NodePerferedCommandRoute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Extensions\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Routes\" />
   </ItemGroup>
 </Project>

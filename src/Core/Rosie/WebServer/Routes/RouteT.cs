@@ -1,20 +1,22 @@
-﻿//using System;
-//using System.Collections.Specialized;
-//using Newtonsoft.Json;
+﻿using System;
+using System.Collections.Specialized;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-//namespace AmazonEchoBridge.Server
-//{
-//	public abstract class Route<T> : Route
-//	{
-//		public abstract T GetResponse (string method, NameValueCollection queryString, string data);
+namespace Rosie.Server
+{
+	public abstract class Route<T> : Route
+	{
+		public abstract Task<T> GetResponse (string method, System.Net.HttpListenerRequest request, NameValueCollection queryString, string data);
 
-//		public override string GetResponseString (string method, NameValueCollection queryString, string data)
-//		{
-//			return JsonConvert.SerializeObject(GetResponse(method,queryString,data),new JsonSerializerSettings { 
-//				ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-//			});
-//		}
+		public override async Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, NameValueCollection queryString, string data)
+		{
+			var item = await GetResponse (method, request, queryString, data);
+			return await Task.Run (() => JsonConvert.SerializeObject (item, new JsonSerializerSettings {
+				ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+			}));
+		}
 
-//	}
-//}
+	}
+}
 

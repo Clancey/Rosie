@@ -20,7 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Devices\Handlers\WebRequestHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SetDeviceStateExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\StringExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)WebServer\LocalWebServer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\WebServer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\PathAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\DeviceResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebServer\Responses\HueApiResponse.cs" />
@@ -34,6 +34,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Logging\IDeviceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Logging\SqliteDeviceLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\Routes\DevicesRoute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebServer\LocalWebServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Devices\" />

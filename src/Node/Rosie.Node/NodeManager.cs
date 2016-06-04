@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Rosie.Server.Routes.Node;
 
 namespace Rosie.Node
 {
@@ -17,6 +18,9 @@ namespace Rosie.Node
 
 		public Task Init ()
 		{
+			LocalWebServer.Shared.Router.AddRoute<NodeDevicesRoute> ();
+			LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute> ();
+			LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute> ();
 			DeviceManager.Shared.RegisterHandler(this);
 			return Connect ();
 		}
@@ -124,6 +128,7 @@ namespace Rosie.Node
 		{
 			switch (type) {
 			case "Binary Power Switch":
+			case "Secure Keypad Door Lock":
 				return DeviceType.Switch;
 			}
 			return DeviceType.Unknown;

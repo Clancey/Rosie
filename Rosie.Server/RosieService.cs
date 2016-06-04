@@ -28,8 +28,8 @@ namespace Rosie
 		{
 			Console.WriteLine ("Amazon Echo Service Started");
 			Init ();
-			LocalServer.Shared.Start ();
-			AmazonEchoWebServer.SharedEcho.Start ();
+			LocalWebServer.Shared.Start ();
+			AmazonEchoWebServer.Shared.Start ();
 			EchoDiscoveryService.Shared.StartListening ();
 			base.OnStart (args);
 		}
@@ -48,8 +48,8 @@ namespace Rosie
 		protected override void OnStop ()
 		{
 			EchoDiscoveryService.Shared.StopListening ();
-			LocalServer.Shared.Stop ();
-			AmazonEchoWebServer.SharedEcho.Stop ();
+			LocalWebServer.Shared.Stop ();
+			AmazonEchoWebServer.Shared.Stop ();
 			Console.WriteLine ("Amazon Echo Service Stoped");
 			base.OnStop ();
 		}

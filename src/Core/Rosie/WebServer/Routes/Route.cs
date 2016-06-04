@@ -12,7 +12,7 @@ namespace Rosie.Server
 	public abstract class Route
 	{
 		public string Path { get; set; }
-		public static void Enable<T>(LocalServer server)
+		public static void Enable<T>(WebServer server)
 		{
 			var type = typeof(T);
 			var path = type.GetCustomAttributes(true).OfType<PathAttribute>().FirstOrDefault();
