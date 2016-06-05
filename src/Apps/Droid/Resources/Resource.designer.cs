@@ -26,7 +26,6 @@ namespace Rosie.Mobile.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Rosie.Mobile.Droid.Resource.Attribute.actionBarSize;
 			global::SimpleAuth.Resource.Id.loginButton = global::Rosie.Mobile.Droid.Resource.Id.loginButton;
 			global::SimpleAuth.Resource.Id.password = global::Rosie.Mobile.Droid.Resource.Id.password;
 			global::SimpleAuth.Resource.Id.username = global::Rosie.Mobile.Droid.Resource.Id.username;
@@ -34,6 +33,7 @@ namespace Rosie.Mobile.Droid
 			global::SimpleAuth.Resource.String.ApplicationName = global::Rosie.Mobile.Droid.Resource.String.ApplicationName;
 			global::SimpleAuth.Resource.String.Hello = global::Rosie.Mobile.Droid.Resource.String.Hello;
 			global::NGraphics.Android.Resource.String.library_name = global::Rosie.Mobile.Droid.Resource.String.library_name;
+			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Rosie.Mobile.Droid.Resource.Attribute.actionBarSize;
 		}
 		
 		public partial class Animation

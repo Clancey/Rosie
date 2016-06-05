@@ -10,6 +10,7 @@ namespace Rosie.Mobile
 		public SettingsPage ()
 		{
 			InitializeComponent ();
+			BindingContext = new SettingsViewModel ();
 		}
 	}
 }

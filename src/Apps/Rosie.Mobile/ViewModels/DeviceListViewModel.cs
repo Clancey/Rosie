@@ -22,6 +22,7 @@ namespace Rosie.Mobile
 		{
 			base.SetupEvents ();
 			NotificationManager.Shared.DeviceListUpdated += DevicesUpdated;
+			RosieApi.Shared.Sync ();
 		}
 		public override void TearDownEvents ()
 		{

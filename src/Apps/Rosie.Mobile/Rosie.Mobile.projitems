@@ -32,7 +32,6 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Data\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Database.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\DeviceApi.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\OverviewPage.xaml.cs">
       <DependentUpon>OverviewPage.xaml</DependentUpon>
     </Compile>
@@ -68,6 +67,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RoomsListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Pages\BasePage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />

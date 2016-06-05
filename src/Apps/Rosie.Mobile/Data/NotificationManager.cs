@@ -12,7 +12,7 @@ namespace Rosie.Mobile
 		}
 
 		public event EventHandler DeviceListUpdated;
-		public void ProcDeviceListUpdated (string deviceId)
+		public void ProcDeviceListUpdated ()
 		{
 			DeviceListUpdated?.InvokeOnMainThread (this);
 		}
