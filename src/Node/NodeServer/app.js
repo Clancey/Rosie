@@ -296,7 +296,7 @@ router.route('/device/:nodeId/location')
         var node = nodes[nodeId];
         node.loc = location;
         zwave.setNodeLocation(nodeId,location);  
-        zwave.refreshNodeInfo(nodeid);
+        zwave.refreshNodeInfo(nodeId);
         res.json({success:true});
      });
 
