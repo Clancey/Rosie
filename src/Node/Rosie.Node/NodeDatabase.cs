@@ -22,7 +22,8 @@ namespace Rosie.Node
 		{
 			if (string.IsNullOrWhiteSpace (nodeDevice.PerferedCommand)) {
 				var oldDevice = await GetDevice (nodeDevice.Id);
-				nodeDevice.PerferedCommand = oldDevice.PerferedCommand;
+				if(oldDevice != null)
+					nodeDevice.PerferedCommand = oldDevice.PerferedCommand;
 			}
 			await DatabaseConnection.InsertOrReplaceAsync (nodeDevice);
 			var nodeValues = nodeDevice.Classes?.SelectMany (x => x.Value.Select (y => y.Value)).ToList ();
