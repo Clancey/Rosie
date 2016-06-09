@@ -318,6 +318,35 @@ router.route('/devices/remove')
         res.json({success:true});
     });  
 
+
+router.route('/devices/:nodeId/switchOn')
+    .post(function(req,res){
+
+        var nodeId = req.params.nodeId;
+        zwave.switchOn(nodeId);
+        
+        res.json({success:true});
+    });
+
+router.route('/devices/:nodeId/switchOff')
+    .post(function(req,res){
+        
+        var nodeId = req.params.nodeId;
+        zwave.switchOff(nodeId);
+        
+        res.json({success:true});
+    });
+
+
+router.route('/devices/:nodeId/setLevel')
+    .post(function(req,res){        
+        var nodeId = req.params.nodeId;
+        var level = req.body.level;       
+        zwave.setLevel(nodeId,level);
+        
+        res.json({success:true});
+    });
+
 router.route('/devices')
 
     // get all the devices (accessed at GET api/devices)
