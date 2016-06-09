@@ -80,6 +80,14 @@ namespace Rosie.Node
 				NodeValueUpdated?.Invoke (obj);
 
 			});
+			socket.On ("value-changed", (data) => {
+
+				Log ($"Node Value Changed: {data}");
+
+				var obj = ((JObject)data).ToObject<NodeValueUpdate> ();
+				NodeValueUpdated?.Invoke (obj);
+
+			});
 			socket.On ("notification", (data) => {
 				Log ($"Node Notification: {data}");
 			});

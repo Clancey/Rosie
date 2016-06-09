@@ -63,6 +63,11 @@ zwave.on('value added', function(nodeid, comclass, value) {
     if (!nodes[nodeid]['classes'][comclass])
         nodes[nodeid]['classes'][comclass] = {};
     nodes[nodeid]['classes'][comclass][value.index] = value;
+    io.emit('value-added', {
+       nodeId:nodeid,
+       comclass:comclass,
+       value:value, 
+    });
 });
 
 zwave.on('value changed', function(nodeid, comclass, value) {
@@ -75,7 +80,7 @@ zwave.on('value changed', function(nodeid, comclass, value) {
                 value['value']);
     }
     nodes[nodeid]['classes'][comclass][value.index] = value;
-    io.emit('value-added', {
+    io.emit('value-changed', {
        nodeId:nodeid,
        comclass:comclass,
        value:value, 
