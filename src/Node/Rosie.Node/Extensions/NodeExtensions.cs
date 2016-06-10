@@ -72,7 +72,6 @@ namespace Rosie.Node
 			var commandId = command?.Id;
 			switch (commandId) {
 			case "37 - 0":
-			case "39 - 0":
 				return DataTypes.Bool;
 			case "49 - 1":
 				return DataTypes.Decimal;
