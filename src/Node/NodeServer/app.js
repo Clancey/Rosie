@@ -257,7 +257,7 @@ router.route('/device')
         var i = req.body.instance;
         var index = req.body.index;
         var value = req.body.value;
-        zwave.setValue(nodeId,commandClass,i,index,value);
+        zwave.setValue({node_id: nodeId, class_id: commandClass, instance: i, index:index},value);
         res.json({success:true});
     });
 
