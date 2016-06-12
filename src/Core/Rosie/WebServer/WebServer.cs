@@ -103,6 +103,11 @@ namespace Rosie.Server
 				path = path?.TrimStart ('/');
 				Log ($"Request from: {request.RemoteEndPoint.Address} Path: {path}");
 				var route = Router.GetRoute(path);
+				if (route == null) {
+					Console.WriteLine ($"Route not found: {path}");
+					context.Response.StatusCode = 404;
+					return;
+				}
 				if(!route.SupportsMethod(context.Request.HttpMethod)) {
 					context.Response.StatusCode = 405;
 					return;
