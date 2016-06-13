@@ -79,6 +79,8 @@ zwave.on('value changed', function(nodeid, comclass, value) {
                 nodes[nodeid]['classes'][comclass][value.index]['value'],
                 value['value']);
     }
+    if(nodes[nodeid]['classes'][comclass][value.index]['value'] == value['value'])
+        return;
     nodes[nodeid]['classes'][comclass][value.index] = value;
     io.emit('value-changed', {
        nodeId:nodeid,
@@ -135,10 +137,12 @@ zwave.on('node ready', function(nodeid, nodeinfo) {
             nodeinfo.type,
             nodeinfo.loc);
     for (comclass in nodes[nodeid]['classes']) {
-        switch (comclass) {
-        case 0x25: // COMMAND_CLASS_SWITCH_BINARY
-        case 0x26: // COMMAND_CLASS_SWITCH_MULTILEVEL
-            zwave.enablePoll(nodeid, comclass);
+        var sVal = comclass.toString();
+        switch (sVal) {
+        case '38':// COMMAND_CLASS_SWITCH_BINARY
+        case '39': // COMMAND_CLASS_SWITCH_MULTILEVEL
+            zwave.enablePoll(nodeid, comclass);            
+            console.log('Enabled Polling on: node%d:', nodeid);
             break;
         }
         var values = nodes[nodeid]['classes'][comclass];
