@@ -678,5 +678,10 @@ namespace Rosie.SmartThings
 		public List<object> Arguments { get; set; } = new List<object> ();
 	}
 
+	public class EventsModel
+	{
+		[JsonProperty ("data")]
+		public string Data { get; set; }
+	}
 }
 

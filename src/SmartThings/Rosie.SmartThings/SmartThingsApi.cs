@@ -281,6 +281,20 @@ namespace Rosie.SmartThings
 				return false;
 			}
 		}
+
+		public async Task<bool> SetDevicePresence (Device device, bool present)
+		{
+			try {
+				var location = await GetDefaultLocation (device);
+				await Post (new EventsModel {
+					Data = $"presence:{(present ? 1 : 0)}"
+				}, location.CreateApiUrl ($"api/devices/{device.Id}/events"));
+				return true;
+			} catch (Exception ex) {
+				Console.WriteLine (ex);
+				return false;
+			}
+		}
 		#endregion
 	}
 }
