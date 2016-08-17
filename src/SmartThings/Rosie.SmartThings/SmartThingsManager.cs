@@ -45,39 +45,6 @@ namespace Rosie.SmartThings
 			return false;
 		}
 
-		public static string GetSig (string input, string key, bool trim = true)
-		{
-			var encoding = new ASCIIEncoding ();
-			//var newKey = StringToAscii(key);
-			byte [] newKey = StringToAscii (key); // 
-			byte [] newKey2 = encoding.GetBytes (key);
-			var hmacsha1 = new HMACSHA1 (newKey);
-
-			//byte[] byteArray = StringToAscii(input);
-			byte [] byteArray = StringToAscii (input); // encoding.GetBytes (input);
-			byte [] foo = hmacsha1.ComputeHash (byteArray);
-
-			string ret = Convert.ToBase64String (foo);
-			ret = ret.Replace ('+', '-')
-				.Replace ('/', '_');
-			if (!trim)
-				return ret;
-			return ret.Substring (0, ret.Length - 1);
-			//.Replace('=', '.');
-		}
-
-		public static byte [] StringToAscii (string s)
-		{
-			var retval = new byte [s.Length];
-			for (int ix = 0; ix < s.Length; ++ix) {
-				char ch = s [ix];
-				if (ch <= 0x7f)
-					retval [ix] = (byte)ch;
-				else
-					retval [ix] = (byte)'?';
-			}
-			return retval;
-		}
 	}
 }
 
