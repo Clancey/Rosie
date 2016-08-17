@@ -1,6 +1,4 @@
-﻿#define Azure
-#define Node
-
+﻿#define SmartThings
 using System;
 using System.Linq;
 using System.ServiceProcess;
@@ -38,12 +36,16 @@ namespace Rosie
 		{
 			DeviceManager.Shared.RegisterDeviceLogHandler<SqliteDeviceLogger> ();
 
+#if SmartThings
+			await Rosie.SmartThings.SmartThingsManager.Shared.Init ();
+#endif
 #if Azure
 			await Rosie.AzureIoT.AzureDeviceManager.Shared.Init ();
 #endif
 #if Node
 			await Rosie.Node.NodeManager.Shared.Init ();
 #endif
+
 		}
 		protected override void OnStop ()
 		{
