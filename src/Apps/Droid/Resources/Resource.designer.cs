@@ -26,13 +26,13 @@ namespace Rosie.Mobile.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::NGraphics.Android.Resource.String.library_name = global::Rosie.Mobile.Droid.Resource.String.library_name;
 			global::SimpleAuth.Resource.Id.loginButton = global::Rosie.Mobile.Droid.Resource.Id.loginButton;
 			global::SimpleAuth.Resource.Id.password = global::Rosie.Mobile.Droid.Resource.Id.password;
 			global::SimpleAuth.Resource.Id.username = global::Rosie.Mobile.Droid.Resource.Id.username;
 			global::SimpleAuth.Resource.Layout.login = global::Rosie.Mobile.Droid.Resource.Layout.login;
 			global::SimpleAuth.Resource.String.ApplicationName = global::Rosie.Mobile.Droid.Resource.String.ApplicationName;
 			global::SimpleAuth.Resource.String.Hello = global::Rosie.Mobile.Droid.Resource.String.Hello;
-			global::NGraphics.Android.Resource.String.library_name = global::Rosie.Mobile.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::Rosie.Mobile.Droid.Resource.Attribute.actionBarSize;
 		}
 		
@@ -2956,11 +2956,11 @@ namespace Rosie.Mobile.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060028
-			public const int ApplicationName = 2131099688;
-			
 			// aapt resource value: 0x7f060027
-			public const int Hello = 2131099687;
+			public const int ApplicationName = 2131099687;
+			
+			// aapt resource value: 0x7f060026
+			public const int Hello = 2131099686;
 			
 			// aapt resource value: 0x7f060012
 			public const int abc_action_bar_home_description = 2131099666;
@@ -3028,8 +3028,8 @@ namespace Rosie.Mobile.Droid
 			// aapt resource value: 0x7f060011
 			public const int character_counter_pattern = 2131099665;
 			
-			// aapt resource value: 0x7f060026
-			public const int library_name = 2131099686;
+			// aapt resource value: 0x7f060028
+			public const int library_name = 2131099688;
 			
 			// aapt resource value: 0x7f060000
 			public const int mr_button_content_description = 2131099648;

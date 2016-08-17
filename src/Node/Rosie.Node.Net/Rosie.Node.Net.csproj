@@ -30,20 +30,17 @@
     <Reference Include="System" />
     <Reference Include="System.Web" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleAuth">
-      <HintPath>..\..\..\packages\Clancey.SimpleAuth.1.0.18\lib\net45\SimpleAuth.dll</HintPath>
-    </Reference>
     <Reference Include="WebSocket4Net">
       <HintPath>..\..\..\packages\WebSocket4Net.0.14.1\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="EngineIoClientDotNet">
       <HintPath>..\..\..\packages\EngineIoClientDotNet.0.9.22\lib\net45\EngineIoClientDotNet.dll</HintPath>
     </Reference>
-    <Reference Include="SocketIoClientDotNet">
-      <HintPath>..\..\..\packages\SocketIoClientDotNet.0.9.13\lib\net45\SocketIoClientDotNet.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleAuth">
+      <HintPath>..\..\..\packages\Clancey.SimpleAuth.1.0.19\lib\net45\SimpleAuth.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -56,6 +53,10 @@
     <ProjectReference Include="..\..\Core\Rosie.Net\Rosie.Net.csproj">
       <Project>{50DD7935-C200-43D8-9C55-733992A5A2F5}</Project>
       <Name>Rosie.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\SocketIoClientDotNet\Src\SocketIoClientDotNet.net45\SocketIoClientDotNet.net45.csproj">
+      <Project>{B4C79CEE-4B09-428A-BFE9-B276DF4F57FA}</Project>
+      <Name>SocketIoClientDotNet.net45</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\Rosie.Node\Rosie.Node.projitems" Label="Shared" Condition="Exists('..\Rosie.Node\Rosie.Node.projitems')" />
