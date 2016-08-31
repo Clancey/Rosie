@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Rosie.SmartThings
 {
-	public class UserInfo
+	public class RootObject
+	{
+		[JsonExtensionData]
+		public Dictionary<string, JToken> ExtraProperties { get; set; }
+	}
+	public class UserInfo : RootObject
 	{
 		[JsonProperty ("uuid")]
 		public string UUID { get; set; }
@@ -19,9 +25,8 @@ namespace Rosie.SmartThings
 		public string FullName { get; set; }
 	}
 
-	public class ServerConnection
+	public class ServerConnection : RootObject
 	{
-
 		[JsonProperty ("scheme")]
 		public string Scheme { get; set; }
 
@@ -36,11 +41,8 @@ namespace Rosie.SmartThings
 
 	}
 
-
-
-	public class Support
+	public class Support : RootObject
 	{
-
 		[JsonProperty ("welcomeUrl")]
 		public string WelcomeUrl { get; set; }
 
@@ -57,9 +59,8 @@ namespace Rosie.SmartThings
 		public string Email { get; set; }
 	}
 
-	public class Shard
+	public class Shard : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -88,9 +89,8 @@ namespace Rosie.SmartThings
 		public Support Support { get; set; }
 	}
 
-	public class UserLocation
+	public class UserLocation : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -107,9 +107,8 @@ namespace Rosie.SmartThings
 		public string Region { get; set; }
 	}
 
-	public class Mode
+	public class Mode : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -120,9 +119,8 @@ namespace Rosie.SmartThings
 		public string LocationId { get; set; }
 	}
 
-	public class Data
+	public class Data : RootObject
 	{
-
 		[JsonProperty ("bluetoothRadioDetected")]
 		public string BluetoothRadioDetected { get; set; }
 
@@ -244,16 +242,14 @@ namespace Rosie.SmartThings
 		public string BackupVersion { get; set; }
 	}
 
-	public class Type
+	public class Type : RootObject
 	{
-
 		[JsonProperty ("name")]
 		public string Name { get; set; }
 	}
 
-	public class Hub
+	public class Hub : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -307,9 +303,8 @@ namespace Rosie.SmartThings
 
 	}
 
-	public class Features
+	public class Features : RootObject
 	{
-
 		[JsonProperty ("contactBook")]
 		public bool ContactBook { get; set; }
 
@@ -317,9 +312,8 @@ namespace Rosie.SmartThings
 		public bool HasVoice { get; set; }
 	}
 
-	public class Location
+	public class Location : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -369,9 +363,8 @@ namespace Rosie.SmartThings
 		public string TimeZoneId { get; set; }
 	}
 
-	public class CurrentState
+	public class CurrentState : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -440,9 +433,8 @@ namespace Rosie.SmartThings
 
 	}
 
-	public class StateOverride
+	public class StateOverride : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -456,9 +448,8 @@ namespace Rosie.SmartThings
 		public string Icon { get; set; }
 	}
 
-	public class Device
+	public class Device : RootObject
 	{
-
 		[JsonProperty ("id")]
 		public string Id { get; set; }
 
@@ -527,9 +518,8 @@ namespace Rosie.SmartThings
 
 	}
 
-    public class LocationResponse
+    public class LocationResponse : RootObject
 	{
-
 		[JsonProperty ("location")]
 		public Location Location { get; set; }
 
@@ -545,7 +535,7 @@ namespace Rosie.SmartThings
 
 
 
-	public class Event
+	public class Event : RootObject
 	{
 		[JsonProperty ("id")]
 		public string Id { get; set; }
@@ -628,9 +618,8 @@ namespace Rosie.SmartThings
 
 	}
 
-	public class DeviceInfo
+	public class DeviceInfo : RootObject
 	{
-
 		[JsonProperty ("device")]
 		public Device Device { get; set; }
 
@@ -638,13 +627,13 @@ namespace Rosie.SmartThings
 		public List<object> Events { get; set; }
 	}
 
-	public class SmartThingsUpdate
+	public class SmartThingsUpdate : RootObject
 	{
 		[JsonProperty ("event")]
 		public Event Event { get; set; }
 	}
 
-	public class ColorArgument
+	public class ColorArgument : RootObject
 	{
 		[JsonProperty ("green")]
 		public int Green { get; set; }
@@ -671,14 +660,13 @@ namespace Rosie.SmartThings
 		public double Hue { get; set; }
 	}
 
-	public class CommandModel
+	public class CommandModel : RootObject
 	{
-
 		[JsonProperty ("arguments")]
 		public List<object> Arguments { get; set; } = new List<object> ();
 	}
 
-	public class EventsModel
+	public class EventsModel : RootObject
 	{
 		[JsonProperty ("data")]
 		public string Data { get; set; }

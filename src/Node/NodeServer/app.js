@@ -132,17 +132,21 @@ zwave.on('node ready', function(nodeid, nodeinfo) {
             nodeinfo.product ? nodeinfo.product
                      : 'product=' + nodeinfo.productid +
                        ', type=' + nodeinfo.producttype);
-    console.log('node%d: name="%s", type="%s", location="%s"', nodeid,
+    console.log('node%d: name="%s", type="%s", location="%s" productType="%s"', nodeid,
             nodeinfo.name,
             nodeinfo.type,
-            nodeinfo.loc);
+            nodeinfo.loc,
+            nodeinfo.producttype
+            );
     for (comclass in nodes[nodeid]['classes']) {
         var sVal = comclass.toString();
         switch (sVal) {
         case '38':// COMMAND_CLASS_SWITCH_BINARY
         case '39': // COMMAND_CLASS_SWITCH_MULTILEVEL
-            zwave.enablePoll(nodeid, comclass);            
-            console.log('Enabled Polling on: node%d:', nodeid);
+            if(nodeinfo.producttype.toString() != '0x0002'){
+                zwave.enablePoll(nodeid, comclass);            
+                console.log('Enabled Polling on: node%d:', nodeid);
+            }
             break;
         }
         var values = nodes[nodeid]['classes'][comclass];

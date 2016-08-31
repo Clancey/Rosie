@@ -116,6 +116,19 @@ namespace Rosie
 			}
 		}
 		//TODO: List
+		string [] listValue;
+		[JsonIgnore]
+		[Ignore]
+		public string [] ListValue {
+			get { return listValue; }
+			set {
+				if (value == null)
+					return;
+				listValue = value;
+				 this.value = this.StringValue = string.Join (",", value);
+			}
+
+		}
 		byte [] rawValue;
 		[JsonIgnore]
 		public byte [] RawValue {
@@ -129,32 +142,38 @@ namespace Rosie
 
 		void SetCastedValue ()
 		{
-			if (value == null || (int)DataType == 0)
-				return;
-			switch (DataType) {
-			case DataTypes.Bool:
-				boolValue = Convert.ToBoolean (Value);
-				return;
-			case DataTypes.Byte:
-				byteValue = Convert.ToByte(Value);
-				return;
-			case DataTypes.Decimal:
-				decimalValue = Convert.ToDouble(Value);
-				return;
-			case DataTypes.Int:
-				intValue = Convert.ToInt32(Value);
-				return;
-			case DataTypes.List:
-				throw new NotImplementedException ();
-				return;
-			case DataTypes.Raw:
-				rawValue = (byte [])Value;
-				return;
-			case DataTypes.Short:
-				shortValue = Convert.ToInt16(Value);
-				return;
-			case DataTypes.String:
-				stringValue = value?.ToString ();
+			try {
+				if (value == null || (int)DataType == 0)
+					return;
+				switch (DataType) {
+				case DataTypes.Bool:
+					boolValue = Convert.ToBoolean (Value);
+					return;
+				case DataTypes.Byte:
+					byteValue = Convert.ToByte (Value);
+					return;
+				case DataTypes.Decimal:
+					decimalValue = Convert.ToDouble (Value);
+					return;
+				case DataTypes.Int:
+					intValue = Convert.ToInt32 (Value);
+					return;
+				case DataTypes.List:
+					listValue = Value?.ToString ().Split (new char [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					return;
+				case DataTypes.Raw:
+					rawValue = (byte [])Value;
+					return;
+				case DataTypes.Short:
+					shortValue = Convert.ToInt16 (Value);
+					return;
+				case DataTypes.String:
+					stringValue = value?.ToString ();
+					return;
+				}
+			} catch (Exception ex) {
+				Console.WriteLine (value);
+				Console.WriteLine (ex);
 				return;
 			}
 			throw new NotImplementedException ();

@@ -8,7 +8,7 @@ namespace Rosie.Node
 {
 	class SocketManager
 	{
-		public bool DebugMode { get; set; }
+		public bool DebugMode { get; set; } = true;
 		public bool Connected { get; private set; }
 
 		public Action StatusChanged { get; set; }
@@ -17,7 +17,7 @@ namespace Rosie.Node
 
 		public Action<NodeValueUpdate> NodeValueUpdated;
 
-		public async Task<bool> Connect (string server = "http://localhost:3000")
+		public async Task<bool> Connect (string server = "http://192.168.86.10:3000")
 		{
 			var tcs = new TaskCompletionSource<bool> ();
 			socket = IO.Socket (server);

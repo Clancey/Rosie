@@ -14,7 +14,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
+    <DefineConstants>DEBUG;ROSIE;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -22,20 +22,22 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>ROSIE;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="SimpleAuth">
-      <HintPath>..\..\..\packages\Clancey.SimpleAuth.1.0.19\lib\net45\SimpleAuth.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Security" />
+    <Reference Include="SimpleAuth">
+      <HintPath>..\..\..\packages\Clancey.SimpleAuth.1.0.23\lib\net45\SimpleAuth.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -44,13 +46,13 @@
     <Compile Include="AuthStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\Rosie.Net\Rosie.Net.csproj">
       <Project>{50DD7935-C200-43D8-9C55-733992A5A2F5}</Project>
       <Name>Rosie.Net</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="..\Rosie.SmartThings\Rosie.SmartThings.projitems" Label="Shared" Condition="Exists('..\Rosie.SmartThings\Rosie.SmartThings.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

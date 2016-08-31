@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if ROSIE
+using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,4 +48,4 @@ namespace Rosie.SmartThings
 
 	}
 }
-
+#endif
