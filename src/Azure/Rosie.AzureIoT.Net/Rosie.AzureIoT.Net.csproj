@@ -40,32 +40,35 @@
     <Reference Include="Mono.Security">
       <HintPath>..\..\..\packages\Mono.Security.3.2.3.0\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Amqp">
-      <HintPath>..\..\..\packages\Microsoft.Azure.Amqp.1.1.5\lib\net451\Microsoft.Azure.Amqp.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Windows.Core">
-      <HintPath>..\..\..\packages\PInvoke.Windows.Core.0.3.2\lib\portable-net45+win+wpa81+MonoAndroid10+xamarinios10+MonoTouch10\PInvoke.Windows.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Kernel32">
-      <HintPath>..\..\..\packages\PInvoke.Kernel32.0.3.2\lib\net40\PInvoke.Kernel32.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.BCrypt">
-      <HintPath>..\..\..\packages\PInvoke.BCrypt.0.3.2\lib\net40\PInvoke.BCrypt.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.NCrypt">
-      <HintPath>..\..\..\packages\PInvoke.NCrypt.0.3.2\lib\net40\PInvoke.NCrypt.dll</HintPath>
-    </Reference>
-    <Reference Include="Validation">
-      <HintPath>..\..\..\packages\Validation.2.3.7\lib\dotnet\Validation.dll</HintPath>
-    </Reference>
     <Reference Include="PCLCrypto">
       <HintPath>..\..\..\packages\PCLCrypto.2.0.147\lib\net45\PCLCrypto.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.Amqp">
+      <HintPath>..\..\..\packages\Microsoft.Azure.Amqp.2.1.2\lib\net45\Microsoft.Azure.Amqp.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.Devices.Shared">
+      <HintPath>..\..\..\packages\Microsoft.Azure.Devices.Shared.1.1.1\lib\net45\Microsoft.Azure.Devices.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.Windows.Core">
+      <HintPath>..\..\..\packages\PInvoke.Windows.Core.0.5.97\lib\net35\PInvoke.Windows.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.Kernel32">
+      <HintPath>..\..\..\packages\PInvoke.Kernel32.0.5.97\lib\net45\PInvoke.Kernel32.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.BCrypt">
+      <HintPath>..\..\..\packages\PInvoke.BCrypt.0.5.97\lib\net45\PInvoke.BCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="PInvoke.NCrypt">
+      <HintPath>..\..\..\packages\PInvoke.NCrypt.0.5.97\lib\net45\PInvoke.NCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="Validation">
+      <HintPath>..\..\..\packages\Validation.2.4.15\lib\net45\Validation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.Devices">
-      <HintPath>..\..\..\packages\Microsoft.Azure.Devices.1.0.14\lib\net451\Microsoft.Azure.Devices.dll</HintPath>
+      <HintPath>..\..\..\packages\Microsoft.Azure.Devices.1.4.1\lib\net451\Microsoft.Azure.Devices.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

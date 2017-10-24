@@ -15,7 +15,7 @@ namespace Rosie.SmartThings
 		{
 
 		}
-		public override async Task<bool> CheckCredentails (string username, string password)
+		public override async Task<bool> VerifyCredentials (string username, string password)
 		{
 			try {
 				if (string.IsNullOrWhiteSpace (username))
@@ -68,7 +68,7 @@ namespace Rosie.SmartThings
 
 	public partial class SmartThingsApi : BasicAuthApi
 	{
-		public SmartThingsApi (string identifier) : base (identifier, "https://auth-global.api.smartthings.com/oauth/token")
+		public SmartThingsApi (string identifier, string encryptionKey) : base (identifier,encryptionKey, "https://auth-global.api.smartthings.com/oauth/token")
 		{
 			Client.DefaultRequestHeaders.Add ("X-ST-Client-DeviceModel", "iPhone");
 			Client.DefaultRequestHeaders.Add ("X-ST-Api-Version", "2.6");

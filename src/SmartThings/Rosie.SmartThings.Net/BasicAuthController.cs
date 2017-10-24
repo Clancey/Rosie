@@ -7,9 +7,9 @@ namespace Rosie.SmartThings
 {
 	public class BasicAuthController
 	{
-		readonly Authenticator authenticator;
+		readonly IBasicAuthenicator authenticator;
 
-		public BasicAuthController (Authenticator authenticator)
+		public BasicAuthController (IBasicAuthenicator authenticator)
 		{
 			this.authenticator = authenticator;
 		}
@@ -30,9 +30,9 @@ namespace Rosie.SmartThings
 				var result = new Tuple<string, string> (username, password);
 				try {
 					bool success = false;
-					var basic = authenticator as BasicAuthAuthenticator;
+					var basic = authenticator;
 					if (basic != null) {
-						success = await basic.CheckCredentails (result.Item1, result.Item2);
+						success = await basic.VerifyCredentials (result.Item1, result.Item2);
 					}
 					if (!success)
 						throw new Exception ("Invalid Credentials");

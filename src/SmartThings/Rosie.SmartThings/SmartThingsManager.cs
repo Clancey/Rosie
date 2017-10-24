@@ -17,7 +17,7 @@ namespace Rosie.SmartThings
 		{
 			throw new NotImplementedException ();
 		}
-		SmartThingsApi api = new SmartThingsApi ("SmartThings");
+		SmartThingsApi api = new SmartThingsApi ("SmartThings","fdsjfhe545343uiryeui43hd1hfdsfy8d5syf");
 		SmartThingsUpdateListener updater;
 		public async Task<bool> Init ()
 		{

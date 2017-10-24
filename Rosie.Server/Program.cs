@@ -15,7 +15,7 @@ namespace Rosie.Server
 			//if (Debugger.IsAttached) {
 				Task.Run (() => {
 					(new RosieService ()).Start ();
-				});
+				}).Wait();
 				while (true) {
 					Thread.Sleep (10000);
 				}
