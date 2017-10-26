@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
+using SimpleAuth;
 
 namespace Rosie.Server
 {
@@ -10,6 +11,11 @@ namespace Rosie.Server
 		public static void Main (string [] args)
 		{
 			//DeviceDatabase.Shared.TestUpdates ();
+
+			BasicAuthApi.ShowAuthenticator = async (auth) => {
+				var authenticator = new BasicAuthController(auth);
+				await authenticator.GetCredentials("SmartThings Login");
+			};
 #if DEBUG
 			//The debugger cannot launch a service, so we handle it oursleves
 			//if (Debugger.IsAttached) {

@@ -3,7 +3,7 @@ using System.Security;
 using System.Threading.Tasks;
 using SimpleAuth;
 
-namespace Rosie.SmartThings
+namespace Rosie
 {
 	public class BasicAuthController
 	{
