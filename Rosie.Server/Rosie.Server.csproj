@@ -53,6 +53,21 @@
     <Reference Include="Plugin.Settings">
       <HintPath>..\packages\Xam.Plugins.Settings.3.1.1\lib\net45\Plugin.Settings.dll</HintPath>
     </Reference>
+    <Reference Include="SQLitePCLRaw.core">
+      <HintPath>..\packages\SQLitePCLRaw.core.1.1.5\lib\net45\SQLitePCLRaw.core.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.provider.e_sqlite3">
+      <HintPath>..\packages\SQLitePCLRaw.provider.e_sqlite3.net45.1.1.5\lib\net45\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_green">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.5\lib\net45\SQLitePCLRaw.batteries_green.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2">
+      <HintPath>..\packages\SQLitePCLRaw.bundle_green.1.1.5\lib\net45\SQLitePCLRaw.batteries_v2.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLite-net">
+      <HintPath>..\packages\sqlite-net-pcl.1.4.118\lib\netstandard1.1\SQLite-net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -61,29 +76,29 @@
     <Compile Include="Helpers\BasicAuthController.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure\Rosie.AzureIoT.Net\Rosie.AzureIoT.Net.csproj">
-      <Project>{D9EE4768-F1FE-4311-87F0-E8ADB4844550}</Project>
-      <Name>Rosie.AzureIoT.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\Echo\Rosie.Echo.Net\Rosie.Echo.Net.csproj">
-      <Project>{A7C205F8-F18B-423E-914F-E8DD3C02121B}</Project>
-      <Name>Rosie.Echo.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\ZWave\Rosie.ZWave.Net\Rosie.ZWave.Net.csproj">
-      <Project>{13BD0334-20B2-4341-B50C-07174771DA0B}</Project>
-      <Name>Rosie.ZWave.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\Core\Rosie.Net\Rosie.Net.csproj">
-      <Project>{50DD7935-C200-43D8-9C55-733992A5A2F5}</Project>
-      <Name>Rosie.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\Node\Rosie.Node.Net\Rosie.Node.Net.csproj">
-      <Project>{2391DDC2-5BE5-4E36-93FC-3EDBFFC0C56C}</Project>
-      <Name>Rosie.Node.Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\src\SmartThings\Rosie.SmartThings.Net\Rosie.SmartThings.Net.csproj">
-      <Project>{40618AE2-4681-4564-A11F-08A52A06B013}</Project>
+      <Project>{98005BE2-2D51-46B6-B059-8D58DC2A13CF}</Project>
       <Name>Rosie.SmartThings.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Core\Rosie\Rosie.csproj">
+      <Project>{B679C1B8-7276-4CE9-ADE6-E85B62247995}</Project>
+      <Name>Rosie</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Azure\Rosie.AzureIoT\Rosie.AzureIoT.csproj">
+      <Project>{B748440A-3F3F-40E6-9EA7-E23394E76DAA}</Project>
+      <Name>Rosie.AzureIoT</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Echo\Rosie.Echo\Rosie.Echo.csproj">
+      <Project>{FD7627E4-0B3A-488A-A75A-81DA2F125F45}</Project>
+      <Name>Rosie.Echo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Node\Rosie.Node\Rosie.Node.csproj">
+      <Project>{8FCAAB49-3C09-4356-A6FE-EE0C5AE96DEC}</Project>
+      <Name>Rosie.Node</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\ZWave\Rosie.ZWave\Rosie.ZWave.csproj">
+      <Project>{5D73EAAD-7E59-47D4-9F4B-388DB341AEB3}</Project>
+      <Name>Rosie.ZWave</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -91,4 +106,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.5\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.5\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.5\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.osx.1.1.5\build\net35\SQLitePCLRaw.lib.e_sqlite3.osx.targets')" />
+  <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.5\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.v110_xp.1.1.5\build\net35\SQLitePCLRaw.lib.e_sqlite3.v110_xp.targets')" />
 </Project>

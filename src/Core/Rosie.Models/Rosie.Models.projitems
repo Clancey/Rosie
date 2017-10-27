@@ -12,12 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)DeviceGroup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceUpdate.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\SQLite.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\SQLiteAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Usage.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Data\" />
   </ItemGroup>
 </Project>
