@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Devices" Version="1.4.1" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Rosie\Rosie.csproj" />
