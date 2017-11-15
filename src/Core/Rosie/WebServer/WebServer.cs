@@ -78,7 +78,14 @@ namespace Rosie.Server
 							Console.WriteLine (ex);
 							if (ctx == null)
 								return;
-							ctx.Response.StatusCode = 500;
+							try
+							{
+								ctx.Response.StatusCode = 500;
+							}
+							catch
+							{
+
+							}
 						} finally {
 							ctx?.Response.OutputStream.Close ();
 						}
