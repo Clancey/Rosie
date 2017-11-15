@@ -3,7 +3,7 @@ using SQLite;
 
 namespace Rosie
 {
-	public class DeviceState : DeviceUpdate
+	public partial class DeviceState : DeviceUpdate
 	{
 		public override string Id {
 			get {
