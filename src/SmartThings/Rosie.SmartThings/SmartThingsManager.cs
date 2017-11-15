@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Rosie.SmartThings
 {
@@ -27,7 +28,10 @@ namespace Rosie.SmartThings
 					return false;
 				updater = new SmartThingsUpdateListener (api);
 				updater.UpdateReceived += (obj) => {
-					Console.WriteLine ("Status update");
+					Console.WriteLine("Status update");
+					if (obj.ShouldIgnoreUpdate())
+						return;
+					
 				};
 				await updater.StartListening ();
 
