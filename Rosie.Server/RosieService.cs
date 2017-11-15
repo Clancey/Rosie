@@ -1,14 +1,20 @@
 ﻿#define SmartThings
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.ServiceProcess;
 using System.Text;
 using Rosie.Echo;
+using Rosie.Hue;
 using Rosie.Server;
+using Rosie.Services;
+
 namespace Rosie
 {
 	public class RosieService : ServiceBase
 	{
+		ServiceRegistry _serviceRegistry;
 		public RosieService ()
 		{
 		}
@@ -16,6 +22,8 @@ namespace Rosie
 		public void Start ()
 		{
 			try {
+				_serviceRegistry = new ServiceRegistry();
+				var v = new HueService();		
 				OnStart (new string [] { "" });
 			} catch (Exception e) {
 				Console.WriteLine (e);
@@ -24,20 +32,23 @@ namespace Rosie
 		#endif
 		protected override void OnStart (string [] args)
 		{
-			Console.WriteLine ("Amazon Echo Service Started");
 			Init ();
+			_serviceRegistry.Start();
 			LocalWebServer.Shared.Start ();
-			AmazonEchoWebServer.Shared.Start ();
-			EchoDiscoveryService.Shared.StartListening ();
+			//AmazonEchoWebServer.Shared.Start ();
+			//EchoDiscoveryService.Shared.StartListening ();
 			base.OnStart (args);
 		}
 
 		async void Init ()
 		{
+			
 			DeviceManager.Shared.RegisterDeviceLogHandler<SqliteDeviceLogger> ();
 
+
+
 #if SmartThings
-			await Rosie.SmartThings.SmartThingsManager.Shared.Init ();
+	//		await Rosie.SmartThings.SmartThingsManager.Shared.Init ();
 #endif
 #if Azure
 			await Rosie.AzureIoT.AzureDeviceManager.Shared.Init ();
@@ -49,6 +60,7 @@ namespace Rosie
 		}
 		protected override void OnStop ()
 		{
+			_serviceRegistry.Stop();
 			EchoDiscoveryService.Shared.StopListening ();
 			LocalWebServer.Shared.Stop ();
 			AmazonEchoWebServer.Shared.Stop ();
