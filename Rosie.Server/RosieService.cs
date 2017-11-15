@@ -23,7 +23,7 @@ namespace Rosie
 		{
 			try {
 				_serviceRegistry = new ServiceRegistry();
-				var v = new HueService();		
+				new HueService();
 				OnStart (new string [] { "" });
 			} catch (Exception e) {
 				Console.WriteLine (e);
@@ -44,8 +44,6 @@ namespace Rosie
 		{
 			
 			DeviceManager.Shared.RegisterDeviceLogHandler<SqliteDeviceLogger> ();
-
-
 
 #if SmartThings
 	//		await Rosie.SmartThings.SmartThingsManager.Shared.Init ();

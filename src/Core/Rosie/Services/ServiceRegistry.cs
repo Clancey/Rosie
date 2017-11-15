@@ -12,19 +12,20 @@ namespace Rosie.Services
 	{
 		
 		IEnumerable<IRosieService> _services;
-
+		ServiceProvider _serviceProvider;
+		ServiceCollection _serviceCollection;
 		public IEnumerable<IRosieService> Services => _services;
 		public IConfiguration Configuration { get; }
 
 		public ServiceRegistry()
 		{
-			var services = new ServiceCollection();
+			_serviceCollection = new ServiceCollection();
 			var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", true);
 
 			Configuration = builder.Build();
 			Register();
-			AddDefaultServices(services);
-			ConfigureServices(services);
+			AddDefaultServices(_serviceCollection);
+			ConfigureServices(_serviceCollection);
 		}
 
 		void AddDefaultServices(ServiceCollection serviceCollection)
@@ -32,29 +33,38 @@ namespace Rosie.Services
 			serviceCollection.AddLogging();
 		}
 
-		public virtual void ConfigureServices(IServiceCollection serviceCollection)
+		void ConfigureServices(IServiceCollection serviceCollection)
 		{
-			ServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
 			foreach (var s in Services)
 			{
 				var type = s.GetType();
-				s.Setup(serviceProvider);
-				serviceCollection.AddSingleton(s);
+				s.Setup(serviceCollection.BuildServiceProvider());
+				serviceCollection.AddSingleton(typeof(IRosieService),type);
 			}
-
+			_serviceProvider = serviceCollection.BuildServiceProvider();
 		}
 
-		public async void Start()
+		public void Start()
 		{
-			foreach (var service in Services)
+			try
 			{
-				await service.Start();
+				var services = _serviceProvider.GetServices<IRosieService>();
+
+				foreach (var service in services)
+				{
+					service.Start();
+				}
 			}
+			catch (Exception ex)
+			{
+
+			}
+
 		}
 
 		public async void Stop()
 		{
-			foreach (var service in Services)
+			foreach (var service in _serviceProvider.GetServices<IRosieService>())
 			{
 				await service.Stop();
 			}

@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Q42.HueApi;
+using Q42.HueApi.Interfaces;
 using Rosie.Services;
 
 namespace Rosie.Hue
 {
-	public class HueService : IRosieService
+	public class HueService : IRosieService, IDisposable
 	{
 		ILogger<HueService> _logger;
 
@@ -26,26 +29,43 @@ namespace Rosie.Hue
 			throw new NotImplementedException();
 		}
 
-		public Task Start()
+		public async Task Start()
 		{
-			return Task.Run(() =>
+
+			try
 			{
-				System.Diagnostics.Debug.WriteLine("Start");
-			});
+				IBridgeLocator locator = new HttpBridgeLocator();
+				var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
+				ILocalHueClient client = new LocalHueClient("ip");
+				var appKey = await client.RegisterAsync(Domain, Name);
+			}
+			catch (Exception ex)
+			{
+
+			}
+
+
 		}
 
 		public Task Stop()
 		{
 			return Task.Run(() =>
 			{
-				System.Diagnostics.Debug.WriteLine("Stop");
+				_logger.LogInformation("Stop");
 			});
 		}
 
 		public void Setup(IServiceProvider serviceProvicer)
 		{
-			_logger = serviceProvicer.GetService<ILoggerFactory>().AddConsole(LogLevel.Debug).CreateLogger<HueService>();
-			_logger.LogDebug("Setup HUE lights");
+			_logger = serviceProvicer.GetService<ILoggerFactory>().AddConsole(LogLevel.Information).CreateLogger<HueService>();
+			_logger.LogInformation("Setup HUE lights");
+			_logger.LogInformation(Description);
+
+		}
+
+		public void Dispose()
+		{
+			
 		}
 	}
 }
