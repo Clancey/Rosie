@@ -5,43 +5,101 @@ using System.Security.Cryptography;
 using System.Text;
 using SimpleAuth;
 using System.Reflection;
+using System.Linq;
 
 namespace Rosie
 {
 	public class AuthStorage : IAuthStorage
 	{
-		static string EncryptString(string text, string keyString)
+		private const int Keysize = 256;
+
+		// This constant determines the number of iterations for the password bytes generation function.
+		private const int DerivationIterations = 1000;
+
+		public static string EncryptString(string plainText, string passPhrase)
 		{
-			var algorithm = GetAlgorithm(keyString);
-
-			//Anything to process?
-			if (string.IsNullOrWhiteSpace(text))
-				return "";
-
-			byte[] encryptedBytes;
-			using (ICryptoTransform encryptor = algorithm.CreateEncryptor(algorithm.Key, algorithm.IV))
+			// Salt and IV is randomly generated each time, but is preprended to encrypted cipher text
+			// so that the same Salt and IV values can be used when decrypting.  
+			var saltStringBytes = Generate256BitsOfRandomEntropy();
+			var ivStringBytes = Generate256BitsOfRandomEntropy();
+			var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
+			using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
 			{
-				byte[] bytesToEncrypt = Encoding.UTF8.GetBytes(text);
-				encryptedBytes = InMemoryCrypt(bytesToEncrypt, encryptor);
+				var keyBytes = password.GetBytes(Keysize / 8);
+				using (var symmetricKey = new RijndaelManaged())
+				{
+					symmetricKey.BlockSize = 256;
+					symmetricKey.Mode = CipherMode.CBC;
+					symmetricKey.Padding = PaddingMode.PKCS7;
+					using (var encryptor = symmetricKey.CreateEncryptor(keyBytes, ivStringBytes))
+					{
+						using (var memoryStream = new MemoryStream())
+						{
+							using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+							{
+								cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+								cryptoStream.FlushFinalBlock();
+								// Create the final bytes as a concatenation of the random salt bytes, the random iv bytes and the cipher bytes.
+								var cipherTextBytes = saltStringBytes;
+								cipherTextBytes = cipherTextBytes.Concat(ivStringBytes).ToArray();
+								cipherTextBytes = cipherTextBytes.Concat(memoryStream.ToArray()).ToArray();
+								memoryStream.Close();
+								cryptoStream.Close();
+								return Convert.ToBase64String(cipherTextBytes);
+							}
+						}
+					}
+				}
 			}
-			return Convert.ToBase64String(encryptedBytes);
 		}
 
-		static string DecryptString(string cipherText, string keyString)
+		public static string DecryptString(string cipherText, string passPhrase)
 		{
-			var algorithm = GetAlgorithm(keyString);
+			// Get the complete stream of bytes that represent:
+			// [32 bytes of Salt] + [32 bytes of IV] + [n bytes of CipherText]
+			var cipherTextBytesWithSaltAndIv = Convert.FromBase64String(cipherText);
+			// Get the saltbytes by extracting the first 32 bytes from the supplied cipherText bytes.
+			var saltStringBytes = cipherTextBytesWithSaltAndIv.Take(Keysize / 8).ToArray();
+			// Get the IV bytes by extracting the next 32 bytes from the supplied cipherText bytes.
+			var ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(Keysize / 8).Take(Keysize / 8).ToArray();
+			// Get the actual cipher text bytes by removing the first 64 bytes from the cipherText string.
+			var cipherTextBytes = cipherTextBytesWithSaltAndIv.Skip((Keysize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((Keysize / 8) * 2)).ToArray();
 
-			//Anything to process?
-
-			if (string.IsNullOrWhiteSpace(cipherText))
-				return "";
-			byte[] descryptedBytes;
-			using (ICryptoTransform decryptor = algorithm.CreateDecryptor(algorithm.Key, algorithm.IV))
+			using (var password = new Rfc2898DeriveBytes(passPhrase, saltStringBytes, DerivationIterations))
 			{
-				byte[] encryptedBytes = Convert.FromBase64String(cipherText);
-				descryptedBytes = InMemoryCrypt(encryptedBytes, decryptor);
+				var keyBytes = password.GetBytes(Keysize / 8);
+				using (var symmetricKey = new RijndaelManaged())
+				{
+					symmetricKey.BlockSize = 256;
+					symmetricKey.Mode = CipherMode.CBC;
+					symmetricKey.Padding = PaddingMode.PKCS7;
+					using (var decryptor = symmetricKey.CreateDecryptor(keyBytes, ivStringBytes))
+					{
+						using (var memoryStream = new MemoryStream(cipherTextBytes))
+						{
+							using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+							{
+								var plainTextBytes = new byte[cipherTextBytes.Length];
+								var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+								memoryStream.Close();
+								cryptoStream.Close();
+								return Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+							}
+						}
+					}
+				}
 			}
-			return Encoding.UTF8.GetString(descryptedBytes);
+		}
+
+		private static byte[] Generate256BitsOfRandomEntropy()
+		{
+			var randomBytes = new byte[32]; // 32 Bytes will give us 256 bits.
+			using (var rngCsp = new RNGCryptoServiceProvider())
+			{
+				// Fill the array with cryptographically secure random bytes.
+				rngCsp.GetBytes(randomBytes);
+			}
+			return randomBytes;
 		}
 
 		static string CalculateMD5Hash(string input)
@@ -60,35 +118,13 @@ namespace Rosie
 			return sb.ToString();
 
 		}
-		private static byte[] InMemoryCrypt(byte[] data, ICryptoTransform transform)
-		{
-			MemoryStream memory = new MemoryStream();
-			using (Stream stream = new CryptoStream(memory, transform, CryptoStreamMode.Write))
-			{
-				stream.Write(data, 0, data.Length);
-			}
-			return memory.ToArray();
-		}
-		private static readonly byte[] salt = Encoding.ASCII.GetBytes(Assembly.GetExecutingAssembly().GetName().FullName);
-		private static RijndaelManaged GetAlgorithm(string encryptionPassword)
-		{
-			// Create an encryption key from the encryptionPassword and salt.
-			var key = new Rfc2898DeriveBytes(encryptionPassword, salt);
-
-			// Declare that we are going to use the Rijndael algorithm with the key that we've just got.
-			var algorithm = new RijndaelManaged();
-			int bytesForKey = algorithm.KeySize / 8;
-			int bytesForIV = algorithm.BlockSize / 8;
-			algorithm.Key = key.GetBytes(bytesForKey);
-			algorithm.IV = key.GetBytes(bytesForIV);
-			return algorithm;
-		}
 
 		public void SetSecured(string identifier, string value, string clientId, string clientSecret, string sharedGroup)
 		{
 			var key = $"{clientId}-{identifier}-{clientId}-{sharedGroup}";
 			var newKey = CalculateMD5Hash(key);
-			Plugin.Settings.CrossSettings.Current.AddOrUpdateValue(newKey, EncryptString(value, clientSecret));
+			var encrypted = EncryptString(value, clientSecret);
+			Plugin.Settings.CrossSettings.Current.AddOrUpdateValue(newKey, encrypted);
 		}
 
 		public string GetSecured(string identifier, string clientId, string clientSecret, string sharedGroup)
@@ -97,7 +133,8 @@ namespace Rosie
 			{
 				var key = $"{clientId}-{identifier}-{clientId}-{sharedGroup}";
 				var newKey = CalculateMD5Hash(key);
-				return DecryptString(Plugin.Settings.CrossSettings.Current.GetValueOrDefault(newKey, ""), clientSecret);
+				var cryptText = Plugin.Settings.CrossSettings.Current.GetValueOrDefault(newKey, "");
+				return DecryptString(cryptText, clientSecret);
 			}
 			catch (Exception ex)
 			{
