@@ -12,6 +12,7 @@ namespace Rosie.Server
 		{
 			//DeviceDatabase.Shared.TestUpdates ();
 
+			SimpleAuth.Resolver.Register<IAuthStorage, Rosie.AuthStorage>();
 			BasicAuthApi.ShowAuthenticator = async (auth) => {
 				var authenticator = new BasicAuthController(auth);
 				await authenticator.GetCredentials("SmartThings Login");
