@@ -40,7 +40,7 @@ namespace Rosie
 			base.OnStart (args);
 		}
 
-		async void Init ()
+		void Init ()
 		{
 			
 			DeviceManager.Shared.RegisterDeviceLogHandler<SqliteDeviceLogger> ();
