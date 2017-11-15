@@ -34,6 +34,7 @@ namespace Rosie.SmartThings
 				#region testing
 				var devices = await api.GetDevices ();
 				devices.ToList ().ForEach (x => Console.WriteLine ($"Name: {x.Name} Label: {x.Label}"));
+				await Task.Delay(5000);
 				var officeLights = devices.FirstOrDefault((x) => (x.Label?.Contains("Office") ?? false)  && (x.Label?.Contains("Light") ?? false) );
 				await api.TurnOnDevice (officeLights);
 				await Task.Delay (10000);
