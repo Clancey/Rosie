@@ -17,7 +17,7 @@ namespace Rosie.SmartThings
 		{
 			throw new NotImplementedException ();
 		}
-		SmartThingsApi api = new SmartThingsApi ("SmartThings","fdsjfhe545343uiryeui43hd1hfdsfy8d5syf");
+		SmartThingsApi api = new SmartThingsApi ("SmartThings","fdsjfhe545343uiryeui43hd1hfdsfy8");
 		SmartThingsUpdateListener updater;
 		public async Task<bool> Init ()
 		{
@@ -34,6 +34,7 @@ namespace Rosie.SmartThings
 				#region testing
 				var devices = await api.GetDevices ();
 				devices.ToList ().ForEach (x => Console.WriteLine ($"Name: {x.Name} Label: {x.Label}"));
+				await Task.Delay(5000);
 				var officeLights = devices.FirstOrDefault((x) => (x.Label?.Contains("Office") ?? false)  && (x.Label?.Contains("Light") ?? false) );
 				await api.TurnOnDevice (officeLights);
 				await Task.Delay (10000);

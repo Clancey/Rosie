@@ -19,6 +19,15 @@
     <WarningLevel>4</WarningLevel>
     <ExternalConsole>true</ExternalConsole>
     <ConsolePause>true</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>AfterBuild</type>
+          <command>rm System.Net.Http.dll</command>
+          <workingdir>${TargetDir}</workingdir>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -205,6 +214,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RosieService.cs" />
     <Compile Include="Helpers\BasicAuthController.cs" />
+    <Compile Include="Helpers\AuthStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\SmartThings\Rosie.SmartThings.Net\Rosie.SmartThings.Net.csproj">
