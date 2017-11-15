@@ -9,5 +9,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Secrets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Import Project="..\Rosie.Models\Rosie.Models.projitems" Label="Shared" Condition="Exists('..\Rosie.Models\Rosie.Models.projitems')" />
 </Project>

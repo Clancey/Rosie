@@ -23,10 +23,12 @@ Debugging on the Raspberry pie via XS can be achieved by using (https://github.c
 Secrets.json
 ===
 This is just a json file with Key Value Pairs. It's a place to put your API keys (src/Core/Rosie/Secrets.json)
+To use the built in Api to get data out, set the `ApiKey` value
 
 `{
+
+	"ApiKey":"theKey",
     "AzureIoTUrl":"http://...",
-	"Foo":"bar"
 }`
 
 Raspberry Pi
