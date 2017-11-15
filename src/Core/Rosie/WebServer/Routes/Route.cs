@@ -119,7 +119,7 @@ namespace Rosie.Server
 				return Task.FromResult(true);
 			try {
 				string inKey = null;
-				var apikey = Settings.GetSecretString (null,"NodeServerApiKey");
+				var apikey = Settings.GetSecretString (null,"ApiKey");
 				var header = context.Request.Headers.AllKeys.FirstOrDefault (x => x.ToLower () == "apikey");
 				if (!string.IsNullOrWhiteSpace (header))
 					inKey = context.Request.Headers [header];
