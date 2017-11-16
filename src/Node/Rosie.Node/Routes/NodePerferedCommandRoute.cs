@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Rosie.Server;
 using System.Collections.Generic;
 using Rosie.Node;
+using System.Net.Http;
 
 namespace Rosie.Server.Routes.Node
 {
 	[Path ("api/NodePerferedCommand/{deviceId}")]
 	public class NodePerferedCommandRoute: Route<NodeDeviceCommands>
 	{
-		public override async Task<NodeDeviceCommands> GetResponse (string method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override async Task<NodeDeviceCommands> GetResponse (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString ["deviceId"];
 			var device = await NodeDatabase.Shared.GetDevice (deviceId);
@@ -19,16 +20,14 @@ namespace Rosie.Server.Routes.Node
 			return command;
 		}
 
-		public override bool SupportsMethod (string method)
-		{
-			return method == "GET" || method == "POST";
-		}
 
-		public override Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get, HttpMethod.Post };
+
+		public override Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
-			if (method == "GET")
+			if (method == HttpMethod.Get)
 				return base.GetResponseString (method, request, queryString, data);
-			else if (method == "POST")
+			else if (method == HttpMethod.Post)
 				return GetPostedResponseString (request, queryString, data);
 			return null;
 			

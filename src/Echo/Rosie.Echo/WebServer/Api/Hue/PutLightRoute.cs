@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Net.Http;
 namespace Rosie.Server.Routes.Echo
 {
 	[Path ("api/{userId}/lights/{lightId}/state")]
@@ -10,10 +11,9 @@ namespace Rosie.Server.Routes.Echo
 		{
 			IsSecured = false;
 		}
+		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Put };
 
-		public override bool SupportsMethod (string method) => method == "PUT";
-
-		public override async Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override async Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			var stateRequest = await data.ToObjectAsync<SetDeviceStateRequest> ().ConfigureAwait (false);
 			var lightId = queryString ["lightId"];

@@ -10,7 +10,7 @@ namespace Rosie.Echo
 		public static AmazonEchoWebServer Shared { get; set; } = new AmazonEchoWebServer ();
 		public const int EchoWebServerPort = 8082;
 
-		public AmazonEchoWebServer (int webserverPort = EchoWebServerPort) : base(webserverPort)
+		public AmazonEchoWebServer (int webserverPort = EchoWebServerPort) : base("Echo",webserverPort)
 		{
 			
 		}

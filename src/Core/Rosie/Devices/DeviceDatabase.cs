@@ -36,6 +36,11 @@ namespace Rosie
 			},
 		};
 
+		public Task<DeviceState> GetDeviceState(string deviceId)
+		{
+			return DatabaseConnection.Table<DeviceState>().Where(x => x.DeviceId == deviceId).FirstOrDefaultAsync();
+		}
+
 		//public async void TestUpdates ()
 		//{
 		//	try {

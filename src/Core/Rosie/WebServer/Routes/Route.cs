@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
+using System.Net.Http;
 
 namespace Rosie.Server
 {
@@ -22,7 +23,7 @@ namespace Rosie.Server
 				throw new Exception("Cannot automatically regiseter Route without Path attribute");
 			server.Router.AddRoute(path.Path, type);
 		}
-		public abstract bool SupportsMethod(string method);
+		public abstract HttpMethod[] GetSupportedMethods();
 
 		public virtual string ContentType
 		{
@@ -32,7 +33,7 @@ namespace Rosie.Server
 			}
 		}
 
-		public virtual Task<string> GetResponseString(string method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public virtual Task<string> GetResponseString(HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			throw new Exception("You need to provide either GetResponseString or GetResponseBytes");
 		}
@@ -51,7 +52,7 @@ namespace Rosie.Server
 				return Encoding.UTF8.GetBytes(responseString);
 			}
 
-			var method = request.HttpMethod;
+			var method =  new HttpMethod(request.HttpMethod);
 			string data;
 			using (var reader = new StreamReader(request.InputStream))
 				data = reader.ReadToEnd();
@@ -119,7 +120,7 @@ namespace Rosie.Server
 
 		}
 
-		public virtual Task<byte[]> GetResponseBytes(string method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public virtual Task<byte[]> GetResponseBytes(HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			return Task.FromResult<byte[]>(null);
 		}

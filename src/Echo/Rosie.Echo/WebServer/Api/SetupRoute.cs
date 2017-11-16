@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Rosie.Echo;
 using Rosie.Server.Echo;
+using System.Net.Http;
 
 namespace Rosie.Server.Routes.Echo
 {
@@ -16,10 +17,8 @@ namespace Rosie.Server.Routes.Echo
 
 		#region implemented abstract members of Route
 
-		public override bool SupportsMethod (string method)
-		{
-			return true;
-		}
+
+		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get };
 
 		public override string ContentType {
 			get {
@@ -29,7 +28,7 @@ namespace Rosie.Server.Routes.Echo
 
 		#endregion
 
-		public override Task<string> GetResponseString (string method, HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override Task<string> GetResponseString (HttpMethod method, HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString ["DeviceId"];
 			var server = request.Url.Host;
