@@ -23,6 +23,7 @@ using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Rosie.Server
 {
@@ -31,7 +32,7 @@ namespace Rosie.Server
 		public Router Router = new Router ();
 		public bool DebugMode { get; set; }
 		private readonly HttpListener _listener = new HttpListener();
-		public WebServer(int webServerPort)
+		public WebServer(string name, int webServerPort)
 		{
 			if (!HttpListener.IsSupported)
 				throw new NotSupportedException("Http Listener is not supported");
@@ -41,7 +42,7 @@ namespace Rosie.Server
 			};
 
 			foreach (string s in prefixes) {
-				Log ($"Listening on: {s}");
+				Console.WriteLine($"{name} webserver listening on: {s}");
 				_listener.Prefixes.Add (s);
 			}
 			init ();
@@ -78,7 +79,14 @@ namespace Rosie.Server
 							Console.WriteLine (ex);
 							if (ctx == null)
 								return;
-							ctx.Response.StatusCode = 500;
+							try
+							{
+								ctx.Response.StatusCode = 500;
+							}
+							catch (Exception e)
+							{
+
+							}
 						} finally {
 							ctx?.Response.OutputStream.Close ();
 						}
@@ -108,7 +116,7 @@ namespace Rosie.Server
 					context.Response.StatusCode = 404;
 					return;
 				}
-				if(!route.SupportsMethod(context.Request.HttpMethod)) {
+				if(!route.GetSupportedMethods().Contains(new HttpMethod(context.Request.HttpMethod))) {
 					context.Response.StatusCode = 405;
 					return;
 				}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Net.Http;
 namespace Rosie.Server.Routes.Echo
 {
 	[Path ("api/")]
@@ -9,9 +10,10 @@ namespace Rosie.Server.Routes.Echo
 		{
 			IsSecured = false;
 		}
-		public override bool SupportsMethod (string method) => method == "GET";
 
-		public override Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get };
+
+		public override Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			return Task.FromResult("[{\"success\":{\"username\":\"lights\"}}]");
 		}

@@ -11,7 +11,7 @@ namespace Rosie
 
 		public const int DefaultWebServerPort = 8081;
 
-		public LocalWebServer (int webServerPort = DefaultWebServerPort) : base (webServerPort)
+		public LocalWebServer (int webServerPort = DefaultWebServerPort) : base ("Rosie",webServerPort)
 		{
 			
 		}

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net.Http;
 namespace Rosie.Server.Routes.Echo
 {
 	[Path ("api/{userId}")]
@@ -11,9 +12,9 @@ namespace Rosie.Server.Routes.Echo
 			IsSecured = false;
 		}
 
-		public override bool SupportsMethod (string method) => method == "GET";
+		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get };
 
-		public override async Task<string> GetResponseString (string method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override async Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			var devices = await DeviceDatabase.Shared.GetEchoDevices ();
 			var resp = await new HueApiResponse {

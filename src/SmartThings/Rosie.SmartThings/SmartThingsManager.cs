@@ -42,7 +42,6 @@ namespace Rosie.SmartThings
 				devices.ToList ().ForEach (x => Console.WriteLine ($"Name: {x.Name} Label: {x.Label} : {string.Join(",",x.CurrentStates.Select(y=> y.Name))}"));
 				//await Task.Delay(5000);
 				var officeLights = devices.FirstOrDefault((x) => (x.Label?.Contains("Office") ?? false)  && (x.Label?.Contains("Light") ?? false) );
-				//var info = await api.GetDeviceCommands(officeLights);
 				await api.TurnOnDevice (officeLights);
 				await Task.Delay (10000);
 				await api.TurnOffDevice (officeLights);
