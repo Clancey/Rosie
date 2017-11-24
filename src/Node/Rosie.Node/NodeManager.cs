@@ -8,20 +8,23 @@ namespace Rosie.Node
 {
 	public class NodeManager : IDeviceHandler
 	{
-
+		IDeviceManager _deviceManager;
+		public NodeManager(IDeviceManager deviceManager)
+		{
+			_deviceManager = deviceManager;
+		}
 		internal static string NodeServerUrl {
 			get { return Rosie.Settings.GetSecretString (); }
 		}
 		NodeApi nodeApi;
 		SocketManager sockets;
-		public static NodeManager Shared { get; set; } = new NodeManager ();
-
+	
 		public Task Init ()
 		{
 			LocalWebServer.Shared.Router.AddRoute<NodeDevicesRoute> ();
 			LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute> ();
 			LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute> ();
-			DeviceManager.Shared.RegisterHandler(this);
+			_deviceManager.RegisterHandler(this);
 			return Connect ();
 		}
 
@@ -76,7 +79,7 @@ namespace Rosie.Node
 					var update = await nodeUpdate.ToDeviceUpdate ();
 					if (update == null)
 						return;
-					await DeviceManager.Shared.UpdateCurrentState (update);
+					await _deviceManager.UpdateCurrentState (update);
 				} catch (Exception ex) {
 					Console.WriteLine (ex);
 				}
@@ -110,7 +113,7 @@ namespace Rosie.Node
 				DeviceType = FromNodeType (nodeDevice.Type),
 			};
 			device.Discoverable = !string.IsNullOrWhiteSpace (device.Name);
-			await DeviceManager.Shared.AddDevice (device);
+			await _deviceManager.AddDevice (device);
 			nodeDevice.NodeId = nodeId;
 			await NodeDatabase.Shared.InsertDevice (nodeDevice);
 

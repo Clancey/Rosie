@@ -12,7 +12,8 @@ namespace Rosie
 
 		public bool Success { get; set; }
 	}
-	public class DeviceManager
+
+	internal class DeviceManager : IDeviceManager
 	{
 		public static DeviceManager Shared { get; set; } = new DeviceManager ();
 

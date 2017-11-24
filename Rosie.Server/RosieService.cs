@@ -42,8 +42,7 @@ namespace Rosie
 
 		void Init ()
 		{
-			
-			DeviceManager.Shared.RegisterDeviceLogHandler<SqliteDeviceLogger> ();
+			_serviceRegistry.GetService<IDeviceManager>().RegisterDeviceLogHandler<SqliteDeviceLogger>();
 
 #if SmartThings
 	//		await Rosie.SmartThings.SmartThingsManager.Shared.Init ();

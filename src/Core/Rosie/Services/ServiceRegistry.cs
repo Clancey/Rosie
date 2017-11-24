@@ -10,11 +10,10 @@ namespace Rosie.Services
 {
 	public class ServiceRegistry
 	{
-		
 		IEnumerable<IRosieService> _services;
 		ServiceProvider _serviceProvider;
 		ServiceCollection _serviceCollection;
-		public IEnumerable<IRosieService> Services => _services;
+		public IEnumerable<IRosieService> RosieServices => _services;
 		public IConfiguration Configuration { get; }
 
 		public ServiceRegistry()
@@ -26,22 +25,27 @@ namespace Rosie.Services
 			Register();
 			AddDefaultServices(_serviceCollection);
 			ConfigureServices(_serviceCollection);
+			_serviceProvider = _serviceCollection.BuildServiceProvider();
 		}
+
+		public T GetService<T>() where T : class => _serviceProvider.GetService<T>();
 
 		void AddDefaultServices(ServiceCollection serviceCollection)
 		{
 			serviceCollection.AddLogging();
+			serviceCollection.AddSingleton<IDeviceManager>(DeviceManager.Shared);
 		}
 
 		void ConfigureServices(IServiceCollection serviceCollection)
 		{
-			foreach (var s in Services)
+			foreach (var s in RosieServices)
 			{
 				var type = s.GetType();
 				s.Setup(serviceCollection.BuildServiceProvider());
-				serviceCollection.AddSingleton(typeof(IRosieService),type);
+				serviceCollection.AddSingleton(type, s);
+				serviceCollection.AddSingleton<IRosieService>(s);
 			}
-			_serviceProvider = serviceCollection.BuildServiceProvider();
+
 		}
 
 		public void Start()

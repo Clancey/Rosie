@@ -6,9 +6,11 @@ namespace Rosie.Server.Routes.Echo
 	[Path ("api/{userId}/lights/{lightId}/state")]
 	public class PutLightRoute : Route
 	{
-		public PutLightRoute ()
+		IDeviceManager _deviceManager;
+		public PutLightRoute (IDeviceManager deviceManager)
 		{
 			IsSecured = false;
+			_deviceManager = deviceManager;
 		}
 
 		public override bool SupportsMethod (string method) => method == "PUT";
@@ -22,7 +24,7 @@ namespace Rosie.Server.Routes.Echo
 			stateRequest.SetValueFromBri (device);
 			Console.WriteLine (data);
 			Console.WriteLine (device);
-			var success = await DeviceManager.Shared.SetDeviceState (device, stateRequest);
+			var success = await _deviceManager.SetDeviceState (device, stateRequest);
 			var result = await new [] { new { success = new Dictionary<string, bool> { { $"lights/{lightId}/state/on", success ? stateRequest.On : !stateRequest.On } } } }.ToJsonAsync();
 			return result;
 			//

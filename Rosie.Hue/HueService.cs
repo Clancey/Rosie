@@ -6,18 +6,28 @@ using Microsoft.Extensions.Logging;
 using Q42.HueApi;
 using Q42.HueApi.Interfaces;
 using Rosie.Services;
+using System.Linq;
 
 namespace Rosie.Hue
 {
 	public class HueService : IRosieService, IDisposable
 	{
+		//cUIpxMwkuC0xb-JVYsQOaBI-4BzKM6fl02fnQbCf
+
+		string _apiToken = "cUIpxMwkuC0xb-JVYsQOaBI-4BzKM6fl02fnQbCf";
+		bool _isConnected;
+
+		ILocalHueClient _hueClient;
 		ILogger<HueService> _logger;
+		IDeviceManager _deviceManager;
 
 		public string Domain => "HUE";
 
 		public string Name => "HUESERVICE";
 
 		public string Description => "Integration with Phillips Hue";
+
+		public string ServiceIdentifier => nameof(HueService);
 
 		public Task Send()
 		{
@@ -31,20 +41,35 @@ namespace Rosie.Hue
 
 		public async Task Start()
 		{
+			_logger.LogInformation("Starting");
 
-			try
+			await Connect();
+			if(_isConnected)
 			{
-				IBridgeLocator locator = new HttpBridgeLocator();
-				var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
-				ILocalHueClient client = new LocalHueClient("ip");
-				var appKey = await client.RegisterAsync(Domain, Name);
-			}
-			catch (Exception ex)
-			{
+				await GetLights();
 
 			}
+		}
 
-
+		async Task GetLights()
+		{
+			var lights = await _hueClient.GetLightsAsync();
+			foreach (var light in lights)
+			{
+				var device = new Device
+				{
+					Id = light.Id,
+					Service = ServiceIdentifier,
+					Description = light.Name,
+					Manufacturer = light.ManufacturerName,
+					ManufacturerId = light.ModelId,
+					ProductId = light.ProductId,
+					Name = light.Name,
+					DeviceType = DeviceType.Light,
+				};
+				device.Discoverable = !string.IsNullOrWhiteSpace(device.Name);
+				await _deviceManager.AddDevice(device);
+			}
 		}
 
 		public Task Stop()
@@ -57,6 +82,7 @@ namespace Rosie.Hue
 
 		public void Setup(IServiceProvider serviceProvicer)
 		{
+			_deviceManager = serviceProvicer.GetService<IDeviceManager>();
 			_logger = serviceProvicer.GetService<ILoggerFactory>().AddConsole(LogLevel.Information).CreateLogger<HueService>();
 			_logger.LogInformation("Setup HUE lights");
 			_logger.LogInformation(Description);
@@ -65,7 +91,41 @@ namespace Rosie.Hue
 
 		public void Dispose()
 		{
-			
+
+		}
+
+		async Task Connect()
+		{
+			IBridgeLocator locator = new HttpBridgeLocator();
+			var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
+			var ip = bridgeIPs.FirstOrDefault();
+			if(ip == null)
+			{
+				_logger.LogError("Didn't find a HUE Bridge...");
+				return;
+			}
+			_hueClient = new LocalHueClient(ip.IpAddress);
+			try
+			{
+				if (string.IsNullOrEmpty(_apiToken))
+					_apiToken = await _hueClient.RegisterAsync(Domain, "Rosie");
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError($"Failed Connect",ex);
+				if (ex.Message == "Link button not pressed")
+				{
+					_logger.LogWarning("Please press the button");
+				}
+			}
+			_isConnected = !string.IsNullOrEmpty(_apiToken);
+			_hueClient.Initialize(_apiToken);
+			_logger.LogInformation("Connected");
+		}
+
+		public Task<bool> HandleRequest(Device device, SetDeviceStateRequest request)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

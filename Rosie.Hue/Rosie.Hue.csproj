@@ -13,5 +13,4 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" />
     <PackageReference Include="Q42.HueApi" Version="3.5.2" />
   </ItemGroup>
-  <Import Project="..\src\Core\Rosie.Models\Rosie.Models.projitems" Label="Shared" Condition="Exists('..\src\Core\Rosie.Models\Rosie.Models.projitems')" />
 </Project>

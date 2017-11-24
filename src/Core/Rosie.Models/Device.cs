@@ -15,6 +15,7 @@ namespace Rosie
 		Unknown,
 		Switch,
 		Thermostat,
+		Light,
 		Sensor,
 	}
 	public class Device
