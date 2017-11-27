@@ -15,5 +15,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Device.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Usage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeviceStateKeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DeviceCapability.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DeviceCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DeviceCapabilityKeys.cs" />
   </ItemGroup>
 </Project>

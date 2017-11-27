@@ -89,6 +89,11 @@ namespace Rosie
 			var s = await DatabaseConnection.DeleteAsync (device);
 			return s > 0;
 		}
+
+		public readonly DeviceCapability[] DefaultCapabilities = {
+			new DeviceCapability{Key = "Switch"},
+			new DeviceCapability{Key = "Sensor"},
+		};
 	}
 }
 
