@@ -13,7 +13,7 @@ namespace Rosie.Server.Routes.Echo
 
 		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get };
 
-		public override Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override Task<string> GetResponseString<HttpListenerRequest> (HttpMethod method, HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			return Task.FromResult("[{\"success\":{\"username\":\"lights\"}}]");
 		}

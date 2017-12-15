@@ -15,7 +15,7 @@ namespace Rosie.Server.Routes.Echo
 		}
 		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Put };
 
-		public override async Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override async Task<string> GetResponseString<HttpListenerRequest> (HttpMethod method, HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			var stateRequest = await data.ToObjectAsync<SetDeviceStateRequest> ().ConfigureAwait (false);
 			var lightId = queryString ["lightId"];

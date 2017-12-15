@@ -14,7 +14,6 @@ namespace Rosie
 {
 	public class RosieService : ServiceBase
 	{
-		ServiceRegistry _serviceRegistry;
 		public RosieService ()
 		{
 		}
@@ -22,8 +21,7 @@ namespace Rosie
 		public void Start ()
 		{
 			try {
-				_serviceRegistry = new ServiceRegistry();
-				new HueService();
+				new HueService(null,null);
 				OnStart (new string [] { "" });
 			} catch (Exception e) {
 				Console.WriteLine (e);
@@ -32,9 +30,10 @@ namespace Rosie
 		#endif
 		protected override void OnStart (string [] args)
 		{
-			Init ();
-			_serviceRegistry.Start();
 			LocalWebServer.Shared.Start ();
+
+			Init ();
+
 			//AmazonEchoWebServer.Shared.Start ();
 			//EchoDiscoveryService.Shared.StartListening ();
 			base.OnStart (args);
@@ -42,7 +41,7 @@ namespace Rosie
 
 		void Init ()
 		{
-			_serviceRegistry.GetService<IDeviceManager>().RegisterDeviceLogHandler<SqliteDeviceLogger>();
+			//LocalWebServer.Registry.GetService<IDeviceManager>().RegisterDeviceLogHandler<SqliteDeviceLogger>();
 
 #if SmartThings
 	//		await Rosie.SmartThings.SmartThingsManager.Shared.Init ();
@@ -57,7 +56,6 @@ namespace Rosie
 		}
 		protected override void OnStop ()
 		{
-			_serviceRegistry.Stop();
 			EchoDiscoveryService.Shared.StopListening ();
 			LocalWebServer.Shared.Stop ();
 			AmazonEchoWebServer.Shared.Stop ();

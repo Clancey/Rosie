@@ -21,6 +21,15 @@ namespace Rosie.Hue
 		ILogger<HueService> _logger;
 		IDeviceManager _deviceManager;
 
+		public HueService(ILoggerFactory loggerFactory, IDeviceManager deviceManager)
+		{
+			if (loggerFactory != null)
+				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<HueService>();
+			_logger?.LogInformation("Setup HUE lights");
+			_logger?.LogInformation(Description);
+		
+			_deviceManager = deviceManager;
+		}
 		public string Domain => "HUE";
 
 		public string Name => "HUESERVICE";
@@ -44,7 +53,7 @@ namespace Rosie.Hue
 			_logger.LogInformation("Starting");
 
 			await Connect();
-			if(_isConnected)
+			if (_isConnected)
 			{
 				await GetLights();
 
@@ -80,15 +89,6 @@ namespace Rosie.Hue
 			});
 		}
 
-		public void Setup(IServiceProvider serviceProvicer)
-		{
-			_deviceManager = serviceProvicer.GetService<IDeviceManager>();
-			_logger = serviceProvicer.GetService<ILoggerFactory>().AddConsole(LogLevel.Information).CreateLogger<HueService>();
-			_logger.LogInformation("Setup HUE lights");
-			_logger.LogInformation(Description);
-
-		}
-
 		public void Dispose()
 		{
 
@@ -99,7 +99,7 @@ namespace Rosie.Hue
 			IBridgeLocator locator = new HttpBridgeLocator();
 			var bridgeIPs = await locator.LocateBridgesAsync(TimeSpan.FromSeconds(5));
 			var ip = bridgeIPs.FirstOrDefault();
-			if(ip == null)
+			if (ip == null)
 			{
 				_logger.LogError("Didn't find a HUE Bridge...");
 				return;
@@ -112,7 +112,7 @@ namespace Rosie.Hue
 			}
 			catch (Exception ex)
 			{
-				_logger.LogError($"Failed Connect",ex);
+				_logger.LogError($"Failed Connect", ex);
 				if (ex.Message == "Link button not pressed")
 				{
 					_logger.LogWarning("Please press the button");

@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rosie.Hue", "Rosie.Hue\Rosi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Phillips Hue", "Phillips Hue", "{C4DBF116-94FE-44DC-920B-9D7EDF2BECA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rosie.AspServer", "Rosie.AspServer\Rosie.AspServer.csproj", "{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,6 +212,20 @@ Global
 		{E61ADF58-8C1C-41A2-94F7-87B821BE2A28}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{E61ADF58-8C1C-41A2-94F7-87B821BE2A28}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{E61ADF58-8C1C-41A2-94F7-87B821BE2A28}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.NuGet|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.NuGet|Any CPU.Build.0 = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Release|iPhone.Build.0 = Release|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{6CDCD6F4-BF55-43F5-817F-3AC9A5A0D358}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8E4BE03F-C577-4481-A405-F1913A18C289} = {3FA1EFF4-1AF2-442F-A53C-0DD0DA4871F9}

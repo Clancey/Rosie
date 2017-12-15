@@ -29,7 +29,7 @@ namespace Rosie.Server
 {
 	public class WebServer
 	{
-		public Router Router = new Router ();
+		public virtual IRouter Router => new Router (null,null);
 		public bool DebugMode { get; set; }
 		private readonly HttpListener _listener = new HttpListener();
 		public WebServer(string name, int webServerPort)
@@ -62,21 +62,43 @@ namespace Rosie.Server
 		/// </summary>
 		public void Start(int concurrentConnections = 4)
 		{
+			StartTask(concurrentConnections);
+			OnStart();
+		}
+
+		public virtual void OnStart() { }
+
+		public void Stop ()
+		{
+			StopTask();
+			OnStop();
+		}
+
+		public virtual void OnStop() { }
+
+		void StartTask(int concurrentConnections)
+		{
 			_listener.Start();
-			Task.Run (() => {
-				var sem = new Semaphore (concurrentConnections, concurrentConnections);
-				while (_listener.IsListening) {
-					sem.WaitOne ();
-					_listener.GetContextAsync ().ContinueWith (async (t) => {
+			Task.Run(() =>
+			{
+				var sem = new Semaphore(concurrentConnections, concurrentConnections);
+				while (_listener.IsListening)
+				{
+					sem.WaitOne();
+					_listener.GetContextAsync().ContinueWith(async (t) =>
+					{
 						HttpListenerContext ctx = null;
-						try {
+						try
+						{
 
-							sem.Release ();
+							sem.Release();
 							ctx = await t;
-							await ProcessReponse (ctx);
+							await ProcessReponse(ctx);
 
-						} catch (Exception ex) {
-							Console.WriteLine (ex);
+						}
+						catch (Exception ex)
+						{
+							Console.WriteLine(ex);
 							if (ctx == null)
 								return;
 							try
@@ -87,19 +109,21 @@ namespace Rosie.Server
 							{
 
 							}
-						} finally {
-							ctx?.Response.OutputStream.Close ();
+						}
+						finally
+						{
+							ctx?.Response.OutputStream.Close();
 						}
 					});
 				}
 			});
 		}
 
-		public void Stop ()
+		void StopTask()
 		{
 			if (_listener?.IsListening ?? false)
 				return;
-			_listener.Stop ();
+			_listener.Stop();
 		}
 
 		async Task ProcessReponse(HttpListenerContext context)

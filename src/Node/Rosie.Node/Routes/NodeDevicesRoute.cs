@@ -16,7 +16,7 @@ namespace Rosie.Server.Routes.Node
 		{
 		}
 
-		public override Task<List<NodeDevice>> GetResponse (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override Task<List<NodeDevice>> GetResponse<HttpListenerRequest> (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			return NodeDatabase.Shared.DatabaseConnection.Table<NodeDevice>().ToListAsync();
 		}
