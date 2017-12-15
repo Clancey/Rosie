@@ -29,7 +29,7 @@ namespace Rosie.Server
 {
 	public class WebServer
 	{
-		public virtual IRouter Router => new Router (null,null);
+		public virtual IRouter Router => new Router (null);
 		public bool DebugMode { get; set; }
 		private readonly HttpListener _listener = new HttpListener();
 		public WebServer(string name, int webServerPort)

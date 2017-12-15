@@ -8,12 +8,10 @@ namespace Rosie.Server
 	public class Router : IRouter
 	{
 		IServiceCollection coll;
-		IServiceProvider provider;
-
-		public Router(IServiceCollection col, IServiceProvider prov)
+	
+		public Router(IServiceCollection col)
 		{
 			coll = col;
-			provider = prov;
 		}
 
 		Dictionary<string, (Type RouteType, string Path)> routes = new Dictionary<string, (Type RouteType, string Path)>();
@@ -21,7 +19,7 @@ namespace Rosie.Server
 
 		public void AddRoute(string path, Type route)
 		{
-			coll.AddSingleton(route);
+			coll.AddTransient(route);
 			var orgPath = path;
 			routes[path.ToLower()] = (route, orgPath);
 			var parts = path.Split('/');
@@ -70,7 +68,7 @@ namespace Rosie.Server
 					routeInformation = closestMatch.FirstOrDefault().Value;
 				}
 			}
-			var route = coll.BuildServiceProvider().GetRequiredService(routeInformation.RouteType) as Route;
+			var route = coll.BuildServiceProvider().GetService(routeInformation.RouteType) as Route;
 			route.Path = routeInformation.Path;
 			return route;
 		}

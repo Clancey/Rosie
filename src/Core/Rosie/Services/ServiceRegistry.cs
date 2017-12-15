@@ -32,7 +32,7 @@ namespace Rosie.Services
 		static void AddDefaultServices(IServiceCollection serviceCollection)
 		{
 			serviceCollection.AddLogging();
-			serviceCollection.AddSingleton<IRouter>((IServiceProvider arg) => new Router(serviceCollection,arg));
+			serviceCollection.AddSingleton<IRouter>((IServiceProvider arg) => new Router(serviceCollection));
 			serviceCollection.AddSingleton<IDeviceManager, DeviceManager>();		
 		}
 
