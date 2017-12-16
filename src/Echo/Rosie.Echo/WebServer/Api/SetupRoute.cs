@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Rosie.Echo;
 using Rosie.Server.Echo;
-using System.Net.Http;
 
 namespace Rosie.Server.Routes.Echo
 {
@@ -18,7 +17,7 @@ namespace Rosie.Server.Routes.Echo
 		#region implemented abstract members of Route
 
 
-		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get };
+		public override System.Net.Http.HttpMethod[] GetSupportedMethods() => new System.Net.Http.HttpMethod[] { System.Net.Http.HttpMethod.Get };
 
 		public override string ContentType {
 			get {
@@ -28,10 +27,10 @@ namespace Rosie.Server.Routes.Echo
 
 		#endregion
 
-		public override Task<string> GetResponseString (HttpMethod method, HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
+		public override Task<string> GetResponseString<HttpListenerRequest> (System.Net.Http.HttpMethod method, HttpListenerRequest request, System.Collections.Specialized.NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString ["DeviceId"];
-			var server = request.Url.Host;
+			var server = (request as System.Net.HttpListenerRequest).Url.Host;
 			var resp = MessageTemplates.GetSetupTemplate (server, AmazonEchoWebServer.EchoWebServerPort, EchoDiscoveryService.GetDeviceId ());
 			return Task.FromResult(resp);
 		}

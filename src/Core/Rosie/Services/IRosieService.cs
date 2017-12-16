@@ -22,7 +22,5 @@ namespace Rosie.Services
 		Task Stop();
 		Task Send();
 		Task Received(object data);
-		void Setup(IServiceProvider serviceCollection);
 	}
-
 }

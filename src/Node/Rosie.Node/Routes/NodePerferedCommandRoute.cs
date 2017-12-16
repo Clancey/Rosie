@@ -12,7 +12,7 @@ namespace Rosie.Server.Routes.Node
 	[Path ("api/NodePerferedCommand/{deviceId}")]
 	public class NodePerferedCommandRoute: Route<NodeDeviceCommands>
 	{
-		public override async Task<NodeDeviceCommands> GetResponse (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override async Task<NodeDeviceCommands> GetResponse<HttpListenerRequest> (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString ["deviceId"];
 			var device = await NodeDatabase.Shared.GetDevice (deviceId);
@@ -23,7 +23,7 @@ namespace Rosie.Server.Routes.Node
 
 		public override HttpMethod[] GetSupportedMethods() => new HttpMethod[] { HttpMethod.Get, HttpMethod.Post };
 
-		public override Task<string> GetResponseString (HttpMethod method, System.Net.HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override Task<string> GetResponseString<HttpListenerRequest> (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			if (method == HttpMethod.Get)
 				return base.GetResponseString (method, request, queryString, data);
@@ -33,7 +33,7 @@ namespace Rosie.Server.Routes.Node
 			
 		}
 
-		public async Task<string> GetPostedResponseString (System.Net.HttpListenerRequest request, NameValueCollection queryString, string data)
+		public async Task<string> GetPostedResponseString<HttpListenerRequest> (HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			var dict = await data.ToObjectAsync<Dictionary<string,string>> ();
 

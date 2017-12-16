@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Rosie.Server
 {
-	public class Router
+	public class Router : IRouter
 	{
+		IServiceCollection coll;
+	
+		public Router(IServiceCollection col)
+		{
+			coll = col;
+		}
 
 		Dictionary<string, (Type RouteType, string Path)> routes = new Dictionary<string, (Type RouteType, string Path)>();
 		Dictionary<string, (Type RouteType, string Path)> matchedRoutes = new Dictionary<string, (Type RouteType, string Path)>();
+
 		public void AddRoute(string path, Type route)
 		{
+			coll.AddTransient(route);
 			var orgPath = path;
 			routes[path.ToLower()] = (route, orgPath);
 			var parts = path.Split('/');
@@ -59,7 +68,7 @@ namespace Rosie.Server
 					routeInformation = closestMatch.FirstOrDefault().Value;
 				}
 			}
-			var route = (Route)Activator.CreateInstance(routeInformation.RouteType);
+			var route = coll.BuildServiceProvider().GetService(routeInformation.RouteType) as Route;
 			route.Path = routeInformation.Path;
 			return route;
 		}

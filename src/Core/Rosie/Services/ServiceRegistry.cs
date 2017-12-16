@@ -1,90 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Rosie.Extensions;
+using Rosie.Server;
 
 namespace Rosie.Services
 {
-	public class ServiceRegistry
+	public static class ServiceRegistry
 	{
-		IEnumerable<IRosieService> _services;
-		ServiceProvider _serviceProvider;
-		ServiceCollection _serviceCollection;
-		public IEnumerable<IRosieService> RosieServices => _services;
-		public IConfiguration Configuration { get; }
+		static Type _iRosieServiceType = typeof(IRosieService);
+		static IEnumerable<Type> _serviceTypes;
+		static IRouter router;
 
-		public ServiceRegistry()
+		internal static RosieServiceProvider Register(IServiceCollection services)
 		{
-			_serviceCollection = new ServiceCollection();
-			var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", true);
-
-			Configuration = builder.Build();
-			Register();
-			AddDefaultServices(_serviceCollection);
-			ConfigureServices(_serviceCollection);
-			_serviceProvider = _serviceCollection.BuildServiceProvider();
+			AddDefaultServices(services);
+			ConfigureServices(services);
+			var rosieProvider = new RosieServiceProvider(services);
+			Start(rosieProvider);
+			return rosieProvider;
 		}
 
-		public T GetService<T>() where T : class => _serviceProvider.GetService<T>();
+		static void Start(IServiceProvider builder)
+		{
+			foreach (var service in builder.GetServices<IRosieService>())
+				service.Start(); //or setup
+		}
 
-		void AddDefaultServices(ServiceCollection serviceCollection)
+		static void AddDefaultServices(IServiceCollection serviceCollection)
 		{
 			serviceCollection.AddLogging();
-			serviceCollection.AddSingleton<IDeviceManager>(DeviceManager.Shared);
+			serviceCollection.AddSingleton<IRouter>((IServiceProvider arg) => new Router(serviceCollection));
+			serviceCollection.AddSingleton<IDeviceManager, DeviceManager>();		
 		}
 
-		void ConfigureServices(IServiceCollection serviceCollection)
+		static void ConfigureServices(IServiceCollection serviceCollection)
 		{
-			foreach (var s in RosieServices)
+			var assembly = Assembly.GetEntryAssembly();
+
+			if (_serviceTypes == null)
+				_serviceTypes = GetIRosieServices(assembly);
+
+			foreach (var serviceType in _serviceTypes)
 			{
-				var type = s.GetType();
-				s.Setup(serviceCollection.BuildServiceProvider());
-				serviceCollection.AddSingleton(type, s);
-				serviceCollection.AddSingleton<IRosieService>(s);
-			}
-
-		}
-
-		public void Start()
-		{
-			try
-			{
-				var services = _serviceProvider.GetServices<IRosieService>();
-
-				foreach (var service in services)
-				{
-					service.Start();
-				}
-			}
-			catch (Exception ex)
-			{
-
-			}
-
-		}
-
-		public async void Stop()
-		{
-			foreach (var service in _serviceProvider.GetServices<IRosieService>())
-			{
-				await service.Stop();
+				serviceCollection.AddTransient(_iRosieServiceType, serviceType);
 			}
 		}
 
-		void Register()
-		{
-			if (_services == null)
-			{
-				var assembly = Assembly.GetEntryAssembly();
-				var services = GetIRosieServices(assembly);
-				_services = services;
-			}
-		}
-
-		static IEnumerable<IRosieService> GetIRosieServices(Assembly assembly)
+		static IEnumerable<Type> GetIRosieServices(Assembly assembly)
 		{
 			var assemblies = assembly.GetReferencedAssemblies();
 
@@ -92,16 +57,14 @@ namespace Rosie.Services
 			{
 				assembly = Assembly.Load(assemblyName);
 
-				foreach (var types in assembly.DefinedTypes)
+				foreach (var type in assembly.DefinedTypes)
 				{
-					if (types.ImplementedInterfaces.Contains(typeof(IRosieService)))
+					if (type.ImplementedInterfaces.Contains(_iRosieServiceType))
 					{
-						yield return (IRosieService)assembly.CreateInstance(types.FullName);
+						yield return type;
 					}
 				}
 			}
 		}
-
-
 	}
 }
