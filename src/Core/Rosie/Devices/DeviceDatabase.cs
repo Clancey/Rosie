@@ -91,8 +91,8 @@ namespace Rosie
 		}
 
 		public readonly DeviceCapability[] DefaultCapabilities = {
-			new DeviceCapability{Key = "Switch"},
-			new DeviceCapability{Key = "Sensor"},
+			new DeviceCapability{Key = DeviceCapabilityKeys.Switch},
+			new DeviceCapability{Key = DeviceCapabilityKeys.Sensor},
 		};
 	}
 }
