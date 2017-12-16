@@ -11,7 +11,7 @@ namespace Rosie.Server.Routes.Node
 	[Path ("api/NodeDevice/{deviceId}")]
 	public class NodeDeviceRoute : Route<NodeDevice>
 	{
-		public override Task<NodeDevice> GetResponse (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override Task<NodeDevice> GetResponse<HttpListenerRequest> (HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString ["deviceId"];
 			return NodeDatabase.Shared.GetDevice (deviceId);

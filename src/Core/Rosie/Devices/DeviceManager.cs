@@ -12,13 +12,16 @@ namespace Rosie
 
 		public bool Success { get; set; }
 	}
-	public class DeviceManager
-	{
-		public static DeviceManager Shared { get; set; } = new DeviceManager ();
 
-		public DeviceManager ()
+	internal class DeviceManager : IDeviceManager
+	{
+		public DeviceManager (IDeviceLogger defaultDeviceLogger)
 		{
 			RegisterHandler<WebRequestHandler> ();
+			if(defaultDeviceLogger != null)
+			{
+				RegisterHandler(defaultDeviceLogger);
+			}
 		}
 
 		public Task<bool> AddDevice (Device device)

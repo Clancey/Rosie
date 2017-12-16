@@ -9,7 +9,7 @@ namespace Rosie
 	public static class Settings
 	{
 		public static string ApiKey {
-			get { return GetString ("ApiKey"); }
+			get { return GetString ("thekey"); }
 			set { SetString (value);}
 		}
 		public static string ApiUrl {
