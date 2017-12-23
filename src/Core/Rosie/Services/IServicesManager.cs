@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Rosie.Services
 {
@@ -9,5 +10,6 @@ namespace Rosie.Services
 	{
 		void RegisterService(string domain, string name, ServiceHandler serviceHandler, string description = "");
 		Dictionary<string, ServiceHandler> GetAvailableServices();
+		void CallService(string senderDomain, string domain, string name, ExpandoObject data = null);
 	}
 }

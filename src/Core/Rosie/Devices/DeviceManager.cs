@@ -40,6 +40,11 @@ namespace Rosie
 			return DeviceDatabase.Shared.InsertDevice (device);
 		}
 
+		public Task<List<Device>> GetAllDevices()
+		{
+			return DeviceDatabase.Shared.GetAllDevices();
+		}
+
 		public delegate bool SetDeviceStateHandler (object sender, SetDeviceArgs args);
 
 		public event SetDeviceStateHandler SetDeviceEvent;

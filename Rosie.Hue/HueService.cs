@@ -128,14 +128,29 @@ namespace Rosie.Hue
 			throw new NotImplementedException();
 		}
 
-		public void TurnOn(Data data)
+		public async void TurnOn(Data data)
 		{
-			throw new NotImplementedException();
+			if (data.DataS != null)
+			{
+
+				try
+				{
+					await _hueClient.SendCommandAsync(new LightCommand()
+					{
+						On = true
+					});
+				}
+				catch (Exception ex)
+				{
+					_logger.LogError(nameof(TurnOn), ex);
+				}
+			}
+			_logger.LogInformation("TurnOn");
 		}
 
-		public Task TurnOff(Data data)
+		public async Task TurnOff(Data data)
 		{
-			throw new NotImplementedException();
+			_logger.LogInformation("TurnOff");
 		}
 	}
 }

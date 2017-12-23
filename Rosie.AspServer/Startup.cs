@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Rosie.Extensions;
 using Rosie.Hue;
+using Rosie.Services;
+
 namespace Rosie.AspServer
 {
 	public class Startup
@@ -32,6 +34,7 @@ namespace Rosie.AspServer
 
 			//hook custom stuff
 			app.UseRosie();
+
 		}
 	}
 }

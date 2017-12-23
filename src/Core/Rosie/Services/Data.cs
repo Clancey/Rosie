@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 
 namespace Rosie.Services
 {
@@ -12,6 +13,12 @@ namespace Rosie.Services
 		}
 
 		public IList<object> Fields
+		{
+			get;
+			set;
+		}
+
+		public ExpandoObject DataS
 		{
 			get;
 			set;
