@@ -30,6 +30,7 @@ namespace Rosie.Hue
 			_deviceManager = deviceManager;
 			_serviceManager = serviceManager;
 			_serviceManager?.RegisterService(Domain, nameof(TurnOn), TurnOn);
+			_serviceManager?.RegisterService(Domain, nameof(TurnOff), TurnOff,"Send deviceid");
 		}
 		public string Domain => "HUE";
 
@@ -128,16 +129,25 @@ namespace Rosie.Hue
 			throw new NotImplementedException();
 		}
 
-		public async void TurnOn(Data data)
+		public async Task TurnOn(Data data)
+		{
+			await SetState(true, data);
+		}
+
+		public async Task TurnOff(Data data)
+		{
+			await SetState(false, data);
+		}
+
+		async Task SetState(bool isOn, Data data)
 		{
 			if (data.DataS != null)
 			{
-
 				try
 				{
 					await _hueClient.SendCommandAsync(new LightCommand()
 					{
-						On = true
+						On = isOn
 					});
 				}
 				catch (Exception ex)
@@ -148,9 +158,6 @@ namespace Rosie.Hue
 			_logger.LogInformation("TurnOn");
 		}
 
-		public async Task TurnOff(Data data)
-		{
-			_logger.LogInformation("TurnOff");
-		}
+
 	}
 }

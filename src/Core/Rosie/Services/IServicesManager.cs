@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Threading.Tasks;
 
 namespace Rosie.Services
 {
-	public delegate void ServiceHandler(Data data);
+	public delegate Task ServiceHandler(Data data);
 
 	public interface IServicesManager
 	{
