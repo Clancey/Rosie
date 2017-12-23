@@ -8,7 +8,7 @@ namespace Rosie.Extensions
 {
 	public static class ServiceCollectionExtensions
 	{
-		public static RosieServiceProvider AddRosie(this IServiceCollection services)
+		public static IServiceCollection AddRosie(this IServiceCollection services)
 		{
 			if (services == null)
 			{
@@ -18,11 +18,10 @@ namespace Rosie.Extensions
 			//first we register all the services, the defaults ones used by Rosie
 			//loggers, iRouter etcc
 			//We also scan and register for plugins that implement iRosieServices
-			var builder = ServiceRegistry.Register(services);
+			ServiceRegistry.Register(services);
 
-			return builder;
+		
+			return services;
 		}
-
-	
 	}
 }
