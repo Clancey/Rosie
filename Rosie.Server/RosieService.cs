@@ -21,7 +21,7 @@ namespace Rosie
 		public void Start ()
 		{
 			try {
-				new HueService(null,null);
+				new HueService(null,null,null);
 				OnStart (new string [] { "" });
 			} catch (Exception e) {
 				Console.WriteLine (e);

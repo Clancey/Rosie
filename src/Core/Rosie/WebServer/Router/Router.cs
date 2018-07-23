@@ -2,24 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using Rosie.Services;
 
 namespace Rosie.Server
 {
 	public class Router : IRouter
 	{
-		IServiceCollection coll;
-	
+		IServiceCollection _serviceCollection;
+		IServiceProvider _provider;
+
 		public Router(IServiceCollection col)
 		{
-			coll = col;
+			_serviceCollection = col;
 		}
 
 		Dictionary<string, (Type RouteType, string Path)> routes = new Dictionary<string, (Type RouteType, string Path)>();
 		Dictionary<string, (Type RouteType, string Path)> matchedRoutes = new Dictionary<string, (Type RouteType, string Path)>();
 
+		public IServiceProvider GetProvider()
+		{
+			if(_provider == null)
+			{
+				_provider = _serviceCollection.BuildServiceProvider(false);
+			}
+			return _provider;
+		}
+
 		public void AddRoute(string path, Type route)
 		{
-			coll.AddTransient(route);
+			_serviceCollection.AddTransient(route);
 			var orgPath = path;
 			routes[path.ToLower()] = (route, orgPath);
 			var parts = path.Split('/');
@@ -68,14 +79,27 @@ namespace Rosie.Server
 					routeInformation = closestMatch.FirstOrDefault().Value;
 				}
 			}
-			var route = coll.BuildServiceProvider().GetService(routeInformation.RouteType) as Route;
+			var route = _provider.GetRequiredService(routeInformation.RouteType) as Route;
 			route.Path = routeInformation.Path;
 			return route;
 		}
 
+
+		public void AddRoute(Route route)
+		{
+			var type = route.GetType();
+			AddRouteWithAttribute(type);
+		}
+
+
 		public void AddRoute<T>() where T : Route
 		{
 			var type = typeof(T);
+			AddRouteWithAttribute(type);
+		}
+
+		private void AddRouteWithAttribute(Type type)
+		{
 			var path = type.GetCustomAttributes(true).OfType<PathAttribute>().FirstOrDefault();
 			if (path == null)
 				throw new Exception("Cannot automatically regiseter Route without Path attribute");

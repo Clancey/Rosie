@@ -15,7 +15,7 @@ namespace Rosie.Server.Routes
 
 		public override System.Threading.Tasks.Task<List<Device>> GetResponse<HttpRequest>(HttpMethod method, HttpRequest request, NameValueCollection queryString, string data)
 		{
-			return DeviceDatabase.Shared.GetAllDevices();
+			return _deviceManager.GetAllDevices();
 		}
 
 		public override HttpMethod[] GetSupportedMethods() =>  new HttpMethod[] { HttpMethod.Get };

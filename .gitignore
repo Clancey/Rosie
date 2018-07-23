@@ -37,3 +37,4 @@ Thumbs.db
 
 [Nn]ode_modules/
 src/Node/NodeServer/.vscode/launch.json
+.vs/

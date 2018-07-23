@@ -13,27 +13,19 @@ namespace Rosie.Services
 		static Type _iRosieServiceType = typeof(IRosieService);
 		static IEnumerable<Type> _serviceTypes;
 		static IRouter router;
-
-		internal static RosieServiceProvider Register(IServiceCollection services)
+		internal static void Register(IServiceCollection services)
 		{
 			AddDefaultServices(services);
 			ConfigureServices(services);
-			var rosieProvider = new RosieServiceProvider(services);
-			Start(rosieProvider);
-			return rosieProvider;
-		}
-
-		static void Start(IServiceProvider builder)
-		{
-			foreach (var service in builder.GetServices<IRosieService>())
-				service.Start(); //or setup
 		}
 
 		static void AddDefaultServices(IServiceCollection serviceCollection)
 		{
 			serviceCollection.AddLogging();
+			serviceCollection.AddSingleton<IDeviceManager, DeviceManager>();	
+			serviceCollection.AddSingleton<IServicesManager, ServicesManager>();
 			serviceCollection.AddSingleton<IRouter>((IServiceProvider arg) => new Router(serviceCollection));
-			serviceCollection.AddSingleton<IDeviceManager, DeviceManager>();		
+
 		}
 
 		static void ConfigureServices(IServiceCollection serviceCollection)

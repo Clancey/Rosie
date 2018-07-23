@@ -20,15 +20,17 @@ namespace Rosie.Hue
 		ILocalHueClient _hueClient;
 		ILogger<HueService> _logger;
 		IDeviceManager _deviceManager;
-
-		public HueService(ILoggerFactory loggerFactory, IDeviceManager deviceManager)
+		IServicesManager _serviceManager;
+		public HueService(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
 		{
 			if (loggerFactory != null)
 				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<HueService>();
 			_logger?.LogInformation("Setup HUE lights");
 			_logger?.LogInformation(Description);
-		
 			_deviceManager = deviceManager;
+			_serviceManager = serviceManager;
+			_serviceManager?.RegisterService(Domain, nameof(TurnOn), TurnOn);
+			_serviceManager?.RegisterService(Domain, nameof(TurnOff), TurnOff,"Send deviceid");
 		}
 		public string Domain => "HUE";
 
@@ -56,7 +58,6 @@ namespace Rosie.Hue
 			if (_isConnected)
 			{
 				await GetLights();
-
 			}
 		}
 
@@ -127,5 +128,36 @@ namespace Rosie.Hue
 		{
 			throw new NotImplementedException();
 		}
+
+		public async Task TurnOn(Data data)
+		{
+			await SetState(true, data);
+		}
+
+		public async Task TurnOff(Data data)
+		{
+			await SetState(false, data);
+		}
+
+		async Task SetState(bool isOn, Data data)
+		{
+			if (data.DataS != null)
+			{
+				try
+				{
+					await _hueClient.SendCommandAsync(new LightCommand()
+					{
+						On = isOn
+					});
+				}
+				catch (Exception ex)
+				{
+					_logger.LogError(nameof(TurnOn), ex);
+				}
+			}
+			_logger.LogInformation("TurnOn");
+		}
+
+
 	}
 }
