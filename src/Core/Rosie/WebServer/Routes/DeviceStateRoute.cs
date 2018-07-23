@@ -21,18 +21,19 @@ namespace Rosie.Server.Routes
 			if (method == HttpMethod.Get)
 				return GetDeviceState(deviceId);
 			else if (method == HttpMethod.Post)
-				return SetDeviceState(deviceId,data.ToObject<DeviceState>());
+				return SetDeviceState(deviceId, data.ToObject<DeviceUpdate>());
 			throw new NotSupportedException($"Not supported HttpMethod: {method.Method}");
 		}
 
-		async Task<DeviceState[]> SetDeviceState(string deviceId, DeviceState state)
+		async Task<DeviceState[]> SetDeviceState(string deviceId, DeviceUpdate state)
 		{
 			var manager = ServiceProvider.GetService<IDeviceManager>();
 			var device = await DeviceDatabase.Shared.GetDevice(deviceId);
-			manager.SetDeviceState(device, state);
-
-			throw new NotSupportedException();
+			if (!await manager.SetDeviceState(device, state))
+				throw new Exception("Error processing the request");
+			return new[] { await DeviceDatabase.Shared.GetDeviceState(deviceId, state.Key) };
 		}
+
 		Task<DeviceState[]> GetDeviceState(string deviceId)
 		{
 			return DeviceDatabase.Shared.GetDeviceState(deviceId);
