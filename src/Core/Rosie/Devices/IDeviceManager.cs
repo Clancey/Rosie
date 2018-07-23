@@ -11,7 +11,7 @@ namespace Rosie
 		void RegisterHandler<T>() where T : IDeviceHandler;
 		void RegisterHandler(IDeviceHandler handler);
 		void RegisterHandler(IDeviceLogger handler);
-		Task<bool> SetDeviceState(Device device, SetDeviceStateRequest state);
+		Task<bool> SetDeviceState(Device device, DeviceUpdate state);
 		Task UpdateCurrentState(DeviceState state);
 	}
 }

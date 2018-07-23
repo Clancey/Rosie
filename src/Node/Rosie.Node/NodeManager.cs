@@ -142,14 +142,14 @@ namespace Rosie.Node
 			await Task.WhenAll(devices.Select (x => AddDevice (x)));
 		}
 
-		public async Task<bool> HandleRequest (Device device, SetDeviceStateRequest request)
+		public async Task<bool> HandleRequest (Device device, DeviceUpdate request)
 		{
 			try {
 				var nodeId = int.Parse(device.Id.Replace ("node-", ""));
 
 				var nodeDevice = await NodeDatabase.Shared.GetDevice (nodeId);
 				var command = await nodeDevice.GetPerferedCommand ();
-				var s = await nodeApi.SetState (command, request.On);
+				var s = await nodeApi.SetState (command, request.Value);
 				return s;
 
 			} catch (Exception ex) {

@@ -6,7 +6,7 @@ namespace Rosie
 	{
 		string ServiceIdentifier { get; }
 
-		Task<bool> HandleRequest (Device device, SetDeviceStateRequest request);
+		Task<bool> HandleRequest (Device device, DeviceUpdate request);
 	}
 }
 

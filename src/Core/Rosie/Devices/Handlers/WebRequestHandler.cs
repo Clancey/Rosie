@@ -15,10 +15,12 @@ namespace Rosie
 		public string ServiceIdentifier => Identifier;
 
 		HttpClient client = new HttpClient ();
-		public async Task<bool> HandleRequest (Device device, SetDeviceStateRequest request)
+		public async Task<bool> HandleRequest (Device device, DeviceUpdate request)
 		{
 			try {
-				var resp = await client.GetAsync (request.On ? device.OnUrl : device.OffUrl);
+				if (request.DataType != DataTypes.Bool)
+					return false;
+				var resp = await client.GetAsync (request.BoolValue.Value ? device.OnUrl : device.OffUrl);
 				resp.EnsureSuccessStatusCode ();
 			} catch (Exception ex) {
 				Console.WriteLine (ex);

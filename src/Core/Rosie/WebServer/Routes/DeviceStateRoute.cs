@@ -4,17 +4,18 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Rosie.Server;
+using Microsoft.Extensions.DependencyInjection;
 namespace Rosie.Server.Routes
 {
 
 	[Path("api/{deviceId}/State")]
-	public class DeviceRoute : Route<DeviceState>
+	public class DeviceRoute : Route<DeviceState[]>
 	{
 		public DeviceRoute()
 		{
 		}
 
-		public override Task<DeviceState> GetResponse<HttpRequest>(HttpMethod method, HttpRequest request, NameValueCollection queryString, string data)
+		public override Task<DeviceState[]> GetResponse<HttpRequest>(HttpMethod method, HttpRequest request, NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString["deviceId"];
 			if (method == HttpMethod.Get)
@@ -24,11 +25,15 @@ namespace Rosie.Server.Routes
 			throw new NotSupportedException($"Not supported HttpMethod: {method.Method}");
 		}
 
-		async Task<DeviceState> SetDeviceState(string deviceId, DeviceState state)
+		async Task<DeviceState[]> SetDeviceState(string deviceId, DeviceState state)
 		{
+			var manager = ServiceProvider.GetService<IDeviceManager>();
+			var device = await DeviceDatabase.Shared.GetDevice(deviceId);
+			manager.SetDeviceState(device, state);
+
 			throw new NotSupportedException();
 		}
-		Task<DeviceState> GetDeviceState(string deviceId)
+		Task<DeviceState[]> GetDeviceState(string deviceId)
 		{
 			return DeviceDatabase.Shared.GetDeviceState(deviceId);
 		}

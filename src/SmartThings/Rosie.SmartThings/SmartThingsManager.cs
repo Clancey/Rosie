@@ -14,7 +14,7 @@ namespace Rosie.SmartThings
 
 		public string ServiceIdentifier => "SmartThings";
 
-		public Task<bool> HandleRequest (Rosie.Device device, SetDeviceStateRequest request)
+		public Task<bool> HandleRequest (Rosie.Device device, DeviceUpdate request)
 		{
 			throw new NotImplementedException ();
 		}

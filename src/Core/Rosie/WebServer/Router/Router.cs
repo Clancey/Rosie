@@ -80,6 +80,8 @@ namespace Rosie.Server
 				}
 			}
 			var route = _provider.GetRequiredService(routeInformation.RouteType) as Route;
+			route.ServiceCollection = _serviceCollection;
+			route.ServiceProvider = _provider;
 			route.Path = routeInformation.Path;
 			return route;
 		}

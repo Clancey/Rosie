@@ -8,7 +8,7 @@ namespace Rosie
 	{
 		public Device Device { get; set; }
 
-		public SetDeviceStateRequest Request { get; set; }
+		public DeviceUpdate Request { get; set; }
 
 		public bool Success { get; set; }
 	}
@@ -49,7 +49,7 @@ namespace Rosie
 
 		public event SetDeviceStateHandler SetDeviceEvent;
 
-		public async Task<bool> SetDeviceState (Device device, SetDeviceStateRequest state)
+		public async Task<bool> SetDeviceState (Device device, DeviceUpdate state)
 		{
 			var events = SetDeviceEvent?.GetInvocationList ().ToList ();
 			//Let the last subscription get first dibs
@@ -72,8 +72,7 @@ namespace Rosie
 
 
 			var handlerList = GetHandlerList (device.Service ?? WebRequestHandler.Identifier);
-			for (var i = handlerList.Count - 1; i >= 0; i--) {
-				var handler = handlerList [i];
+			foreach (var handler in handlerList) {
 				handled = await handler.HandleRequest (device, state);
 				if (handled)
 					return true;

@@ -124,7 +124,7 @@ namespace Rosie.Hue
 			_logger.LogInformation("Connected");
 		}
 
-		public Task<bool> HandleRequest(Device device, SetDeviceStateRequest request)
+		public Task<bool> HandleRequest(Device device, DeviceUpdate request)
 		{
 			throw new NotImplementedException();
 		}

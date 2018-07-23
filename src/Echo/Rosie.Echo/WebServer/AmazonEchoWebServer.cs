@@ -23,7 +23,8 @@ namespace Rosie.Echo
 			Router.AddRoute<ApiUserRoute> ();
 			Router.AddRoute<GetLightRoute> ();
 			Router.AddRoute<GetLightsRoute> ();
-			Router.AddRoute<PutLightRoute> ();
+			//TODO: Reimplement
+			//Router.AddRoute<PutLightRoute> ();
 		}
 	}
 }

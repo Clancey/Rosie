@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Rosie.Server
 {
 	public abstract class Route
 	{
+		public IServiceProvider ServiceProvider { get; set; }
+		public IServiceCollection ServiceCollection { get; set; }
+
 		public virtual bool IsSecured { get; set; } = true;
 		public string Path { get; set; }
 		public static void Enable<T>(WebServer server)
@@ -57,7 +61,7 @@ namespace Rosie.Server
 			NameValueCollection queryParams = new NameValueCollection();
 			string data = String.Empty;
 			Stream stream = null;
-			if(request is HttpListenerRequest)
+			if (request is HttpListenerRequest)
 			{
 				Request = request as HttpListenerRequest;
 
@@ -70,7 +74,7 @@ namespace Rosie.Server
 					foreach (var val in valuesFromPath)
 						queryParams.Add(val.Key, val.Value);
 			}
-			if(request is HttpRequest)
+			if (request is HttpRequest)
 			{
 				var req = request as HttpRequest;
 				method = new HttpMethod(req.Method);
@@ -89,7 +93,7 @@ namespace Rosie.Server
 
 			using (var reader = new StreamReader(stream))
 				data = reader.ReadToEnd();
-			
+
 			var responseData = await GetResponseBytes(method, request, queryParams, data);
 			if (responseData != null)
 				return responseData;
@@ -171,28 +175,32 @@ namespace Rosie.Server
 			return Task.FromResult<byte[]>(null);
 		}
 
-		public virtual Task<bool> CheckAuthentication (HttpListenerContext context)
+		public virtual Task<bool> CheckAuthentication(HttpListenerContext context)
 		{
 			if (!IsSecured)
 				return Task.FromResult(true);
-			try {
+			try
+			{
 				string inKey = null;
-				var apikey = Settings.GetSecretString (null,"ApiKey");
-				var header = context.Request.Headers.AllKeys.FirstOrDefault(x => string.Equals(x, "apikey",StringComparison.OrdinalIgnoreCase));
-				if (!string.IsNullOrWhiteSpace (header))
-					inKey = context.Request.Headers [header];
-				else {
-					var key = context.Request.QueryString.AllKeys.FirstOrDefault (x => string.Equals(x, "apikey", StringComparison.OrdinalIgnoreCase));
-					if (string.IsNullOrWhiteSpace (key))
-						return Task.FromResult (false);
+				var apikey = Settings.GetSecretString(null, "ApiKey");
+				var header = context.Request.Headers.AllKeys.FirstOrDefault(x => string.Equals(x, "apikey", StringComparison.OrdinalIgnoreCase));
+				if (!string.IsNullOrWhiteSpace(header))
+					inKey = context.Request.Headers[header];
+				else
+				{
+					var key = context.Request.QueryString.AllKeys.FirstOrDefault(x => string.Equals(x, "apikey", StringComparison.OrdinalIgnoreCase));
+					if (string.IsNullOrWhiteSpace(key))
+						return Task.FromResult(false);
 
-					inKey = context.Request.QueryString [key];
+					inKey = context.Request.QueryString[key];
 				}
-				return Task.FromResult (apikey == inKey);
-			} catch (Exception ex) {
-				Console.WriteLine (ex);
+				return Task.FromResult(apikey == inKey);
 			}
-			return Task.FromResult (false);
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+			return Task.FromResult(false);
 
 		}
 

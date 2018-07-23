@@ -36,9 +36,14 @@ namespace Rosie
 			},
 		};
 
-		public Task<DeviceState> GetDeviceState(string deviceId)
+		public Task<DeviceState> GetDeviceState(string deviceId, string key)
 		{
-			return DatabaseConnection.Table<DeviceState>().Where(x => x.DeviceId == deviceId).FirstOrDefaultAsync();
+			return DatabaseConnection.Table<DeviceState>().Where(x => x.DeviceId == deviceId && x.Key == key).FirstOrDefaultAsync();
+		}
+
+		public Task<DeviceState[]> GetDeviceState(string deviceId)
+		{
+			return DatabaseConnection.Table<DeviceState>().Where(x => x.DeviceId == deviceId).ToArrayAsync();
 		}
 
 		//public async void TestUpdates ()
