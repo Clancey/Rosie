@@ -14,7 +14,7 @@ namespace Rosie.Server.Routes
 		{
 		}
 
-		public override Task<DeviceState> GetResponse(HttpMethod method, HttpListenerRequest request, NameValueCollection queryString, string data)
+		public override Task<DeviceState> GetResponse<HttpRequest>(HttpMethod method, HttpRequest request, NameValueCollection queryString, string data)
 		{
 			var deviceId = queryString["deviceId"];
 			if (method == HttpMethod.Get)
