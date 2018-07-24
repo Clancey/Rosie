@@ -52,9 +52,6 @@ namespace Rosie
 
 		[Indexed]
 		public string Service { get; set; }
-		#if !__MOBILE__
-		= WebRequestHandler.Identifier;
-		#endif
 
 		public bool Discoverable { get; set; } = true;
 	}

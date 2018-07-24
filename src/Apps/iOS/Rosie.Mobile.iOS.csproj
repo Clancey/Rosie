@@ -128,8 +128,11 @@
       <Project>{A8F398D2-9145-4D1A-AF80-5DBC8CC9B4C1}</Project>
       <Name>Rosie.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\Rosie.Models\Rosie.Models.csproj">
+      <Project>{8BC0CC7D-2A97-46F0-83EC-5AEEC7BCBA18}</Project>
+      <Name>Rosie.Models</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\Core\Rosie.Models\Rosie.Models.projitems" Label="Shared" Condition="Exists('..\..\Core\Rosie.Models\Rosie.Models.projitems')" />
   <Import Project="..\Rosie.Mobile\Rosie.Mobile.projitems" Label="Shared" Condition="Exists('..\Rosie.Mobile\Rosie.Mobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

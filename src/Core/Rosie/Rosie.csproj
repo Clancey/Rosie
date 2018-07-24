@@ -24,5 +24,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\Rosie.Models\Rosie.Models.projitems" Label="Shared" Condition="Exists('..\Rosie.Models\Rosie.Models.projitems')" />
+  <ItemGroup>
+    <ProjectReference Include="..\Rosie.Models\Rosie.Models.csproj" />
+  </ItemGroup>
 </Project>
