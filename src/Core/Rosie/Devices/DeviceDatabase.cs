@@ -8,21 +8,21 @@ namespace Rosie
 {
 	public class DeviceDatabase
 	{
-		public SQLiteAsyncConnection DatabaseConnection { get; set;}
+		public SQLiteAsyncConnection DatabaseConnection { get; set; }
 
-		public DeviceDatabase () : this ("devices.db")
+		public DeviceDatabase() : this("devices.db")
 		{
 
 		}
 
-		public DeviceDatabase (string databasePath)
+		public DeviceDatabase(string databasePath)
 		{
 			//System.IO.File.Delete (databasePath);
-			DatabaseConnection = new SQLiteAsyncConnection (databasePath, true);
-			var s = DatabaseConnection.CreateTablesAsync<Device,DeviceGroup,DeviceKeyGrouping, DeviceState> ().Result;
+			DatabaseConnection = new SQLiteAsyncConnection(databasePath, true);
+			var s = DatabaseConnection.CreateTablesAsync<Device, DeviceGroup, DeviceKeyGrouping, DeviceState>().Result;
 		}
 
-		public static DeviceDatabase Shared { get; set; } = new DeviceDatabase ();
+		public static DeviceDatabase Shared { get; set; } = new DeviceDatabase();
 
 		public List<Device> TestDevices { get; set; } = new List<Device> {
 			new Device{
@@ -62,36 +62,36 @@ namespace Rosie
 
 		//}
 
-		public Task InsertDeviceState (DeviceState state)
+		public Task InsertDeviceState(DeviceState state)
 		{
-			return DatabaseConnection.InsertOrReplaceAsync (state);
+			return DatabaseConnection.InsertOrReplaceAsync(state);
 		}
 
-		public Task<Device> GetDevice (string id)
+		public Task<Device> GetDevice(string id)
 		{
-			return DatabaseConnection.Table<Device> ().Where (x => x.Id == id).FirstOrDefaultAsync ();
+			return DatabaseConnection.Table<Device>().Where(x => x.Id == id).FirstOrDefaultAsync();
 		}
 
-		public Task<List<Device>> GetAllDevices ()
+		public Task<List<Device>> GetAllDevices()
 		{
-			return DatabaseConnection.Table<Device> ().ToListAsync ();
+			return DatabaseConnection.Table<Device>().ToListAsync();
 		}
 
-		public Task<List<Device>> GetEchoDevices ()
+		public Task<List<Device>> GetEchoDevices()
 		{
 
-			return DatabaseConnection.Table<Device> ().Where(x=> x.Discoverable && x.DeviceType != DeviceType.Unknown).ToListAsync ();
+			return DatabaseConnection.Table<Device>().Where(x => x.Discoverable && x.DeviceType != DeviceType.Unknown).ToListAsync();
 		}
 
-		public async Task<bool> InsertDevice (Device device)
+		public async Task<bool> InsertDevice(Device device)
 		{
-			var s = await DatabaseConnection.InsertOrReplaceAsync (device);
+			var s = await DatabaseConnection.InsertOrReplaceAsync(device);
 			return s > 0;
 		}
 
-		public async Task<bool> DeleteDevice (Device device)
+		public async Task<bool> DeleteDevice(Device device)
 		{
-			var s = await DatabaseConnection.DeleteAsync (device);
+			var s = await DatabaseConnection.DeleteAsync(device);
 			return s > 0;
 		}
 
