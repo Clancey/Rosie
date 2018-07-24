@@ -24,15 +24,21 @@ namespace Rosie
 			}
 		}
 
-		public Task<bool> AddDevice (Device device)
+		public Task<bool> AddDevice(Device device)
 		{
-			if (DeviceLogHandlers.Any ()) {
-				Task.Run (async () => {
-					foreach (var handler in DeviceLogHandlers) {
-						try {
-							await handler.AddDevice (device);
-						} catch (Exception ex) {
-							Console.WriteLine (ex);
+			if (DeviceLogHandlers.Any())
+			{
+				Task.Run(async () =>
+				{
+					foreach (var handler in DeviceLogHandlers)
+					{
+						try
+						{
+							await handler.AddDevice(device);
+						}
+						catch (Exception ex)
+						{
+							Console.WriteLine(ex);
 						}
 					}
 				});
