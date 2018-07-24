@@ -15,10 +15,10 @@ namespace Rosie
 
 	internal class DeviceManager : IDeviceManager
 	{
-		public DeviceManager (IDeviceLogger defaultDeviceLogger)
+		public DeviceManager(IDeviceLogger defaultDeviceLogger)
 		{
-			RegisterHandler<WebRequestHandler> ();
-			if(defaultDeviceLogger != null)
+			RegisterHandler<WebRequestHandler>();
+			if (defaultDeviceLogger != null)
 			{
 				RegisterHandler(defaultDeviceLogger);
 			}
@@ -43,7 +43,7 @@ namespace Rosie
 					}
 				});
 			}
-			return DeviceDatabase.Shared.InsertDevice (device);
+			return DeviceDatabase.Shared.InsertDevice(device);
 		}
 
 		public Task<List<Device>> GetAllDevices()
@@ -51,35 +51,41 @@ namespace Rosie
 			return DeviceDatabase.Shared.GetAllDevices();
 		}
 
-		public delegate bool SetDeviceStateHandler (object sender, SetDeviceArgs args);
+		public delegate bool SetDeviceStateHandler(object sender, SetDeviceArgs args);
 
 		public event SetDeviceStateHandler SetDeviceEvent;
 
-		public async Task<bool> SetDeviceState (Device device, DeviceUpdate state)
+		public async Task<bool> SetDeviceState(Device device, DeviceUpdate state)
 		{
-			var events = SetDeviceEvent?.GetInvocationList ().ToList ();
+			var events = SetDeviceEvent?.GetInvocationList().ToList();
 			//Let the last subscription get first dibs
-			events?.Reverse ();
+			events?.Reverse();
 			var handled = false;
-			var args = new SetDeviceArgs {
+			var args = new SetDeviceArgs
+			{
 				Device = device,
 				Request = state,
 			};
-			if(events != null)
-			foreach (var e in events) {
-				try {
-					handled = await Task.Run (() => (e as SetDeviceStateHandler)?.Invoke (this, args) ?? false);
-					if (handled)
-						return args.Success;
-				} catch (Exception ex) {
-					Console.WriteLine (ex);
+			if (events != null)
+				foreach (var e in events)
+				{
+					try
+					{
+						handled = await Task.Run(() => (e as SetDeviceStateHandler)?.Invoke(this, args) ?? false);
+						if (handled)
+							return args.Success;
+					}
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex);
+					}
 				}
-			}
 
 
-			var handlerList = GetHandlerList (device.Service ?? WebRequestHandler.Identifier);
-			foreach (var handler in handlerList) {
-				handled = await handler.HandleRequest (device, state);
+			var handlerList = GetHandlerList(device.Service ?? WebRequestHandler.Identifier);
+			foreach (var handler in handlerList)
+			{
+				handled = await handler.HandleRequest(device, state);
 				if (handled)
 					return true;
 			}
@@ -87,54 +93,59 @@ namespace Rosie
 			return false;
 		}
 
-		public Task UpdateCurrentState (DeviceState state)
+		public Task UpdateCurrentState(DeviceState state)
 		{
-			if (DeviceLogHandlers.Any ()) {
-				Task.Run (async () => {
-					foreach (var handler in DeviceLogHandlers) {
-						try {
-							await handler.DeviceUpdate (state);
-						} catch (Exception ex) {
-							Console.WriteLine (ex);
-						}
+			if (DeviceLogHandlers.Any())
+			{
+				Task.WhenAll(DeviceLogHandlers.Select(handler => Task.Run(async () =>
+				{
+					try
+					{
+						await handler.DeviceUpdate(state);
 					}
-				});
+					catch (Exception ex)
+					{
+						Console.WriteLine(ex);
+					}
+				})).ToList());
+				//await Task.WhenAll(
+
 			}
-			return DeviceDatabase.Shared.InsertDeviceState (state);
+			return DeviceDatabase.Shared.InsertDeviceState(state);
 		}
 
-		Dictionary<string, List<IDeviceHandler>> handlers = new Dictionary<string, List<IDeviceHandler>> ();
+		Dictionary<string, List<IDeviceHandler>> handlers = new Dictionary<string, List<IDeviceHandler>>();
 
-		public void RegisterHandler<T> () where T : IDeviceHandler
+		public void RegisterHandler<T>() where T : IDeviceHandler
 		{
-			var handler = (T)Activator.CreateInstance (typeof (T));
-			RegisterHandler (handler);
+			var handler = (T)Activator.CreateInstance(typeof(T));
+			RegisterHandler(handler);
 		}
 
-		public void RegisterHandler (IDeviceHandler handler)
+		public void RegisterHandler(IDeviceHandler handler)
 		{
-			var handlerList = GetHandlerList (handler.ServiceIdentifier);
-			handlerList.Add (handler);
+			var handlerList = GetHandlerList(handler.ServiceIdentifier);
+			handlerList.Add(handler);
 		}
 
-		List<IDeviceHandler> GetHandlerList (string service)
+		List<IDeviceHandler> GetHandlerList(string service)
 		{
 			List<IDeviceHandler> handlerList;
-			if (!handlers.TryGetValue (service, out handlerList))
-				handlers [service] = handlerList = new List<IDeviceHandler> ();
+			if (!handlers.TryGetValue(service, out handlerList))
+				handlers[service] = handlerList = new List<IDeviceHandler>();
 			return handlerList;
 		}
 
-		List<IDeviceLogger> DeviceLogHandlers = new List<IDeviceLogger> ();
-		public void RegisterDeviceLogHandler<T> () where T : IDeviceLogger
+		List<IDeviceLogger> DeviceLogHandlers = new List<IDeviceLogger>();
+		public void RegisterDeviceLogHandler<T>() where T : IDeviceLogger
 		{
-			var handler = (T)Activator.CreateInstance (typeof (T));
-			RegisterHandler (handler);
+			var handler = (T)Activator.CreateInstance(typeof(T));
+			RegisterHandler(handler);
 		}
 
-		public void RegisterHandler (IDeviceLogger handler)
+		public void RegisterHandler(IDeviceLogger handler)
 		{
-			DeviceLogHandlers.Add (handler);
+			DeviceLogHandlers.Add(handler);
 		}
 
 	}
