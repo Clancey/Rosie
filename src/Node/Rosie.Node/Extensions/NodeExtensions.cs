@@ -49,7 +49,7 @@ namespace Rosie.Node
 			{
 				case "37 - 0":
 				case "39 - 0":
-					return DeviceState.SwitchState;
+					return DeviceStateKey.SwitchState;
 				case "117 - 0":
 					return "Protection";
 				case "32 - 0":
@@ -57,15 +57,15 @@ namespace Rosie.Node
 				case "48 - 0":
 					return "Sensor";
 				case "49 - 1":
-					return DeviceState.Temperature;
+					return DeviceStateKey.Temperature;
 				case "49 - 3":
-					return DeviceState.Illuminance;
+					return DeviceStateKey.Illuminance;
 				case "49 - 25":
 					return "Seismic Intensity";
 				case "113 - 10":
 					return "Burglar";
 				case "128 - 0":
-					return DeviceState.BatteryLevel;
+					return DeviceStateKey.BatteryLevel;
 			}
 			return $"Unknown ({commandId})";
 		}

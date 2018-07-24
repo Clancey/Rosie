@@ -24,25 +24,25 @@ namespace Rosie.SmartThings
 
 		static Dictionary<string, string> CommandNames = new Dictionary<string, string>
 		{
-			["switch"] = DeviceState.SwitchState,
-			["battery"] = DeviceState.BatteryLevel,
-			["lock"] = DeviceState.Lock,
-			["motion"] = DeviceState.Motion,
-			//["checkInterval"] = DeviceStateKeys.in,
-			["level"] = DeviceState.Level,
-			["energy"] = DeviceState.Energy,
-			["power"] = DeviceState.Power,
-			["about"] = DeviceState.About,
-			["networkAddress"] = DeviceState.NetworkAddress,
-			["status"] = DeviceState.Status,
-			["serialNumber"] = DeviceState.SerialNumber,
-			["indicatorStatus"] = DeviceState.IndicatorStatus,
-			["water"] = DeviceState.Water,
-			["button"] = DeviceState.Button,
-			["numberOfButtons"] = DeviceState.NumberOfButtons,
-			["hue"] = DeviceState.Hue,
-			["saturation"] = DeviceState.Saturation,
-			["color"] = DeviceState.Color
+			["switch"] = DeviceStateKey.SwitchState,
+			["battery"] = DeviceStateKey.BatteryLevel,
+			["lock"] = DeviceStateKey.Lock,
+			["motion"] = DeviceStateKey.Motion,
+			//["checkInterval"] = DeviceStateKey.in,
+			["level"] = DeviceStateKey.Level,
+			["energy"] = DeviceStateKey.Energy,
+			["power"] = DeviceStateKey.Power,
+			["about"] = DeviceStateKey.About,
+			["networkAddress"] = DeviceStateKey.NetworkAddress,
+			["status"] = DeviceStateKey.Status,
+			["serialNumber"] = DeviceStateKey.SerialNumber,
+			["indicatorStatus"] = DeviceStateKey.IndicatorStatus,
+			["water"] = DeviceStateKey.Water,
+			["button"] = DeviceStateKey.Button,
+			["numberOfButtons"] = DeviceStateKey.NumberOfButtons,
+			["hue"] = DeviceStateKey.Hue,
+			["saturation"] = DeviceStateKey.Saturation,
+			["color"] = DeviceStateKey.Color
 		};
 
 		static string StatusKey(this SmartThingsUpdate command)

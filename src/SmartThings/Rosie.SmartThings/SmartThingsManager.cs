@@ -20,18 +20,19 @@ namespace Rosie.SmartThings
 
 		public string Description => "Integration with Phillips Hue";
 
-		public Device[] Devices = new Device[];
+		public Device[] Devices = new Device[0];
 
 		public async Task<bool> HandleRequest(Rosie.Device device, DeviceUpdate request)
 		{
-			
-			switch (request.Key)
-			{
-				case DeviceState.SwitchState:
-					if (request.BoolValue.Value)
-						await api.TurnOnDevice();
-					return true;
-			}
+
+			//switch (request.Key)
+			//{
+			//	case DeviceStateKey.SwitchState:
+			//		if (request.BoolValue.Value)
+			//			await api.TurnOnDevice();
+			//		return true;
+			//}
+			return false;
 		}
 		SmartThingsApi api = new SmartThingsApi("SmartThings", "fdsjfhe545343uiryeui43hd1hfdsfy8");
 		SmartThingsUpdateListener updater;
