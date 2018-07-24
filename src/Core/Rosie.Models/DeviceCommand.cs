@@ -12,6 +12,7 @@ namespace Rosie
 		public bool IsReadonly {get;set;}
 
 	}
+
 	public class CapabilityCommandGrouping
 	{
 		[PrimaryKey]
@@ -30,6 +31,7 @@ namespace Rosie
 		[Indexed]
 		public string Capability { get; set; }
 
+		[Indexed]
 		public string Command { get; set; }
 	}
 }

@@ -58,10 +58,6 @@
     <Compile Include="Helpers\AuthStorage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\SmartThings\Rosie.SmartThings.Net\Rosie.SmartThings.Net.csproj">
-      <Project>{98005BE2-2D51-46B6-B059-8D58DC2A13CF}</Project>
-      <Name>Rosie.SmartThings.Net</Name>
-    </ProjectReference>
     <ProjectReference Include="..\src\Core\Rosie\Rosie.csproj">
       <Project>{B679C1B8-7276-4CE9-ADE6-E85B62247995}</Project>
       <Name>Rosie</Name>

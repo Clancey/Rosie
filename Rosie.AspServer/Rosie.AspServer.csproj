@@ -15,5 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Core\Rosie\Rosie.csproj" />
     <ProjectReference Include="..\Rosie.Hue\Rosie.Hue.csproj" />
+    <ProjectReference Include="..\src\SmartThings\Rosie.SmartThings\Rosie.SmartThings.csproj" />
   </ItemGroup>
 </Project>

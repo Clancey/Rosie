@@ -77,7 +77,13 @@ namespace Rosie.SmartThings
 			Client.DefaultRequestHeaders.Add ("User-Agent", "SmartThings / 2.1.4 (iPhone; iOS 9.3.3; Scale / 2.00)");
 			Client.DefaultRequestHeaders.Add ("X-ST-Client-OS", "iOS 9.3.3");
 		}
-
+		public bool HasLoggedIn()
+		{
+			if (CurrentBasicAccount != null)
+				return true;
+			return GetAccount<SmartThingsAccount>(this.Identifier) != null;
+			
+		}
 		#region Api Configuration
 		public SmartThingsAccount CurrentSmartThingsAccount => CurrentAccount as SmartThingsAccount;
 		protected override SimpleAuth.BasicAuthAuthenticator CreateAuthenticator ()
@@ -180,7 +186,7 @@ namespace Rosie.SmartThings
 		}
 		public async Task<UserLocation> GetDefaultLocation (Device device)
 		{
-			return CurrentLocations?.FirstOrDefault () ?? (await GetLocations ())?.FirstOrDefault (x=> x.Id == device.LocationId);
+			return CurrentLocations?.FirstOrDefault (x => x.Id == device.LocationId) ?? (await GetLocations ())?.FirstOrDefault (x=> x.Id == device.LocationId);
 		}
 
 		public async Task<LocationResponse> GetLocationDetails (UserLocation location = null)
@@ -215,6 +221,7 @@ namespace Rosie.SmartThings
 			var location = await GetDefaultLocation (device);
 			return await Get<DeviceInfo> (location.CreateApiUrl ($"api/devices/{device.Id}"));
 		}
+
 
 		public async Task<bool> TurnOnDevice (Device device)
 		{

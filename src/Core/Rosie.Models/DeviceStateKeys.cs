@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Rosie
 {
-	public partial class DeviceState
+	public class DeviceStateKey
 	{
 		public const string SwitchState = "switchState";
 		public const string BatteryLevel = "batteryLevel";
@@ -28,7 +28,7 @@ namespace Rosie
 		public const string Temperature = "temperature";
 		public const string Humidity = "humidity";
 		public const string Acceleration = "acceleration";
-		public const string UltravioletIndex = "ultraviolet Index";
+		public const string UltravioletIndex = "ultravioletIndex";
 		public const string Tamper = "tamper";
 		public const string NeedUpdate = "needsUpdate";
 		public const string Smoke = "smoke";
