@@ -32,6 +32,7 @@ namespace Rosie
 		/// Internal used by Sqlite-net
 		/// </summary>
 		/// <value>The commands string.</value>
+		[JsonIgnore]
 		public string _commandsString
 		{
 			get => string.Join(",", Commands);
@@ -43,6 +44,7 @@ namespace Rosie
 		/// Internal used by Sqlite-net
 		/// </summary>
 		/// <value>The commands string.</value>
+		[JsonIgnore]
 		public string _propertiesString
 		{
 			get => string.Join(",", Properties);
