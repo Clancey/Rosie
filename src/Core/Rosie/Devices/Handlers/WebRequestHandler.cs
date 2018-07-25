@@ -20,8 +20,10 @@ namespace Rosie
 			try {
 				if (request.DataType != DataTypes.Bool)
 					return false;
-				var resp = await client.GetAsync (request.BoolValue.Value ? device.OnUrl : device.OffUrl);
-				resp.EnsureSuccessStatusCode ();
+				//TODO: Fixme
+				//var url = device.ad
+				//var resp = await client.GetAsync (request.BoolValue.Value ? device.OnUrl : device.OffUrl);
+				//resp.EnsureSuccessStatusCode ();
 			} catch (Exception ex) {
 				Console.WriteLine (ex);
 			}

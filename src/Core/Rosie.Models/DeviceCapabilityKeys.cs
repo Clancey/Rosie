@@ -6,7 +6,6 @@ namespace Rosie
 		public const string Switch = "switch";
 		public const string Thermostat = "thermostat";
 		public const string AccelerationSensor = "accelerationSensor";
-		public const string Actuator = "actuator";
 		public const string Alarm = "alarm";
 		public const string AudioNotification = "audioNotification";
 		public const string Battery = "battery";

@@ -31,7 +31,7 @@ namespace Rosie.Server.Routes
 			var device = await DeviceDatabase.Shared.GetDevice(deviceId);
 			if (!await manager.SetDeviceState(device, state))
 				throw new Exception("Error processing the request");
-			return new[] { await DeviceDatabase.Shared.GetDeviceState(deviceId, state.Key) };
+			return new[] { await DeviceDatabase.Shared.GetDeviceState(deviceId, state.PropertyKey) };
 		}
 
 		Task<DeviceState[]> GetDeviceState(string deviceId)

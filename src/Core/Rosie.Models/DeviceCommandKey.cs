@@ -3,6 +3,7 @@ namespace Rosie
 {
 	public static class DeviceCommandKey
 	{
+
 		public const string On = "on";
 		public const string Off = "off";
 		public const string Level = "level";
@@ -36,6 +37,10 @@ namespace Rosie
 		public const string ChannelDown = "channelDown";
 		public const string CaptureClip = "captureClip";
 		public const string Preset = "preset";
+		public const string Siren = "siren";
+		public const string Strobe = "strobe";
+		public const string Both = "both";
+		public const string AlarmState = "alarmState";
 
 	}
 }

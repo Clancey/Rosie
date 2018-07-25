@@ -18,7 +18,7 @@ namespace Rosie.Node
 				DeviceId = node.Id,
 				DataType = dataType,
 				Value = update.Value.Value,
-				Key = statusKey,
+				PropertyKey = statusKey,
 			};
 		}
 
@@ -49,7 +49,7 @@ namespace Rosie.Node
 			{
 				case "37 - 0":
 				case "39 - 0":
-					return DeviceStateKey.SwitchState;
+					return DevicePropertyKey.SwitchState;
 				case "117 - 0":
 					return "Protection";
 				case "32 - 0":
@@ -57,15 +57,15 @@ namespace Rosie.Node
 				case "48 - 0":
 					return "Sensor";
 				case "49 - 1":
-					return DeviceStateKey.Temperature;
+					return DevicePropertyKey.Temperature;
 				case "49 - 3":
-					return DeviceStateKey.Illuminance;
+					return DevicePropertyKey.Illuminance;
 				case "49 - 25":
 					return "Seismic Intensity";
 				case "113 - 10":
 					return "Burglar";
 				case "128 - 0":
-					return DeviceStateKey.BatteryLevel;
+					return DevicePropertyKey.BatteryLevel;
 			}
 			return $"Unknown ({commandId})";
 		}

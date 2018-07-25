@@ -28,17 +28,18 @@ namespace Rosie
 			new Device{
 				Name = "Bedroom Thermostat",
 				Id = "720e95b3-9498-4e86-af8d-1f177c9e25b8",
-				DeviceType = DeviceType.Thermostat
+				DeviceType = DeviceTypeKeys.Thermostat
 			},
 			new Device{
 				Name = "Kitchen Lights",
 				Id = "476b66f1-29fe-42fe-bb9c-d17421bf5f1e",
+				DeviceType = DeviceTypeKeys.Switch
 			},
 		};
 
 		public Task<DeviceState> GetDeviceState(string deviceId, string key)
 		{
-			return DatabaseConnection.Table<DeviceState>().Where(x => x.DeviceId == deviceId && x.Key == key).FirstOrDefaultAsync();
+			return DatabaseConnection.Table<DeviceState>().Where(x => x.DeviceId == deviceId && x.PropertyKey == key).FirstOrDefaultAsync();
 		}
 
 		public Task<DeviceState[]> GetDeviceState(string deviceId)
@@ -79,8 +80,9 @@ namespace Rosie
 
 		public Task<List<Device>> GetEchoDevices()
 		{
+			throw new NotSupportedException();
 
-			return DatabaseConnection.Table<Device>().Where(x => x.Discoverable && x.DeviceType != DeviceType.Unknown).ToListAsync();
+			//return DatabaseConnection.Table<Device>().Where(x => x.Discoverable && x.DeviceType != DeviceType.Unknown).ToListAsync();
 		}
 
 		public async Task<bool> InsertDevice(Device device)
@@ -94,11 +96,6 @@ namespace Rosie
 			var s = await DatabaseConnection.DeleteAsync(device);
 			return s > 0;
 		}
-
-		public readonly DeviceCapability[] DefaultCapabilities = {
-			new DeviceCapability{Key = DeviceCapabilityKeys.Switch},
-			new DeviceCapability{Key = DeviceCapabilityKeys.Sensor},
-		};
 	}
 }
 

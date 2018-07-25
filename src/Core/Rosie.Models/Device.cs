@@ -10,14 +10,6 @@ namespace Rosie
 		Math,
 	}
 
-	public enum DeviceType
-	{
-		Unknown,
-		Switch,
-		Thermostat,
-		Light,
-		Sensor,
-	}
 	public class Device
 	{
 		[PrimaryKey]
@@ -42,13 +34,11 @@ namespace Rosie
 
 		public string Type { get; set; }
 
-		public DeviceType DeviceType { get; set; } = DeviceType.Switch;
+		public string DeviceType { get; set; }
 
-		public string OffUrl { get; set; }
+		public string[] AdditionalCapabilities { get; set; }
 
-		public string OnUrl { get; set; }
-
-		public BriConversionType ConversionType { get; set; }
+		public string[] AdditionalCommands { get; set; }
 
 		[Indexed]
 		public string Service { get; set; }

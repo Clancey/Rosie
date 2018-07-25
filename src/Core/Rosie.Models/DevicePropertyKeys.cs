@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Rosie
 {
-	public class DeviceStateKey
+	public static class DevicePropertyKey
 	{
 		public const string SwitchState = "switchState";
 		public const string BatteryLevel = "batteryLevel";

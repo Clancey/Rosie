@@ -1,37 +1,25 @@
 ﻿using System;
 using SQLite;
+using Newtonsoft.Json;
+using Rosie.Models.JsonConverters;
 namespace Rosie
 {
 	public class DeviceCommand
 	{
-		[PrimaryKey]
 		public string Command { get; set; }
 
-		public DataTypes DataType {get;set;}
+		[Ignore]
+		public DeviceCommandArguments[] Arguments { get; set; }
 
-		public bool IsReadonly {get;set;}
-
-	}
-
-	public class CapabilityCommandGrouping
-	{
-		[PrimaryKey]
-		public string Id
-		{
-			get
-			{
-				return $"{Capability} - {Command}";
-			}
-			set
-			{
-				//This is here just for SqlIte;
-			}
+		/// <summary>
+		/// Used by Sqlite-net. Do not use
+		/// </summary>
+		/// <value>The device command arguments string.</value>
+		[JsonIgnore]
+		public string _deviceCommandArgumentsString {
+			get => Arguments?.Length > 0 ? JsonConvert.SerializeObject(Arguments) : null;
+			set => Arguments = string.IsNullOrWhiteSpace(value) ? null : JsonConvert.DeserializeObject<DeviceCommandArguments[]>(value);
 		}
 
-		[Indexed]
-		public string Capability { get; set; }
-
-		[Indexed]
-		public string Command { get; set; }
 	}
 }

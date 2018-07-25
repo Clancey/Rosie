@@ -23,7 +23,7 @@ namespace Rosie
 		[PrimaryKey]
 		public virtual string Id { get; set; } = Guid.NewGuid ().ToString ();
 		public virtual string DeviceId { get; set; }
-		public virtual string Key { get; set; }
+		public virtual string PropertyKey { get; set; }
 
 		object value;
 		[Ignore]
@@ -182,7 +182,7 @@ namespace Rosie
 		public virtual object ToSimpleObject ()
 		{
 			return new Dictionary<string, object>{
-				{Key,Value},
+				{PropertyKey,Value},
 				{nameof(DateTime),DateTime},
 				{nameof(DataFormat),DataFormat},
 				{nameof(DataType),DataType.ToString()}

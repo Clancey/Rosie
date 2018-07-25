@@ -75,7 +75,7 @@ namespace Rosie.Hue
 					ManufacturerId = light.ModelId,
 					ProductId = light.ProductId,
 					Name = light.Name,
-					DeviceType = DeviceType.Light,
+					DeviceType = DeviceTypeKeys.Switch,
 				};
 				device.Discoverable = !string.IsNullOrWhiteSpace(device.Name);
 				await _deviceManager.AddDevice(device);

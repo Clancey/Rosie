@@ -8,4 +8,7 @@
     <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="JsonConverters\" />
+  </ItemGroup>
 </Project>
