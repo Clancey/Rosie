@@ -114,25 +114,25 @@ namespace Rosie
 			return DeviceDatabase.Shared.InsertDeviceState(state);
 		}
 
-		Dictionary<string, List<IDeviceHandler>> handlers = new Dictionary<string, List<IDeviceHandler>>();
+		Dictionary<string, List<IDeviceService>> handlers = new Dictionary<string, List<IDeviceService>>();
 
-		public void RegisterHandler<T>() where T : IDeviceHandler
+		public void RegisterHandler<T>() where T : IDeviceService
 		{
 			var handler = (T)Activator.CreateInstance(typeof(T));
 			RegisterHandler(handler);
 		}
 
-		public void RegisterHandler(IDeviceHandler handler)
+		public void RegisterHandler(IDeviceService handler)
 		{
 			var handlerList = GetHandlerList(handler.ServiceIdentifier);
 			handlerList.Add(handler);
 		}
 
-		List<IDeviceHandler> GetHandlerList(string service)
+		List<IDeviceService> GetHandlerList(string service)
 		{
-			List<IDeviceHandler> handlerList;
+			List<IDeviceService> handlerList;
 			if (!handlers.TryGetValue(service, out handlerList))
-				handlers[service] = handlerList = new List<IDeviceHandler>();
+				handlers[service] = handlerList = new List<IDeviceService>();
 			return handlerList;
 		}
 

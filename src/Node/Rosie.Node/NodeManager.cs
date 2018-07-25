@@ -6,7 +6,7 @@ using Rosie.Server.Routes.Node;
 
 namespace Rosie.Node
 {
-	public class NodeManager : IDeviceHandler
+	public class NodeManager : IDeviceService
 	{
 		IDeviceManager _deviceManager;
 		public NodeManager(IDeviceManager deviceManager)

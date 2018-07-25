@@ -13,7 +13,7 @@ namespace Rosie.Services
 		}
 	}
 
-	public interface IRosieService : IDeviceHandler
+	public interface IRosieService : IDeviceService
 	{
 		string Domain { get; }
 		string Name { get; }

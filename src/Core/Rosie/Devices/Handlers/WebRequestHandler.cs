@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Rosie
 {
-	public class WebRequestHandler : IDeviceHandler
+	public class WebRequestHandler : IDeviceService
 	{
 		public WebRequestHandler ()
 		{

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 namespace Rosie
 {
-	public interface IDeviceHandler
+	public interface IDeviceService
 	{
 		string ServiceIdentifier { get; }
 
