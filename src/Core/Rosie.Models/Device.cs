@@ -55,7 +55,7 @@ namespace Rosie
 		[JsonIgnore]
 		public string _additionalCapabilitiesString
 		{
-			get => string.Join(",", AdditionalCapabilities);
+			get => AdditionalCapabilities == null ? null : string.Join(",", AdditionalCapabilities);
 			set => AdditionalCapabilities = value?.Split(',');
 		}
 
@@ -69,7 +69,7 @@ namespace Rosie
 		[JsonIgnore]
 		public string _AdditionalCommandsString
 		{
-			get => string.Join(",", AdditionalCommands);
+			get => AdditionalCommands == null ? null : string.Join(",", AdditionalCommands);
 			set => AdditionalCommands = value?.Split(',');
 		}
 

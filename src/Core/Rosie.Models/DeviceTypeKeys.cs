@@ -6,5 +6,6 @@ namespace Rosie
 		public const string Switch = "switch";
 		public const string DimmerSwitch = "dimmerSwitch";
 		public const string Thermostat = "thermostat";
+		public const string Light = "light";
 	}
 }
