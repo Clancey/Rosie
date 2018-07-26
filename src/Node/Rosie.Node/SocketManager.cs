@@ -17,7 +17,7 @@ namespace Rosie.Node
 
 		public Action<NodeValueUpdate> NodeValueUpdated;
 
-		public async Task<bool> Connect (string server = "http://192.168.86.10:3000")
+		public async Task<bool> Connect (string server = "http://12.0.0.1:3000")
 		{
 			var tcs = new TaskCompletionSource<bool> ();
 			socket = IO.Socket (server);
@@ -95,7 +95,10 @@ namespace Rosie.Node
 			var success = await tcs.Task;
 			return success;
 		}
-
+		public async Task Stop()
+		{
+			socket.Close();
+		}
 		void Log (string message)
 		{
 			if (DebugMode)

@@ -35,7 +35,7 @@ namespace Rosie
 		[JsonIgnore]
 		public string _commandsString
 		{
-			get => string.Join(",", Commands);
+			get => Commands == null ? "" : string.Join(",", Commands);
 			set => Commands = value?.Split(',');
 		}
 
@@ -47,7 +47,7 @@ namespace Rosie
 		[JsonIgnore]
 		public string _propertiesString
 		{
-			get => string.Join(",", Properties);
+			get => Properties == null ? "" : string.Join(",", Properties);
 			set => Properties = value?.Split(',');
 		}
 	}

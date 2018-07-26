@@ -13,13 +13,13 @@ var apiKey = undefined;
 var os = require('os');
 
 //OSX
-//var zwavePort = '/dev/tty.usbmodem1421';
+var zwavePort = '/dev/cu.usbmodem1461';
 
 //Windows
 //var zwavePort = '\\\\.\\COM4';
 
 //Raspbery Pi
-var zwavePort = '/dev/ttyACM0';
+//var zwavePort = '/dev/ttyACM0';
  
 var secrets = require("./Secrets.json");
 var OZW = require('openzwave-shared');
@@ -221,7 +221,7 @@ router.use(function(req, res, next) {
       if(apiKey == undefined)
       {
         secrets = require("./Secrets.json");
-        apiKey = secrets.apiKey;
+        apiKey = secrets.ApiKey;
       }
       
       if(token == apiKey)
@@ -229,6 +229,7 @@ router.use(function(req, res, next) {
         next(); 
       }
       else{
+          print(token);
           return res.json({ success: false, message: 'Failed to authenticate token.' });   
       }
   } else {

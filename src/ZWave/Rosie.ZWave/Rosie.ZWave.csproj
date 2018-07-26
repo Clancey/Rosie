@@ -4,4 +4,18 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ZWaveNode.cs" />
+    <Compile Remove="ZWaveCommandTypes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Rosie.Models\Rosie.Models.csproj" />
+    <ProjectReference Include="..\..\Core\Rosie\Rosie.csproj" />
+    <ProjectReference Include="..\..\..\external\zwave-lib-dotnet\ZWaveLib\ZWaveLib.csproj" />
+    <ProjectReference Include="..\..\..\external\serialport-lib-dotnet\SerialPortLib\SerialPortLib.csproj" />
+  </ItemGroup>
 </Project>

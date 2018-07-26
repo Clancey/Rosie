@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Rosie.Extensions;
 using Rosie.Hue;
 using Rosie.Services;
+using Rosie.Node;
 
 namespace Rosie.AspServer
 {
@@ -18,6 +19,7 @@ namespace Rosie.AspServer
 		public void ConfigureServices(IServiceCollection services)
 		{
 			new HueService(null,null,null);
+			new NodeService(null, null, null);
 			 
 			services.AddTransient<IDeviceLogger, SqliteDeviceLogger>();
 			services.AddRosie();

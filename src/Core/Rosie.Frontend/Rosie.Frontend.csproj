@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ooui.AspNetCore" Version="0.10.222" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Clancey.SimpleAuth" Version="1.0.49" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" />
+    <PackageReference Include="Ooui.Forms" Version="0.10.222" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rosie.Models\Rosie.Models.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Main.cs" />
+  </ItemGroup>
+</Project>

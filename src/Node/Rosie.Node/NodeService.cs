@@ -1,33 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Rosie.Services;
+using System.Linq;
 using Rosie.Server.Routes.Node;
 
 namespace Rosie.Node
 {
-	public class NodeManager : IDeviceService
+	public class NodeService : IRosieService
 	{
 		IDeviceManager _deviceManager;
-		public NodeManager(IDeviceManager deviceManager)
+		ILogger<NodeService> _logger;
+		IServicesManager _serviceManager;
+		public NodeService(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
 		{
+			if (loggerFactory != null)
+				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<NodeService>();
+			_logger?.LogInformation("Setup HUE lights");
+			_logger?.LogInformation(Description);
 			_deviceManager = deviceManager;
+			_serviceManager = serviceManager;
 		}
+
+		public NodeService()
+		{
+		}
+
 		internal static string NodeServerUrl
 		{
 			get { return Rosie.Settings.GetSecretString(); }
 		}
 		NodeApi nodeApi;
 		SocketManager sockets;
+		NodeSession nodeSession;
 
-		public Task Init()
-		{
-			LocalWebServer.Shared.Router.AddRoute<NodeDevicesRoute>();
-			LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute>();
-			LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute>();
-			_deviceManager.RegisterHandler(this);
-			return Connect();
-		}
 
 		Task<bool> connectTask;
 		public Task<bool> Connect()
@@ -95,12 +103,18 @@ namespace Rosie.Node
 					Console.WriteLine(ex);
 				}
 			};
-			return await sockets.Connect(NodeServerUrl);
+			return await sockets.Connect("http://localhost:8080");
 		}
 
 		public bool IsConnected => sockets?.Connected ?? false;
 
 		public string ServiceIdentifier => "node";
+
+		public string Domain => "node";
+
+		public string Name => "Node ZWave";
+
+		public string Description => "Node ZWave service";
 
 		List<NodeDevice> Devices = new List<NodeDevice>();
 
@@ -111,7 +125,7 @@ namespace Rosie.Node
 				return;
 			var device = new Device
 			{
-				ServiceDeviceId = nodeDevice.Id,
+				Id = nodeDevice.Id,
 				Service = ServiceIdentifier,
 				Description = nodeDevice.Name,
 				Location = nodeDevice.Loc,
@@ -159,7 +173,7 @@ namespace Rosie.Node
 		{
 			try
 			{
-				var nodeId = int.Parse(device.ServiceDeviceId);
+				var nodeId = int.Parse(device.Id.Replace("node-", ""));
 
 				var nodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
 				var command = await nodeDevice.GetPerferedCommand();
@@ -172,6 +186,42 @@ namespace Rosie.Node
 				Console.WriteLine(ex);
 			}
 			return false;
+		}
+
+		public async Task Start()
+		{
+			try
+			{
+				//LocalWebServer.Shared.Router.AddRoute<NodeDevicesRoute>();
+				//LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute>();
+				//LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute>();
+				nodeSession = new NodeSession();
+				nodeSession.Start("NodeServer");
+				//_deviceManager.RegisterHandler(this);
+				await Connect();
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+		}
+
+		public Task Stop()
+		{
+			nodeSession.Stop();
+			sockets.Stop();
+			return Task.FromResult(true);
+
+		}
+
+		public Task Send()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task Received(object data)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
