@@ -22,7 +22,7 @@ namespace Rosie.AzureIoT
 			registryManager = RegistryManager.CreateFromConnectionString (connectionString);
 			//deviceJobClient = JobClient.CreateFromConnectionString (connectionString);
 			await DeviceDatabase.Shared.DatabaseConnection.CreateTableAsync<DeviceAzureKey> ();
-			var device = new Device { Id = Settings.DeviceId,Description = System.Environment.MachineName };
+			var device = new Device { ServiceDeviceId = Settings.DeviceId,Description = System.Environment.MachineName };
 			await AddDevice (device);
 		}
 

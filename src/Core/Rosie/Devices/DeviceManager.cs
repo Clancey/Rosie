@@ -26,6 +26,10 @@ namespace Rosie
 
 		public Task<bool> AddDevice(Device device)
 		{
+			if (string.IsNullOrWhiteSpace(device.Id))
+			{
+				device.Id = Guid.NewGuid().ToString();
+			}
 			if (DeviceLogHandlers.Any())
 			{
 				Task.Run(async () =>

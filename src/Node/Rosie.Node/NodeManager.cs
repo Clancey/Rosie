@@ -111,7 +111,7 @@ namespace Rosie.Node
 				return;
 			var device = new Device
 			{
-				Id = nodeDevice.Id,
+				ServiceDeviceId = nodeDevice.Id,
 				Service = ServiceIdentifier,
 				Description = nodeDevice.Name,
 				Location = nodeDevice.Loc,
@@ -159,7 +159,7 @@ namespace Rosie.Node
 		{
 			try
 			{
-				var nodeId = int.Parse(device.Id.Replace("node-", ""));
+				var nodeId = int.Parse(device.ServiceDeviceId);
 
 				var nodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
 				var command = await nodeDevice.GetPerferedCommand();

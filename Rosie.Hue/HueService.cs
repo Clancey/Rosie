@@ -68,7 +68,7 @@ namespace Rosie.Hue
 			{
 				var device = new Device
 				{
-					Id = light.Id,
+					ServiceDeviceId = light.Id,
 					Service = ServiceIdentifier,
 					Description = light.Name,
 					Manufacturer = light.ManufacturerName,

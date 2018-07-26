@@ -12,8 +12,18 @@ namespace Rosie
 
 	public class Device
 	{
+		/// <summary>
+		/// This is a guid that is automatically generated.
+		/// </summary>
+		/// <value>The identifier.</value>
 		[PrimaryKey]
-		public string Id { get; set; } 
+		public string Id { get; set; }
+
+		/// <summary>
+		/// This is the ID that is used by each service to identify devices for their platform.
+		/// </summary>
+		/// <value>The service device identifier.</value>
+		public string ServiceDeviceId { get; set; }
 
 		public string Name { get; set; }
 
