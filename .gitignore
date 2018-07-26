@@ -33,9 +33,9 @@ Thumbs.db
 *.Resharper
 #dotCover
 *.dotCover
-*[Ss]ecrets.json
 
 [Nn]ode_modules/
 src/Node/NodeServer/.vscode/launch.json
 .vs/
 Rosie.AspServer/log.db
+Rosie.AspServer/devices.db

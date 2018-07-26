@@ -15,7 +15,7 @@ namespace Rosie.Node
 		}
 		public NodeApi (string apiKey) : base(apiKey,"apikey", AuthLocation.Query)
 		{
-			BaseAddress = new Uri (NodeManager.NodeServerUrl);
+			BaseAddress = new Uri($"http://localhost:8080");
 		}
 		[Path("api/devices")]
 		public Task<List<NodeDevice>> GetDevices ()

@@ -45,6 +45,7 @@ namespace Rosie
 				var data = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>> (json);
 				return data [memberName];
 			} catch (Exception ex) {
+				Console.WriteLine($"Secret key not found: {memberName}");
 				Console.WriteLine (ex);
 			}
 			return defaultValue;
