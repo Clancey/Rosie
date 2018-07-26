@@ -57,6 +57,7 @@ namespace Rosie.ZWave
 			{
 				_logger.LogInformation("Starting");
 				controller = new ZWaveController(Settings.ZWavePort);
+				controller.Nodes.CollectionChanged += Nodes_CollectionChanged;
 				controller.ControllerStatusChanged += Controller_ControllerStatusChanged;
 				controller.DiscoveryProgress += Controller_DiscoveryProgress;
 				controller.NodeOperationProgress += Controller_NodeOperationProgress;
@@ -127,6 +128,11 @@ namespace Rosie.ZWave
 		void Controller_NodeUpdated(object sender, NodeUpdatedEventArgs args)
 		{
 			_logger.LogInformation("NodeUpdated {0} Event Parameter {1} Value {2}", args.NodeId, args.Event.Parameter, args.Event.Value);
+		}
+
+		void Nodes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			_logger.LogInformation($"NodeCollectionChanged {e.Action}");
 		}
 
 	}
