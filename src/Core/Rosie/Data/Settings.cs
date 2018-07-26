@@ -21,8 +21,13 @@ namespace Rosie
 			set { SetString (value);}
 		}
 		public static string ZWavePort {
-			get { return GetString ("/dev/tty.usbmodem1411");}
-			set { GetString (value);}
+			get { return GetString ("/dev/cu.usbmodem1461");}
+			set { SetString (value);}
+		}
+		public static bool ZWaveEnabled
+		{
+			get { return GetBool(); }
+			set { SetBool(value); }
 		}
 
 		public static string EchoDeviceId {

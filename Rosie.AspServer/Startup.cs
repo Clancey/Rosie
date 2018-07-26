@@ -17,7 +17,12 @@ namespace Rosie.AspServer
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
-			new HueService(null,null,null);
+			//Add Services
+
+			{
+				new HueService(null, null, null);
+				new ZWave.ZWaveService(null, null, null);
+			}
 			 
 			services.AddTransient<IDeviceLogger, SqliteDeviceLogger>();
 			services.AddRosie();

@@ -1,0 +1,8 @@
+[submodule "external/zwave-lib-dotnet"]
+	path = external/zwave-lib-dotnet
+	url = https://github.com/Clancey/zwave-lib-dotnet.git
+	branch = net_core
+[submodule "external/serialport-lib-dotnet"]
+	path = external/serialport-lib-dotnet
+	url = https://github.com/Clancey/serialport-lib-dotnet.git
+	branch = net_core
