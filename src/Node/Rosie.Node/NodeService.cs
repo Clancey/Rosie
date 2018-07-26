@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using Rosie.Services;
 using System.Linq;
 using Rosie.Server.Routes.Node;
+using System.IO;
+using System.Reflection;
 
 namespace Rosie.Node
 {
@@ -196,7 +198,7 @@ namespace Rosie.Node
 				//LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute>();
 				//LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute>();
 				nodeSession = new NodeSession();
-				nodeSession.Start("NodeServer");
+				await Task.Run(()=>nodeSession.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "NodeServer")));
 				//_deviceManager.RegisterHandler(this);
 				await Connect();
 			}

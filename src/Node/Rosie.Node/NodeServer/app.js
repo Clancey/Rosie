@@ -11,15 +11,6 @@ var fs = require("fs");
 var apiKey = undefined;
 
 var os = require('os');
-
-//OSX
-var zwavePort = '/dev/cu.usbmodem1461';
-
-//Windows
-//var zwavePort = '\\\\.\\COM4';
-
-//Raspbery Pi
-//var zwavePort = '/dev/ttyACM0';
  
 var secrets = require("./Secrets.json");
 var OZW = require('openzwave-shared');
@@ -144,8 +135,9 @@ zwave.on('node ready', function(nodeid, nodeinfo) {
         case '38':// COMMAND_CLASS_SWITCH_BINARY
         case '39': // COMMAND_CLASS_SWITCH_MULTILEVEL
             if(nodeinfo.producttype.toString() != '0x0002'){
-                zwave.enablePoll(nodeid, comclass);            
-                console.log('Enabled Polling on: node%d:', nodeid);
+                //TODO: Re-enable when we figure out why this crashes
+                //zwave.enablePoll(nodeid, comclass);            
+                //console.log('Enabled Polling on: node%d:', nodeid);
             }
             break;
         }
@@ -195,7 +187,7 @@ zwave.on('controller command', function(r,s) {
 
 
 
-zwave.connect(zwavePort);
+zwave.connect(secrets.ZwavePort);
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST

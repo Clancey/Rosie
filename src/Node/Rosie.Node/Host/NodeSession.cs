@@ -5,6 +5,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Rosie.Node
 {
@@ -44,15 +45,40 @@ namespace Rosie.Node
 			//Kill current user node processes
 			ProcessService.CleanProcessesInMemory ();
 
+			RestorePackages();
 			//Launches HAP-NodeJS process
 			StartNodeJs ();
 
 			Console.WriteLine ($"[Net] Host started in port: {Port}");
 		}
 
+		void RestorePackages()
+		{
+			var filename = "npm";
+			var arguments = "install";
+			var p = new Process
+			{
+				StartInfo = new ProcessStartInfo
+				{
+					FileName = filename,
+					Arguments = arguments,
+					WorkingDirectory = hapNodePath,
+					UseShellExecute = true,
+					CreateNoWindow = true,
 
+				}
+			};
+
+			if (Debug)
+			{
+				p.StartInfo.EnvironmentVariables.Add("DEBUG", "*");
+			}
+			p.Start();
+			p.WaitForExit();
+		}
 		void StartNodeJs ()
 		{
+			var tcs = new TaskCompletionSource<bool>();
 			var filename = Sudo ? "sudo" : "node";
 			var arguments = Sudo ? "node app.js" : "app.js";
 			process = new Process {
@@ -71,11 +97,16 @@ namespace Rosie.Node
 			}
 
 			process.OutputDataReceived += (s, e) => {
+				if (e?.Data?.StartsWith("Magic happens on") ?? false)
+					tcs.TrySetResult(true);
 				Console.WriteLine ($"[NodeJS]{e.Data}");
 			};
 
 			process.Start ();
 			process.BeginOutputReadLine ();
+			var result = Task.WhenAny(tcs.Task, Task.Delay(5000) ).Result;
+			if (result != tcs.Task)
+				throw new Exception("Error loading the server");
 		}
 
 
