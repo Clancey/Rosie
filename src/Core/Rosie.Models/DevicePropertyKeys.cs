@@ -37,6 +37,7 @@ namespace Rosie
 		public const string Contact = "contact";
 		public const string Door = "door";
 		public const string RSSI = "rssi";
-
+		public const string Burglar = "burglar";
+		public const string SeismicIntensity = "seismicIntensity";
 	}
 }

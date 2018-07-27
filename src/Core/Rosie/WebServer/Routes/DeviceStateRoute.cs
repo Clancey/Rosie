@@ -9,9 +9,9 @@ namespace Rosie.Server.Routes
 {
 
 	[Path("api/{deviceId}/State")]
-	public class DeviceRoute : Route<DeviceState[]>
+	public class DeviceStateRoute : Route<DeviceState[]>
 	{
-		public DeviceRoute()
+		public DeviceStateRoute()
 		{
 		}
 

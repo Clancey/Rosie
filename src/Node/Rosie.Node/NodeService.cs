@@ -20,7 +20,7 @@ namespace Rosie.Node
 		{
 			if (loggerFactory != null)
 				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<NodeService>();
-			_logger?.LogInformation("Setup HUE lights");
+			_logger?.LogInformation("Setup Node ZWave");
 			_logger?.LogInformation(Description);
 			_deviceManager = deviceManager;
 			_serviceManager = serviceManager;
@@ -162,7 +162,7 @@ namespace Rosie.Node
 		{
 			try
 			{
-				var nodeId = int.Parse(device.Id.Replace("node-", ""));
+				var nodeId = int.Parse(device.ServiceDeviceId);
 
 				var nodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
 				var command = await nodeDevice.GetPerferedCommand();

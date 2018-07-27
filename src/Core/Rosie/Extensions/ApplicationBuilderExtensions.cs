@@ -30,6 +30,7 @@ namespace Rosie.Extensions
 		static void RegisterRoutes(IRouter router, IList<Route> extraRoutes = null)
 		{
 			router.AddRoute<DevicesRoute>();
+			router.AddRoute<DeviceStateRoute>();
 			router.AddRoute<ServicesRoute>();
 			if(extraRoutes != null)
 			{
@@ -42,8 +43,12 @@ namespace Rosie.Extensions
 
 		static void StartRosieServices(this IServiceProvider builder)
 		{
+			var deviceManager = builder.GetService<IDeviceManager>();
 			foreach (var service in builder.GetServices<IRosieService>())
+			{
+				deviceManager.RegisterHandler(service);
 				service.Start(); //or setup
+			}
 		}
 
 		static async Task HandleRoute(HttpContext context, IRouter router)

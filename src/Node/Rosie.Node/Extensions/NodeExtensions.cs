@@ -132,19 +132,19 @@ namespace Rosie.Node
 				case "39 - 0":
 					return DevicePropertyKey.SwitchState;
 				case "117 - 0":
-					return "Protection";
+					return "protection";
 				case "32 - 0":
-					return "Basic";
+					return "basic";
 				case "48 - 0":
-					return "Sensor";
+					return "sensor";
 				case "49 - 1":
 					return DevicePropertyKey.Temperature;
 				case "49 - 3":
 					return DevicePropertyKey.Illuminance;
 				case "49 - 25":
-					return "Seismic Intensity";
+					return DevicePropertyKey.SeismicIntensity;
 				case "113 - 10":
-					return "Burglar";
+					return DevicePropertyKey.Burglar;
 				case "128 - 0":
 					return DevicePropertyKey.BatteryLevel;
 			}
