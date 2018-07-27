@@ -185,7 +185,7 @@ namespace Rosie.Node
 				//LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute>();
 				//LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute>();
 				nodeSession = new NodeSession();
-				await Task.Run(()=>nodeSession.Start(Path.Combine( Directory.GetCurrentDirectory(),"..","src","Node","Rosie.Node", "NodeServer")));
+				await Task.Run(()=>nodeSession.Start(Path.Combine( Directory.GetCurrentDirectory(),"..","..","Node","Rosie.Node", "NodeServer")));
 				//_deviceManager.RegisterHandler(this);
 				await Connect();
 			}
