@@ -21,7 +21,7 @@ namespace Rosie.Node
 		internal async Task InsertDevice (NodeDevice nodeDevice)
 		{
 			if (string.IsNullOrWhiteSpace (nodeDevice.PerferedCommand)) {
-				var oldDevice = await GetDevice (nodeDevice.Id);
+				var oldDevice = await GetDevice (nodeDevice.NodeId);
 				if(oldDevice != null)
 					nodeDevice.PerferedCommand = oldDevice.PerferedCommand;
 			}
@@ -66,8 +66,7 @@ namespace Rosie.Node
 
 		public Task<NodeDevice> GetDevice (string deviceId)
 		{
-			var nodeId = int.Parse (deviceId);
-			return DatabaseConnection.Table<NodeDevice> ().Where (x => x.NodeId == nodeId).FirstOrDefaultAsync ();
+			return DatabaseConnection.Table<NodeDevice> ().Where (x => x.Id == deviceId).FirstOrDefaultAsync ();
 		}
 	}
 }

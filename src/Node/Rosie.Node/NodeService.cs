@@ -125,11 +125,19 @@ namespace Rosie.Node
 			var nodeId = nodeDevice.Classes.FirstOrDefault().Value?.FirstOrDefault().Value?.NodeId ?? -1;
 			if (nodeId <= 0)
 				return;
-			var oldDevices = await _deviceManager.GetAllDevices();
-			var device = oldDevices.FirstOrDefault(x => x.Service == this.ServiceIdentifier && x.ServiceDeviceId == nodeId.ToString()) ?? new Device { Service = ServiceIdentifier };
+			var oldNodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
+			Device device = null;
+			if (!string.IsNullOrWhiteSpace(oldNodeDevice?.Id))
+			{
+				device = await _deviceManager.GetDevice(oldNodeDevice.Id);
+			}
+			if(device == null)
+			{
+				var oldDevices = await _deviceManager.GetAllDevices();
+				device = oldDevices.FirstOrDefault(x => x.Service == this.ServiceIdentifier && x.ServiceDeviceId == nodeId.ToString()) ?? new Device { Service = ServiceIdentifier, Id = oldNodeDevice?.Id };
+			}
 			if (!device.Update(nodeDevice))
 				return;
-
 			device.Discoverable = !string.IsNullOrWhiteSpace(device.Name);
 			await _deviceManager.AddDevice(device);
 			nodeDevice.Id = device.Id;
