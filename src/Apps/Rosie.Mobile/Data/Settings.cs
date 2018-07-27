@@ -13,7 +13,7 @@ namespace Rosie
 			set { SetString (value);}
 		}
 		public static string ApiUrl {
-			get { return GetString ("http://localhost:8081"); }
+			get { return GetString ("http://localhost:5000"); }
 			set { SetString (value); }
 		}
 

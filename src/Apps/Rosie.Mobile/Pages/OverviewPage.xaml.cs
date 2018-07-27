@@ -13,8 +13,8 @@ namespace Rosie.Mobile
 		{
 			InitializeComponent ();
 			this.BindingContext = new OverviewViewModel ();
-			Icon = D.OnPlatform (new FileImageSource { File = Images.GetCachedImagePath(Images.CurrentOverviewImageName,24) }, null, null);
-			ChangeIcon ();
+			//Icon = D.OnPlatform (new FileImageSource { File = Images.GetCachedImagePath(Images.CurrentOverviewImageName,24) }, null, null);
+			//ChangeIcon ();
 		}
 
 		async void ChangeIcon ()

@@ -8,7 +8,6 @@ namespace Rosie.Mobile
 	{
 		public BasePage ()
 		{
-			
 		}
 		protected override void OnAppearing ()
 		{

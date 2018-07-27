@@ -11,7 +11,7 @@ namespace Rosie.Frontend
 		{
 			Xamarin.Forms.Forms.Init();
 			UI.Port = port;
-			UI.Publish("/", (new OverviewPage()).GetOouiElement());
+			UI.Publish("/", ()=> (new Mobile.DevicesPage()).GetOouiElement(), true);
 		}
 	}
 }

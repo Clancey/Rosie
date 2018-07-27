@@ -6,11 +6,11 @@ namespace Rosie.Mobile
 	{
 		public static string GetCachedImagePath (string svg, double size)
 		{
-			var cachedImage = ImageHelper.GetCachedImagedName (svg, size);
-			if (File.Exists (cachedImage))
-				return cachedImage;
-			ImageHelper.SaveImage (svg, size, cachedImage);
-			return cachedImage;
+			//var cachedImage = ImageHelper.GetCachedImagedName (svg, size);
+			//if (File.Exists (cachedImage))
+			//	return cachedImage;
+			//ImageHelper.SaveImage (svg, size, cachedImage);
+			return string.Empty;
 		}
 		public static string CurrentOverviewImageName => Settings.CurrentUsage == Usage.Low ? OverviewImageNameLow : Settings.CurrentUsage == Usage.Medium ? OverviewImageNameMedium : OverviewImageNameHigh;
 		public const string OverviewImageNameLow = "overview-low.svg";

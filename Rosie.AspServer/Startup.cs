@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Rosie.Extensions;
+using Rosie.Frontend;
 using Rosie.Hue;
 using Rosie.Services;
 using Rosie.Node;
@@ -36,7 +37,7 @@ namespace Rosie.AspServer
 
 			//hook custom stuff
 			app.UseRosie();
-
+			app.UseRosieFrontend();
 		}
 	}
 }

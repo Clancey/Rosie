@@ -8,15 +8,13 @@
     <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0;__OSX__</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Ooui.AspNetCore" Version="0.10.222" />
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" />
-    <PackageReference Include="Ooui.Forms" Version="0.10.222" />
+    <PackageReference Include="Clancey.SimpleAuth" Version="1.0.49" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
+    <PackageReference Include="NGraphics" Version="0.5.0-beta1" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="4.0.0.10-beta" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Rosie.Models\Rosie.Models.csproj" />
-    <ProjectReference Include="..\..\Apps\Rosie.Mobile\Rosie.Mobile.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Main.cs" />
+    <ProjectReference Include="..\..\Core\Rosie.Models\Rosie.Models.csproj" />
   </ItemGroup>
 </Project>
