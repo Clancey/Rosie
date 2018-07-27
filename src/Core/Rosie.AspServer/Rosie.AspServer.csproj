@@ -15,16 +15,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Core\Rosie\Rosie.csproj" />
-    <ProjectReference Include="..\Rosie.Hue\Rosie.Hue.csproj" />
-    <ProjectReference Include="..\src\SmartThings\Rosie.SmartThings\Rosie.SmartThings.csproj" />
-    <ProjectReference Include="..\src\ZWave\Rosie.ZWave\Rosie.ZWave.csproj" />
-    <ProjectReference Include="..\src\Node\Rosie.Node\Rosie.Node.csproj" />
+   
   </ItemGroup>
   <ItemGroup>
     <Content Update="Secrets.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <ProjectReference Include="..\src\Core\Rosie.Frontend\Rosie.Frontend.csproj" />
+
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Rosie.Frontend\Rosie.Frontend.csproj" />
+    <ProjectReference Include="..\..\Hue\Rosie.Hue\Rosie.Hue.csproj" />
+    <ProjectReference Include="..\..\Node\Rosie.Node\Rosie.Node.csproj" />
+    <ProjectReference Include="..\..\SmartThings\Rosie.SmartThings\Rosie.SmartThings.csproj" />
+    <ProjectReference Include="..\Rosie\Rosie.csproj" />
   </ItemGroup>
 </Project>

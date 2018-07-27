@@ -102,6 +102,5 @@
       <Name>Rosie.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\Rosie.Mobile\Rosie.Mobile.projitems" Label="Shared" Condition="Exists('..\Rosie.Mobile\Rosie.Mobile.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -79,7 +79,7 @@
       <Name>Rosie.ZWave</Name>
     </ProjectReference>
     <ProjectReference Include="..\Rosie.Hue\Rosie.Hue.csproj">
-      <Project>{E61ADF58-8C1C-41A2-94F7-87B821BE2A28}</Project>
+      <Project>{73C16606-FFE7-41F9-A5EE-8238D3F38AF8}</Project>
       <Name>Rosie.Hue</Name>
     </ProjectReference>
   </ItemGroup>
