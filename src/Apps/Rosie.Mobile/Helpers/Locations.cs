@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Rosie.Mobile
 {
-	internal static class Locations
+	public static class Locations
 	{
 		static Locations()
 		{
