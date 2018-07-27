@@ -20,6 +20,8 @@ namespace Rosie.Node
 
 		public int Index { get; set; }
 
+		public int Instance { get; set; }
+
 		public CommandGenre Genre { get; set; }
 
 		public string Description { get; set; }

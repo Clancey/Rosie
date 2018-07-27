@@ -43,6 +43,58 @@ namespace Rosie.Node
 			return false;
 		}
 
+		[Path("api/device")]
+		public async Task<bool> SetState(NodeCommand command,int nodeId, object value)
+		{
+			try
+			{
+				var data = new
+				{
+					nodeId = nodeId,
+					commandClass = command.ClassId,
+					instance = command.Instance,
+					index = command.Index,
+					value = value
+				};
+				Console.WriteLine($"Sending: {data.ToJson()}");
+				var s = await Post(data);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+			return false;
+		}
+
+		public async Task<bool> TurnOn(int nodeId)
+		{
+			try
+			{
+				var path = "api/devices/{nodeId}/switchOn";
+				var s = await Post(null, path);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+			return false;
+		}
+		public async Task<bool> TurnOff(int nodeId)
+		{
+			try
+			{
+				var path = "api/devices/{nodeId}/switchOff";
+				var s = await Post(null, path);
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+			return false;
+		}
 	}
 }
 

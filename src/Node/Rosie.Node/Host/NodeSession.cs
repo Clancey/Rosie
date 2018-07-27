@@ -107,7 +107,7 @@ namespace Rosie.Node
 
 			process.Start ();
 			process.BeginOutputReadLine ();
-			var result = Task.WhenAny(tcs.Task, Task.Delay(5000) ).Result;
+			var result = Task.WhenAny(tcs.Task, Task.Delay(TimeSpan.FromSeconds(10))).Result;
 			if (result != tcs.Task)
 				throw new Exception("Error loading the server");
 		}

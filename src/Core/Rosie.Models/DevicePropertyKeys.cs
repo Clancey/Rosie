@@ -34,10 +34,13 @@ namespace Rosie
 		public const string Smoke = "smoke";
 		public const string CarbonMonoxide = "carbonMonoxide";
 		public const string AlarmState = "alarmState";
+		public const string AlarmType = "alarmType";
 		public const string Contact = "contact";
 		public const string Door = "door";
 		public const string RSSI = "rssi";
 		public const string Burglar = "burglar";
 		public const string SeismicIntensity = "seismicIntensity";
+		public const string Sensor = "sensor";
+		public const string Luminance = "luminance";
 	}
 }

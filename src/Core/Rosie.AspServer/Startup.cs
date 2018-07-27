@@ -20,7 +20,7 @@ namespace Rosie.AspServer
 		public void ConfigureServices(IServiceCollection services)
 		{
 			new HueService(null,null,null);
-			new NodeService(null, null, null);
+			NodeService.LinkerPreserve();
 			 
 			services.AddTransient<IDeviceLogger, SqliteDeviceLogger>();
 			services.AddRosie();

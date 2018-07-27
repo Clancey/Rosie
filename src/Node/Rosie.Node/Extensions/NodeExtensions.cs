@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Rosie.Node
 {
@@ -89,17 +90,19 @@ namespace Rosie.Node
 		public static async Task<DeviceState> ToDeviceUpdate(this NodeValueUpdate update)
 		{
 			var command = await update.GetNodeCommand();
+			if (!ZWaveCommands.ZWaveCommandsToRosieCommandsDictionary.TryGetValue(command.Id, out var rosieKey))
+				return null;
 			if (command.ShouldIgnore())
 				return null;
 			var node = await NodeDatabase.Shared.GetDevice(update.NodeId);
-			var statusKey = command.StatusKey();
 			var dataType = command.GetDataType(update);
+			//TODO change value if needed
 			return new DeviceState
 			{
 				DeviceId = node.Id,
 				DataType = dataType,
 				Value = update?.Value?.Value,
-				PropertyKey = statusKey,
+				PropertyKey = rosieKey,
 			};
 		}
 
@@ -148,7 +151,7 @@ namespace Rosie.Node
 				case "128 - 0":
 					return DevicePropertyKey.BatteryLevel;
 			}
-			return $"Unknown ({commandId})";
+			return $"{command.Description} - {commandId}";
 		}
 
 		public static DataTypes GetDataType(this NodeCommand command, NodeValueUpdate update)
@@ -174,6 +177,27 @@ namespace Rosie.Node
 			if (double.TryParse(s, out d))
 				return DataTypes.Decimal;
 			return DataTypes.String;
+		}
+
+		public static async Task<NodeCommand> GetCommand(this NodeDevice device, DeviceUpdate update)
+		{
+			if (!ZWaveCommands.RosieCommandsToZwaveDictionary.TryGetValue(update.PropertyKey, out var commandId))
+				throw new NotSupportedException($"The following key is not supported in Zwave: {update.PropertyKey}");
+
+			var command = await NodeDatabase.Shared.GetCommand(commandId);
+			if (command == null)
+			{
+				var data = commandId.Split('-');
+				var id = int.Parse(data[0]);
+				var index = int.Parse(data[1]);
+				command = new NodeCommand
+				{
+					ClassId = id,
+					Index = index,
+					Instance = 1,
+				};
+			}
+			return command;
 		}
 	}
 }

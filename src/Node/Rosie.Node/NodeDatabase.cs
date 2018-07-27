@@ -27,7 +27,7 @@ namespace Rosie.Node
 			}
 			await DatabaseConnection.InsertOrReplaceAsync (nodeDevice);
 			var nodeValues = nodeDevice.Classes?.SelectMany (x => x.Value.Select (y => y.Value)).ToList ();
-			var commands = nodeValues?.Select (x => new NodeCommand { ClassId = x.ClassId, Index = x.Index, Genre = Enum.Parse<CommandGenre> (x.Genre), Description = x.Label }).ToList ();
+			var commands = nodeValues?.Select (x => new NodeCommand { ClassId = x.ClassId, Index = x.Index, Instance = x.Instance, Genre = Enum.Parse<CommandGenre> (x.Genre), Description = x.Label }).ToList ();
 			var grouped = nodeValues?.Select (x => new NodeDeviceCommands {
 				ClassId = x.ClassId,
 				Index = x.Index,
@@ -54,10 +54,16 @@ namespace Rosie.Node
 		{
 			return DatabaseConnection.Table<NodeDeviceCommands> ().Where (x => x.Id == id).FirstOrDefaultAsync();
 		}
+		public Task<NodeCommand> GetCommand(string id)
+		{
+			return DatabaseConnection.Table<NodeCommand>().Where(x => x.Id == id).FirstOrDefaultAsync();
+		}
+
 		public Task<List<NodeDeviceCommands>> GetDeviceCommands (int nodeId)
 		{
 			return DatabaseConnection.Table<NodeDeviceCommands> ().Where (x => x.NodeId == nodeId).ToListAsync ();
 		}
+
 		public Task<NodeDevice> GetDevice (int nodeId)
 		{
 

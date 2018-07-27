@@ -8,11 +8,16 @@ using System.Linq;
 using Rosie.Server.Routes.Node;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Rosie.Node
 {
 	public class NodeService : IRosieService
 	{
+		public static void LinkerPreserve()
+		{
+
+		}
 		IDeviceManager _deviceManager;
 		ILogger<NodeService> _logger;
 		IServicesManager _serviceManager;
@@ -119,7 +124,6 @@ namespace Rosie.Node
 		public string Description => "Node ZWave service";
 
 		List<NodeDevice> Devices = new List<NodeDevice>();
-
 		async Task AddDevice(NodeDevice nodeDevice)
 		{
 			var nodeId = nodeDevice.Classes.FirstOrDefault().Value?.FirstOrDefault().Value?.NodeId ?? -1;
@@ -162,11 +166,20 @@ namespace Rosie.Node
 		{
 			try
 			{
+				
 				var nodeId = int.Parse(device.ServiceDeviceId);
-
 				var nodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
-				var command = await nodeDevice.GetPerferedCommand();
-				var s = await nodeApi.SetState(command, request.Value);
+				if (!ZWaveCommands.RosieCommandsToZwaveDictionary.TryGetValue(request.PropertyKey, out var commandId))
+					throw new NotSupportedException($"The following key is not supported in Zwave: {request.PropertyKey}");
+				if (request.PropertyKey == DevicePropertyKey.SwitchState)
+				{
+					if (request.BoolValue ?? false)
+						return await nodeApi.TurnOn(nodeId);
+					return await nodeApi.TurnOff(nodeId);
+				}
+
+				var command = await nodeDevice.GetCommand(request);
+				var s = await nodeApi.SetState(command, nodeDevice.NodeId, request.Value);
 				return s;
 
 			}
