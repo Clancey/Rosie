@@ -14,12 +14,12 @@ namespace Rosie.Mobile
 			Main = this;
 			InitializeComponent ();
 
-			MainPage = 
+			MainPage =
 				new TabbedPage()
-				//.AddTab (new OverviewPage ())
-				//.AddTab (new ScenesPage ())
-				//.AddTab (new RoomsPage())
-				.AddTab (new DevicesPage ())
+					//.AddTab (new OverviewPage ())
+					//.AddTab (new ScenesPage ())
+					//.AddTab (new RoomsPage())
+					.AddTab(new DevicesPage());
 			//	.AddTab (new SettingsPage());
 		}
 

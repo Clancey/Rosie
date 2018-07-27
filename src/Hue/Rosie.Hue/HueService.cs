@@ -65,6 +65,7 @@ namespace Rosie.Hue
 		{
 			var existingLights = await _deviceManager.GetAllDevices();
 			var lights = await _hueClient.GetLightsAsync();
+
 			foreach (var light in lights)
 			{
 				var oldDevice = existingLights.FirstOrDefault(cw => cw.ServiceDeviceId == light.Id);
