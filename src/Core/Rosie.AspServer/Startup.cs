@@ -34,6 +34,11 @@ namespace Rosie.AspServer
 			{
 				app.UseDeveloperExceptionPage();
 			}
+			else
+			{
+				app.UseExceptionHandler("/Error");
+				app.UseHsts();
+			}
 
 			//hook custom stuff
 			app.UseRosie();
