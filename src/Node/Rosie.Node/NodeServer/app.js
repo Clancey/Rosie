@@ -221,7 +221,6 @@ router.use(function(req, res, next) {
         next(); 
       }
       else{
-          print(token);
           return res.json({ success: false, message: 'Failed to authenticate token.' });   
       }
   } else {
