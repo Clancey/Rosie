@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net47</TargetFramework>
+		<RuntimeIdentifiers Condition=" '$(OS)' != 'Unix' ">win7-x86</RuntimeIdentifiers>
+	</PropertyGroup>
+    <ItemGroup>
+      <PackageReference Include="Xamarin.IoT.Sdk" Version="1.0.0" />
+      <PackageReference Include="Xamarin.Forms.Platform.GTK" Version="3.1.0.637273" />
+      <PackageReference Include="Mono.GtkSharp" Version="2.12.0" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Rosie.Mobile\Rosie.Mobile.csproj" />
+    </ItemGroup>
+</Project>

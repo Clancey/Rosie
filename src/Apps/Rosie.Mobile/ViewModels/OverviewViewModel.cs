@@ -6,23 +6,20 @@ namespace Rosie.Mobile
 {
 	public class OverviewViewModel
 	{
-		public OverviewViewModel ()
+		public OverviewViewModel()
 		{
-			Refresh ();
+			Refresh();
 		}
-	
-		async Task Refresh ()
+
+		async Task Refresh()
 		{
-			var devices = await Database.Shared.Table<Device> ().ToListAsync ();
-			var deviceTypes = devices.Select (x => x.DeviceType).Distinct().ToList();
+			var devices = await Database.Shared.Table<Device>().ToListAsync();
+			var deviceTypes = devices.Select(x => x.DeviceType).Distinct().ToList();
 			//TODO: filter out stale data
-			var states = (await Database.Shared.Table<DeviceState> ().ToListAsync ()).Where (x => !x.PropertyKey.Contains ("Unknown"));
-			var groups = states.Select (x => x.GroupType).Distinct ();
+			var states = (await Database.Shared.Table<DeviceState>().ToListAsync()).Where(x => !x.PropertyKey.Contains("Unknown"));
+			var groups = states.Select(x => x.GroupType).Distinct();
 
-				//.GroupBy(x=> x.DeviceId);
-
-
+			//.GroupBy(x=> x.DeviceId);
 		}
 	}
 }
-
