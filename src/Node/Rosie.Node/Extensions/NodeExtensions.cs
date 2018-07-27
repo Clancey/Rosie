@@ -179,26 +179,44 @@ namespace Rosie.Node
 			return DataTypes.String;
 		}
 
-		public static async Task<NodeCommand> GetCommand(this NodeDevice device, DeviceUpdate update)
+		public static async Task<NodeDeviceCommands> GetCommand(this NodeDevice device, DeviceUpdate update)
 		{
 			if (!ZWaveCommands.RosieCommandsToZwaveDictionary.TryGetValue(update.PropertyKey, out var commandId))
 				throw new NotSupportedException($"The following key is not supported in Zwave: {update.PropertyKey}");
+			var data = commandId.Split('-');
+			var classId = int.Parse(data[0]);
+			var index = int.Parse(data[1]);
 
-			var command = await NodeDatabase.Shared.GetCommand(commandId);
-			if (command == null)
+			var commands = await NodeDatabase.Shared.GetDeviceCommands(device.NodeId);
+			var matchingCommand = commands.FirstOrDefault(x => x.ClassId == classId && x.Index == index);
+			if (matchingCommand != null)
+				return matchingCommand;
+
+			//Multi level switches don't have switch state 
+			if (update.PropertyKey == DevicePropertyKey.SwitchState)
 			{
-				var data = commandId.Split('-');
-				var id = int.Parse(data[0]);
-				var index = int.Parse(data[1]);
-				command = new NodeCommand
-				{
-					ClassId = id,
-					Index = index,
-					Instance = 1,
-				};
+				matchingCommand = commands.FirstOrDefault(x => x.ClassId == 38 && x.Index == 0);
 			}
-			return command;
+			if (matchingCommand != null)
+				return matchingCommand;
+			throw new Exception($"Device doesn't support Command: {update.PropertyKey}");
 		}
+
+		public static object GetValue(this NodeDeviceCommands command, DeviceUpdate update)
+		{
+			if (command.SimpleStringCommand == "38 - 0")
+			{
+				if (update.DataType == DataTypes.Bool)
+					return update.BoolValue.Value ? 99 : 0;
+				if (update.DataType == DataTypes.Decimal)
+					return Clamp((int)update.DecimalValue.Value, 0, 99);
+				if(update.DataType == DataTypes.Int)
+					return Clamp(update.IntValue.Value, 0, 99);
+			}
+			return update.Value;
+		}
+
+		static int Clamp(int value, int min, int max) => Math.Max(Math.Min(max, value), min);
 	}
 }
 

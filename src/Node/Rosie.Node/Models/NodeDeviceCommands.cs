@@ -8,6 +8,7 @@ namespace Rosie.Node
 
 		public int NodeId { get; set; }
 		public string CommandId { get { return $"{ClassId} - {Instance} - {Index}"; } set { } }
+		public string SimpleStringCommand => $"{ClassId} - {Index}";
 		public CommandGenre Genre { get; set; }
 		public int ClassId { get; set; }
 		public int Instance { get; set; }

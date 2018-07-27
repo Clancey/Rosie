@@ -101,7 +101,7 @@ namespace Rosie
 			return false;
 		}
 
-		public Task UpdateCurrentState(DeviceState state)
+		public async Task UpdateCurrentState(DeviceState state)
 		{
 			if (DeviceLogHandlers.Any())
 			{
@@ -119,7 +119,19 @@ namespace Rosie
 				//await Task.WhenAll(
 
 			}
-			return DeviceDatabase.Shared.InsertDeviceState(state);
+			await DeviceDatabase.Shared.InsertDeviceState(state);
+
+			if (state.PropertyKey == DevicePropertyKey.Level)
+			{
+				var switchState = new DeviceState
+				{
+					Value = state.IntValue > 0,
+					PropertyKey = DevicePropertyKey.SwitchState,
+					DeviceId = state.DeviceId,
+					DataType = DataTypes.Bool,
+				};
+				await UpdateCurrentState(switchState);
+			}
 		}
 
 		Dictionary<string, List<IDeviceService>> handlers = new Dictionary<string, List<IDeviceService>>();

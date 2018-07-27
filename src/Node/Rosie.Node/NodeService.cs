@@ -166,20 +166,12 @@ namespace Rosie.Node
 		{
 			try
 			{
-				
 				var nodeId = int.Parse(device.ServiceDeviceId);
 				var nodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
 				if (!ZWaveCommands.RosieCommandsToZwaveDictionary.TryGetValue(request.PropertyKey, out var commandId))
 					throw new NotSupportedException($"The following key is not supported in Zwave: {request.PropertyKey}");
-				if (request.PropertyKey == DevicePropertyKey.SwitchState)
-				{
-					if (request.BoolValue ?? false)
-						return await nodeApi.TurnOn(nodeId);
-					return await nodeApi.TurnOff(nodeId);
-				}
-
 				var command = await nodeDevice.GetCommand(request);
-				var s = await nodeApi.SetState(command, nodeDevice.NodeId, request.Value);
+				var s = await nodeApi.SetState(command,command.GetValue(request));
 				return s;
 
 			}
