@@ -125,24 +125,14 @@ namespace Rosie.Node
 			var nodeId = nodeDevice.Classes.FirstOrDefault().Value?.FirstOrDefault().Value?.NodeId ?? -1;
 			if (nodeId <= 0)
 				return;
-			var device = new Device
-			{
-				Id = nodeDevice.Id,
-				Service = ServiceIdentifier,
-				Description = nodeDevice.Name,
-				Location = nodeDevice.Loc,
-				Manufacturer = nodeDevice.Manufacturer,
-				ManufacturerId = nodeDevice.ManufacturerId,
-				Product = nodeDevice.Product,
-				ProductType = nodeDevice.ProductType,
-				ProductId = nodeDevice.ProductId,
-				Name = DecentName(nodeDevice),
-				Type = nodeDevice.Type,
-				DeviceType = FromNodeType(nodeDevice.Type),
-			};
+			var oldDevices = await _deviceManager.GetAllDevices();
+			var device = oldDevices.FirstOrDefault(x => x.Service == this.ServiceIdentifier && x.ServiceDeviceId == nodeId.ToString()) ?? new Device { Service = ServiceIdentifier };
+			if (!device.Update(nodeDevice))
+				return;
+
 			device.Discoverable = !string.IsNullOrWhiteSpace(device.Name);
 			await _deviceManager.AddDevice(device);
-			nodeDevice.NodeId = nodeId;
+			nodeDevice.Id = device.Id;
 			await NodeDatabase.Shared.InsertDevice(nodeDevice);
 
 		}
@@ -153,17 +143,6 @@ namespace Rosie.Node
 			if (!string.IsNullOrEmpty(device.Manufacturer))
 				return $"{device.Manufacturer} {device.Type}";
 			return null;
-		}
-
-		internal static string FromNodeType(string type)
-		{
-			switch (type)
-			{
-				case "Binary Power Switch":
-				case "Secure Keypad Door Lock":
-					return DeviceTypeKeys.Switch;
-			}
-			return "Unknown";
 		}
 
 		async Task AddDevices(List<NodeDevice> devices)
@@ -198,7 +177,7 @@ namespace Rosie.Node
 				//LocalWebServer.Shared.Router.AddRoute<NodeDeviceRoute>();
 				//LocalWebServer.Shared.Router.AddRoute<NodePerferedCommandRoute>();
 				nodeSession = new NodeSession();
-				await Task.Run(()=>nodeSession.Start(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "NodeServer")));
+				await Task.Run(()=>nodeSession.Start(Path.Combine( Directory.GetCurrentDirectory(),"..","src","Node","Rosie.Node", "NodeServer")));
 				//_deviceManager.RegisterHandler(this);
 				await Connect();
 			}

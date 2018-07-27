@@ -99,6 +99,9 @@ namespace Rosie.Node
 			process.OutputDataReceived += (s, e) => {
 				if (e?.Data?.StartsWith("Magic happens on") ?? false)
 					tcs.TrySetResult(true);
+				//The server is still running, we will call it good!
+				if (e?.Data?.Contains("listen EADDRINUSE :::8080") ?? false)
+					tcs.TrySetResult(true);
 				Console.WriteLine ($"[NodeJS]{e.Data}");
 			};
 

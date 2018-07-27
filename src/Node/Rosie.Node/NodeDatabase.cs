@@ -66,9 +66,7 @@ namespace Rosie.Node
 
 		public Task<NodeDevice> GetDevice (string deviceId)
 		{
-			var parts = deviceId.Split(new [] { "-" },StringSplitOptions.RemoveEmptyEntries);
-			var d = parts [1];
-			var nodeId = int.Parse (d);
+			var nodeId = int.Parse (deviceId);
 			return DatabaseConnection.Table<NodeDevice> ().Where (x => x.NodeId == nodeId).FirstOrDefaultAsync ();
 		}
 	}

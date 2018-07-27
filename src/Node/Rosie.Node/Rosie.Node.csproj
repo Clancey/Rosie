@@ -20,15 +20,4 @@
   <ItemGroup>
     <None Remove="NodeServer\Secrets.json.secret" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="NodeServer\app.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="NodeServer\package.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="NodeServer\Secrets.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

@@ -5,6 +5,87 @@ namespace Rosie.Node
 {
 	public static class NodeExtensions
 	{
+		public static bool Update(this Device device, NodeDevice nodeDevice)
+		{
+			bool didChange = false;
+			device.ServiceDeviceId = nodeDevice.NodeId.ToString();
+			if (device.Description != nodeDevice.Name)
+			{
+				device.Description = nodeDevice.Name;
+				didChange = true;
+			}
+			if (device.Location != nodeDevice.Loc)
+			{
+				device.Location = nodeDevice.Loc;
+				didChange = true;
+			}
+			if (device.Manufacturer != nodeDevice.Manufacturer)
+			{
+				device.Manufacturer = nodeDevice.Manufacturer;
+				didChange = true;
+			}
+			if (device.ManufacturerId != nodeDevice.ManufacturerId)
+			{
+				device.ManufacturerId = nodeDevice.ManufacturerId;
+				didChange = true;
+			}
+			if (device.Product != nodeDevice.Product)
+			{
+				device.Product = nodeDevice.Product;
+				didChange = true;
+			}
+			if (device.ProductType != nodeDevice.ProductType)
+			{
+				device.ProductType = nodeDevice.ProductType;
+				didChange = true;
+			}
+			if (device.ProductId != nodeDevice.ProductId)
+			{
+				device.ProductId = nodeDevice.ProductId;
+				didChange = true;
+			}
+			var decentName = nodeDevice.DecentName();
+			if (device.Name != decentName)
+			{
+				device.Name = decentName;
+				didChange = true;
+			}
+			if (device.Type != nodeDevice.Type)
+			{
+				device.Type = nodeDevice.Type;
+				didChange = true;
+			}
+			var deviceType = nodeDevice.GetDeviceType();
+			if (device.DeviceType != deviceType)
+			{
+				device.DeviceType = deviceType;
+				didChange = true;
+			}
+			return didChange || string.IsNullOrWhiteSpace(device.Id);
+		}
+
+		internal static string GetDeviceType(this NodeDevice device)
+		{
+			var type = device.Type;
+			switch (type)
+			{
+				case "Binary Power Switch":
+				case "Secure Keypad Door Lock":
+					return DeviceTypeKeys.Switch;
+				case "Multilevel Scene Switch":
+					return DeviceTypeKeys.DimmerSwitch;
+			}
+			return "Unknown";
+		}
+
+		public static string DecentName(this NodeDevice device)
+		{
+			if (!string.IsNullOrWhiteSpace(device.Name))
+				return device.Name;
+			if (!string.IsNullOrEmpty(device.Manufacturer))
+				return $"{device.Manufacturer} {device.Type}";
+			return null;
+		}
 		public static async Task<DeviceState> ToDeviceUpdate(this NodeValueUpdate update)
 		{
 			var command = await update.GetNodeCommand();
@@ -17,7 +98,7 @@ namespace Rosie.Node
 			{
 				DeviceId = node.Id,
 				DataType = dataType,
-				Value = update.Value.Value,
+				Value = update?.Value?.Value,
 				PropertyKey = statusKey,
 			};
 		}

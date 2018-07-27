@@ -36,7 +36,7 @@ namespace Rosie.Node
 		[PrimaryKeyAttribute]
 		public int NodeId { get; set; }
 
-		public string Id => $"node-{NodeId}";
+		public string Id { get; set; }
 
 		[JsonProperty ("classes")]
 		[SQLite.Ignore]

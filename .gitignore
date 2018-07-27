@@ -39,3 +39,4 @@ src/Node/NodeServer/.vscode/launch.json
 .vs/
 Rosie.AspServer/log.db
 Rosie.AspServer/devices.db
+src/Node/Rosie.Node/NodeServer/package-lock.json
