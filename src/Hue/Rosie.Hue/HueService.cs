@@ -30,7 +30,7 @@ namespace Rosie.Hue
 			_deviceManager = deviceManager;
 			_serviceManager = serviceManager;
 			_serviceManager?.RegisterService(Domain, nameof(TurnOn), TurnOn);
-			_serviceManager?.RegisterService(Domain, nameof(TurnOff), TurnOff,"Send deviceid");
+			_serviceManager?.RegisterService(Domain, nameof(TurnOff), TurnOff, "Send deviceid");
 		}
 		public string Domain => "HUE";
 
@@ -63,9 +63,13 @@ namespace Rosie.Hue
 
 		async Task GetLights()
 		{
+			var existingLights = await _deviceManager.GetAllDevices();
 			var lights = await _hueClient.GetLightsAsync();
 			foreach (var light in lights)
 			{
+				var oldDevice = existingLights.FirstOrDefault(cw => cw.ServiceDeviceId == light.Id);
+				if (oldDevice != null)
+					return;
 				var device = new Device
 				{
 					ServiceDeviceId = light.Id,
