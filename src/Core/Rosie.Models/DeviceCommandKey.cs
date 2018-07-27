@@ -10,6 +10,7 @@ namespace Rosie
 		public const string Toggle = "toggle";
 		public const string Hue = "hue";
 		public const string Color = "color";
+		public const string ColorTemperature = "colorTemperature";
 		public const string Saturation = "saturation";
 		public const string Open = "open";
 		public const string Close = "close";
@@ -24,8 +25,10 @@ namespace Rosie
 		public const string Rewind = "rewind";
 		public const string FastForward = "fastforward";
 		public const string Mute = "mute";
+		public const string MuteState = "muteState";
 		public const string Push = "push";
 		public const string Notify = "notify";
+		public const string Notification = "notification";
 		public const string SetPoint = "setpoint";
 		public const string Poll = "poll";
 		public const string Refresh = "refresh";
@@ -41,6 +44,9 @@ namespace Rosie
 		public const string Strobe = "strobe";
 		public const string Both = "both";
 		public const string AlarmState = "alarmState";
-
+		public const string SwitchLevel = "switchLevel";
+		public const string Configure = "configure";
+		public const string InfraredLevel = "infraredLevel";
+		public const string CoolingSetpoint = "coolingSetpoint";
 	}
 }

@@ -57,7 +57,6 @@ namespace Rosie.Devices
 				},
 			};
 
-
 			public static readonly DeviceCapability Switch = new DeviceCapability
 			{
 				Key = DeviceCapabilityKeys.Switch,
@@ -87,11 +86,6 @@ namespace Rosie.Devices
 
 		public static class Commands
 		{
-			public readonly static DeviceCommand RefreshCommand = new DeviceCommand
-			{
-				Command = DeviceCommandKey.Refresh,
-			};
-
 			public readonly static DeviceCommand AlarmStateCommand = new DeviceCommand
 			{
 				Command = DeviceCommandKey.AlarmState,
@@ -103,9 +97,90 @@ namespace Rosie.Devices
 				}
 			};
 
-			public readonly static DeviceCommand OnCommand = new DeviceCommand
+			public readonly static DeviceCommand CloseCommand = new DeviceCommand
 			{
-				Command = DeviceCommandKey.On
+				Command = DeviceCommandKey.Close,
+			};
+
+			public readonly static DeviceCommand ColorCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Color,
+				Arguments = new [] {
+					new DeviceCommandColorArgument {
+						Required = true
+					}
+				}
+			};
+
+			public readonly static DeviceCommand ColorTemperatureCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.ColorTemperature,
+				Arguments = new[] {
+					new DeviceCommandIntegerArguments {
+						Required = true,
+						LowerLimit = 1,
+						UpperLimit = 30000
+					}
+				}
+			};
+
+			public readonly static DeviceCommand ConfigureCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Configure,
+			};
+
+			public readonly static DeviceCommand CoolingSetpointCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.CoolingSetpoint,
+				Arguments = new[] {
+					new DeviceCommandTemperatureArgument {
+						Required = true,
+					}
+				}
+			};
+
+			public readonly static DeviceCommand HueCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Hue,
+				Arguments = new[] {
+					new DeviceCommandIntegerArguments {
+						Required = true,
+						LowerLimit = 0,
+					}
+				}
+			};
+
+			public readonly static DeviceCommand InfraredLevelCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.InfraredLevel,
+				Arguments = new[] {
+					new DeviceCommandIntegerArguments {
+						Required = true,
+						LowerLimit = 0,
+						UpperLimit = 100
+					}
+				}
+			};
+
+			public readonly static DeviceCommand MuteStateCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Mute,
+				Arguments = new[] {
+					new DeviceCommandEnumArguments {
+						Required = true,
+						Options = new [] { "mute", "unmute" }
+					}
+				}
+			};
+
+			public readonly static DeviceCommand NotificationCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Notify,
+				Arguments = new[] {
+					new DeviceCommandStringArgument {
+						Required = true,
+					}
+				}
 			};
 
 			public readonly static DeviceCommand OffCommand = new DeviceCommand
@@ -113,9 +188,39 @@ namespace Rosie.Devices
 				Command = DeviceCommandKey.Off
 			};
 
+			public readonly static DeviceCommand OnCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.On
+			};
+
+			public readonly static DeviceCommand OpenCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Open,
+			};
+
+			public readonly static DeviceCommand PushCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Push,
+			};
+
+			public readonly static DeviceCommand RefreshCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Refresh,
+			};
+
+			public readonly static DeviceCommand SaturationCommand = new DeviceCommand
+			{
+				Command = DeviceCommandKey.Saturation,
+				Arguments = new[] {
+					new DeviceCommandColorArgument {
+						Required = true
+					}
+				}
+			};
+
 			public readonly static DeviceCommand SwitchLevelCommand = new DeviceCommand
 			{
-				Command = DeviceCommandKey.Level,
+				Command = DeviceCommandKey.SwitchLevel,
 				Arguments = new[]{ new DeviceCommandIntegerArguments{
 						Required = true,
 						LowerLimit = 0,
@@ -123,13 +228,26 @@ namespace Rosie.Devices
 					}
 				}
 			};
+
 			public static Dictionary<string, DeviceCommand> All = new Dictionary<string, DeviceCommand>
 			{
-				[DeviceCommandKey.Refresh] = RefreshCommand,
 				[DeviceCommandKey.AlarmState] = AlarmStateCommand,
-				[DeviceCommandKey.On] = OnCommand,
+				[DeviceCommandKey.Close] = CloseCommand,
+				[DeviceCommandKey.Color] = ColorCommand,
+				[DeviceCommandKey.ColorTemperature] = ColorTemperatureCommand,
+				[DeviceCommandKey.Configure] = ConfigureCommand,
+				[DeviceCommandKey.CoolingSetpoint] = CoolingSetpointCommand,
+				[DeviceCommandKey.Hue] = HueCommand,
+				[DeviceCommandKey.InfraredLevel] = InfraredLevelCommand,
+				[DeviceCommandKey.Mute] = MuteStateCommand,
+				[DeviceCommandKey.Notification] = NotificationCommand,
 				[DeviceCommandKey.Off] = OffCommand,
-				[DeviceCommandKey.Level] = SwitchLevelCommand,
+				[DeviceCommandKey.On] = OnCommand,
+				[DeviceCommandKey.Open] = OpenCommand,
+				[DeviceCommandKey.Push] = PushCommand,
+				[DeviceCommandKey.Refresh] = RefreshCommand,
+				[DeviceCommandKey.Saturation] = SaturationCommand,
+				[DeviceCommandKey.SwitchLevel] = SwitchLevelCommand,
 			};
 
 		}

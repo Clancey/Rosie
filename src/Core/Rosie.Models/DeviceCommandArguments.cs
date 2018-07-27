@@ -27,6 +27,38 @@ namespace Rosie
 		public string Url { get; set; }
 	}
 
+	public class DeviceCommandColorArgument : DeviceCommandArguments
+	{
+		public DeviceCommandColorArgument()
+		{
+			DataType = DataTypes.String;
+			CommandType = nameof(DeviceCommandArguments);
+		}
+		public string Color { get; set; }
+	}
+
+	public class DeviceCommandStringArgument : DeviceCommandArguments
+	{
+		public DeviceCommandStringArgument()
+		{
+			DataType = DataTypes.String;
+			CommandType = nameof(DeviceCommandArguments);
+		}
+		public string Value { get; set; }
+	}
+
+	public class DeviceCommandTemperatureArgument : DeviceCommandArguments
+	{
+		public DeviceCommandTemperatureArgument()
+		{
+			DataType = DataTypes.Decimal;
+			CommandType = nameof(DeviceCommandArguments);
+		}
+		public double DegreesCelsius { get; set; }
+
+		// TODO: DegreesFarenheit which wraps DegreesCelsius
+	}
+
 	public class DeviceCommandEnumArguments : DeviceCommandArguments
 	{
 		public DeviceCommandEnumArguments()
