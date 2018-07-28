@@ -27,4 +27,13 @@
         <ProjectReference Include="..\..\SmartThings\Rosie.SmartThings\Rosie.SmartThings.csproj" />
         <ProjectReference Include="..\Rosie\Rosie.csproj" />
     </ItemGroup>
+    <PropertyGroup>
+        <RosieOutputFolder>/Volumes/pi/apps/rosie/</RosieOutputFolder>
+    </PropertyGroup>
+    <ItemGroup>
+        <_CopyItems Include="$(PublishDir)\*.*" />
+    </ItemGroup>
+    <Target Name="CopyCustomContentOnPublish" AfterTargets="Publish">
+        <Copy SourceFiles="@(_CopyItems)" DestinationFolder="$(RosieOutputFolder)"  SkipUnchangedFiles="true"/>
+    </Target>
 </Project>
