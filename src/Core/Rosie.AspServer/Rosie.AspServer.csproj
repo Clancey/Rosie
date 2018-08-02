@@ -26,6 +26,7 @@
         <ProjectReference Include="..\..\Node\Rosie.Node\Rosie.Node.csproj" />
         <ProjectReference Include="..\..\SmartThings\Rosie.SmartThings\Rosie.SmartThings.csproj" />
         <ProjectReference Include="..\Rosie\Rosie.csproj" />
+        <ProjectReference Include="..\..\..\Rosie.Harmony\Rosie.Harmony.csproj" />
     </ItemGroup>
     <PropertyGroup>
         <RosieOutputFolder>/Volumes/pi/apps/rosie/</RosieOutputFolder>

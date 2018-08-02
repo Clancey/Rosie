@@ -21,6 +21,7 @@ namespace Rosie.AspServer
 		{
 			new HueService(null,null,null);
 			NodeService.LinkerPreserve();
+			Harmony.HarmonyService.LinkerPreserve();
 			 
 			services.AddTransient<IDeviceLogger, SqliteDeviceLogger>();
 			services.AddRosie();
