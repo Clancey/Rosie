@@ -2,17 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Core\Rosie\Rosie.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Harmony.NET" Version="0.1.0" />
+    <PackageReference Include="Harmony.NET" Version="0.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
-    <PackageReference Include="Q42.HueApi" Version="3.6.7" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
   </ItemGroup>
 </Project>
