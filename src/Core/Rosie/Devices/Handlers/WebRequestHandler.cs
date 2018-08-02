@@ -15,6 +15,10 @@ namespace Rosie
 		public string ServiceIdentifier => Identifier;
 
 		HttpClient client = new HttpClient ();
+
+		public event EventHandler<DeviceState> CurrentStateUpdated;
+		public event EventHandler<Device> DeviceAdded;
+
 		public async Task<bool> HandleRequest (Device device, DeviceUpdate request)
 		{
 			try {

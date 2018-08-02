@@ -15,9 +15,6 @@ namespace Rosie.Services
 
 	public interface IRosieService : IDeviceService
 	{
-		event EventHandler<DeviceState> CurrentStateUpdated;
-		event EventHandler<Device> DeviceAdded;
-
 		string Domain { get; }
 		string Name { get; }
 		string Description { get; }
