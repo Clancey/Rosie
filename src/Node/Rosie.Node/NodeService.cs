@@ -18,16 +18,15 @@ namespace Rosie.Node
 		{
 
 		}
-		IDeviceManager _deviceManager;
+
 		ILogger<NodeService> _logger;
 		IServicesManager _serviceManager;
-		public NodeService(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
+		public NodeService(ILoggerFactory loggerFactory, IServicesManager serviceManager)
 		{
 			if (loggerFactory != null)
 				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<NodeService>();
 			_logger?.LogInformation("Setup Node ZWave");
 			_logger?.LogInformation(Description);
-			_deviceManager = deviceManager;
 			_serviceManager = serviceManager;
 		}
 
@@ -103,7 +102,7 @@ namespace Rosie.Node
 					var update = await nodeUpdate.ToDeviceUpdate();
 					if (update == null)
 						return;
-					await _deviceManager.UpdateCurrentState(update);
+					CurrentStateUpdated?.Invoke (this, update);
 				}
 				catch (Exception ex)
 				{
@@ -124,30 +123,23 @@ namespace Rosie.Node
 		public string Description => "Node ZWave service";
 
 		List<NodeDevice> Devices = new List<NodeDevice>();
+
+		public event EventHandler<Device> DeviceAdded;
+		public event EventHandler<DeviceState> CurrentStateUpdated;
+
 		async Task AddDevice(NodeDevice nodeDevice)
 		{
 			var nodeId = nodeDevice.Classes.FirstOrDefault().Value?.FirstOrDefault().Value?.NodeId ?? -1;
 			if (nodeId <= 0)
 				return;
+
 			var oldNodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
-			Device device = null;
-			if (!string.IsNullOrWhiteSpace(oldNodeDevice?.Id))
-			{
-				device = await _deviceManager.GetDevice(oldNodeDevice.Id);
-			}
-			if(device == null)
-			{
-				var oldDevices = await _deviceManager.GetAllDevices();
-				device = oldDevices.FirstOrDefault(x => x.Service == this.ServiceIdentifier && x.ServiceDeviceId == nodeId.ToString()) ?? new Device { Service = ServiceIdentifier, Id = oldNodeDevice?.Id };
-			}
-			if (!device.Update(nodeDevice))
-				return;
-			device.Discoverable = !string.IsNullOrWhiteSpace(device.Name);
-			await _deviceManager.AddDevice(device);
+			var device = nodeDevice.ToDevice (ServiceIdentifier, oldNodeDevice?.Id);
+			DeviceAdded?.Invoke (this, device);
 			nodeDevice.Id = device.Id;
 			await NodeDatabase.Shared.InsertDevice(nodeDevice);
-
 		}
+
 		static string DecentName(NodeDevice device)
 		{
 			if (!string.IsNullOrWhiteSpace(device.Name))

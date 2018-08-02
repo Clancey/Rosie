@@ -21,13 +21,16 @@ namespace Rosie.Hue
 		ILogger<HueService> _logger;
 		IDeviceManager _deviceManager;
 		IServicesManager _serviceManager;
-		public HueService(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
+
+		public event EventHandler<Device> DeviceAdded;
+		public event EventHandler<DeviceState> CurrentStateUpdated;
+
+		public HueService(ILoggerFactory loggerFactory, IServicesManager serviceManager)
 		{
 			if (loggerFactory != null)
 				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<HueService>();
 			_logger?.LogInformation("Setup HUE lights");
 			_logger?.LogInformation(Description);
-			_deviceManager = deviceManager;
 			_serviceManager = serviceManager;
 			_serviceManager?.RegisterService(Domain, nameof(TurnOn), TurnOn);
 			_serviceManager?.RegisterService(Domain, nameof(TurnOff), TurnOff, "Send deviceid");
@@ -71,6 +74,7 @@ namespace Rosie.Hue
 				var oldDevice = existingLights.FirstOrDefault(cw => cw.ServiceDeviceId == light.Id);
 				if (oldDevice != null)
 					return;
+
 				var device = new Device
 				{
 					ServiceDeviceId = light.Id,
@@ -82,8 +86,8 @@ namespace Rosie.Hue
 					Name = light.Name,
 					DeviceType = DeviceTypeKeys.Light,
 				};
-				device.Discoverable = !string.IsNullOrWhiteSpace(device.Name);
-				await _deviceManager.AddDevice(device);
+				device.Discoverable = !string.IsNullOrWhiteSpace (device.Name);
+				DeviceAdded?.Invoke (this, device);
 			}
 		}
 

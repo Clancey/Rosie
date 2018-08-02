@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+
 namespace Rosie
 {
 	public class SetDeviceArgs : EventArgs
@@ -24,36 +25,51 @@ namespace Rosie
 			}
 		}
 
-		public Task<bool> AddDevice(Device device)
+		public async Task<bool> AddDevice (Device device)
 		{
-			if (string.IsNullOrWhiteSpace(device.Id))
-			{
+			if (device == null) {
+				return false;
+			};
+
+			Device foundDev = null;
+			if (!string.IsNullOrWhiteSpace (device.Id)) {
+				foundDev = await GetDevice (device.Id);
+			}
+
+			if (foundDev == null) {
+				var oldDevices = await GetAllDevices ();
+				foundDev = oldDevices.FirstOrDefault (x => x.Service == device.Service && x.ServiceDeviceId == device.Id);
+			}
+
+			if (foundDev != null) {
+				//our device was updated
+				foundDev.Update (device);
+				return true;
+			}
+
+			if (string.IsNullOrWhiteSpace(device.Id)) {
 				device.Id = Guid.NewGuid().ToString();
 			}
-			if (DeviceLogHandlers.Any())
-			{
-				Task.Run(async () =>
-				{
-					foreach (var handler in DeviceLogHandlers)
-					{
-						try
-						{
-							await handler.AddDevice(device);
-						}
-						catch (Exception ex)
-						{
-							Console.WriteLine(ex);
-						}
+
+			if (DeviceLogHandlers.Any()) {
+				var tasks = new Task[DeviceLogHandlers.Count];
+				for (int i = 0; i < DeviceLogHandlers.Count; i++) {
+					try {
+						tasks[i] = DeviceLogHandlers[i].AddDevice (device);
+					} catch (Exception ex) {
+						Console.WriteLine (ex);
 					}
-				});
+				}
+				await Task.WhenAll (tasks);
 			}
-			return DeviceDatabase.Shared.InsertDevice(device);
+			return await DeviceDatabase.Shared.InsertDevice(device);
 		}
 
 		public Task<List<Device>> GetAllDevices()
 		{
 			return DeviceDatabase.Shared.GetAllDevices();
 		}
+
 		public Task<Device> GetDevice(string id)
 		{
 			return DeviceDatabase.Shared.GetDevice(id);

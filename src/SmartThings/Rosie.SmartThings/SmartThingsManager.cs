@@ -40,14 +40,15 @@ namespace Rosie.SmartThings
 		readonly IDeviceManager deviceManager;
 		readonly IServicesManager serviceManager;
 
+		public event EventHandler<Rosie.Device> DeviceAdded;
+		public event EventHandler<DeviceState> CurrentStateUpdated;
+
 		public SmartThingsManager(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
 		{
 			this.loggerFactory = loggerFactory;
 			this.deviceManager = deviceManager;
 			this.serviceManager = serviceManager;
 		}
-
-
 
 		public async Task Start()
 		{
