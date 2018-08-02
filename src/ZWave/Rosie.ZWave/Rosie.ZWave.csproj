@@ -15,7 +15,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Rosie.Models\Rosie.Models.csproj" />
     <ProjectReference Include="..\..\Core\Rosie\Rosie.csproj" />
-    <ProjectReference Include="..\..\..\external\zwave-lib-dotnet\ZWaveLib\ZWaveLib.csproj" />
-    <ProjectReference Include="..\..\..\external\serialport-lib-dotnet\SerialPortLib\SerialPortLib.csproj" />
   </ItemGroup>
 </Project>
