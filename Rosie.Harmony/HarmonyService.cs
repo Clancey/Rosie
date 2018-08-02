@@ -25,7 +25,10 @@ namespace Rosie.Harmony
 		IDeviceManager _deviceManager;
 		IServicesManager _serviceManager;
 
-		public HarmonyService(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
+        public event EventHandler<DeviceState> CurrentStateUpdated;
+        public event EventHandler<Device> DeviceAdded;
+
+        public HarmonyService(ILoggerFactory loggerFactory, IDeviceManager deviceManager, IServicesManager serviceManager)
 		{
 			if (loggerFactory != null)
 				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<HarmonyService>();
@@ -100,11 +103,9 @@ namespace Rosie.Harmony
 
 					_logger.LogInformation("Adding Activity as device: {0}", device.Name);
 
-					// Add the device
+                    // Add the device
+                    DeviceAdded?.Invoke(this, device);
 					var added = await _deviceManager.AddDevice(device);
-
-					if (!added)
-						_logger.LogWarning("Failed to add device: {0}", device.Name);
 				}
 			}
 		}
