@@ -48,6 +48,8 @@ namespace Rosie.Extensions
 			{
 				deviceManager.RegisterHandler(service);
 				service.Start(); //or setup
+				service.DeviceAdded += (s, e) => deviceManager.AddDevice (e);
+				service.CurrentStateUpdated += (s, e) => deviceManager.UpdateCurrentState (e);
 			}
 		}
 
