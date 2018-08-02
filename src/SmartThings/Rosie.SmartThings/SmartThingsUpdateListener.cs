@@ -73,7 +73,6 @@ namespace Rosie.SmartThings
 					}
 				});
 				while (IsConnected) {
-					string serverMessage = "";
 					try {
 						// Read message from the server.
 						ReadMessage ();

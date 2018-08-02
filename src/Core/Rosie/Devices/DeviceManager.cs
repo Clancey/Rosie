@@ -75,6 +75,12 @@ namespace Rosie
 			return DeviceDatabase.Shared.GetDevice(id);
 		}
 
+
+        public Task<Device> GetDevice(string service, string serviceDeviceId)
+        {
+            return DeviceDatabase.Shared.GetDevice(service,serviceDeviceId);
+        }
+
 		public delegate bool SetDeviceStateHandler(object sender, SetDeviceArgs args);
 
 		public event SetDeviceStateHandler SetDeviceEvent;
@@ -183,7 +189,6 @@ namespace Rosie
 		{
 			DeviceLogHandlers.Add(handler);
 		}
-
-	}
+    }
 }
 

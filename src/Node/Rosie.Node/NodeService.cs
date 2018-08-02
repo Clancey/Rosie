@@ -132,7 +132,7 @@ namespace Rosie.Node
 			var nodeId = nodeDevice.Classes.FirstOrDefault().Value?.FirstOrDefault().Value?.NodeId ?? -1;
 			if (nodeId <= 0)
 				return;
-
+            
 			var oldNodeDevice = await NodeDatabase.Shared.GetDevice(nodeId);
 			var device = nodeDevice.ToDevice (ServiceIdentifier, oldNodeDevice?.Id);
 			DeviceAdded?.Invoke (this, device);

@@ -7,6 +7,7 @@ namespace Rosie
 	{
 		Task<List<Device>> GetAllDevices();
 		Task<Device> GetDevice(string id);
+        Task<Device> GetDevice(string service, string serviceDeviceId);
 		Task<bool> AddDevice(Device device);
 		void RegisterDeviceLogHandler<T>() where T : IDeviceLogger;
 		void RegisterHandler<T>() where T : IDeviceService;

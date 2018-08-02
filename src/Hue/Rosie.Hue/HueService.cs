@@ -13,7 +13,9 @@ namespace Rosie.Hue
 	public class HueService : IRosieService, IDisposable
 	{
 		//cUIpxMwkuC0xb-JVYsQOaBI-4BzKM6fl02fnQbCf
-
+        public static void LinkerPreserve()
+        {
+        }
 		string _apiToken = "cUIpxMwkuC0xb-JVYsQOaBI-4BzKM6fl02fnQbCf";
 		bool _isConnected;
 
@@ -25,7 +27,7 @@ namespace Rosie.Hue
 		public event EventHandler<Device> DeviceAdded;
 		public event EventHandler<DeviceState> CurrentStateUpdated;
 
-		public HueService(ILoggerFactory loggerFactory, IServicesManager serviceManager)
+        public HueService(ILoggerFactory loggerFactory,IDeviceManager deviceManager, IServicesManager serviceManager)
 		{
 			if (loggerFactory != null)
 				_logger = loggerFactory.AddConsole(LogLevel.Information).CreateLogger<HueService>();
@@ -34,6 +36,7 @@ namespace Rosie.Hue
 			_serviceManager = serviceManager;
 			_serviceManager?.RegisterService(Domain, nameof(TurnOn), TurnOn);
 			_serviceManager?.RegisterService(Domain, nameof(TurnOff), TurnOff, "Send deviceid");
+            _deviceManager = deviceManager;
 		}
 		public string Domain => "HUE";
 
@@ -66,12 +69,11 @@ namespace Rosie.Hue
 
 		async Task GetLights()
 		{
-			var existingLights = await _deviceManager.GetAllDevices();
 			var lights = await _hueClient.GetLightsAsync();
 
 			foreach (var light in lights)
 			{
-				var oldDevice = existingLights.FirstOrDefault(cw => cw.ServiceDeviceId == light.Id);
+                var oldDevice = _deviceManager.GetDevice(ServiceIdentifier, light.Id);
 				if (oldDevice != null)
 					return;
 

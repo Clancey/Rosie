@@ -7,9 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Rosie.Extensions;
 using Rosie.Frontend;
-using Rosie.Hue;
 using Rosie.Services;
-using Rosie.Node;
 
 namespace Rosie.AspServer
 {
@@ -19,8 +17,8 @@ namespace Rosie.AspServer
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
-			new HueService(null,null);
-			NodeService.LinkerPreserve();
+            Hue.HueService.LinkerPreserve();
+            Node.NodeService.LinkerPreserve();
 			Harmony.HarmonyService.LinkerPreserve();
 			 
 			services.AddTransient<IDeviceLogger, SqliteDeviceLogger>();

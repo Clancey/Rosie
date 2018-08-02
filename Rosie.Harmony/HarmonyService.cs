@@ -67,7 +67,6 @@ namespace Rosie.Harmony
 
 		async Task GetActivities()
 		{
-			var existingActivities = await _deviceManager.GetAllDevices();
 
 			// Add all the activities from the hubs as devices
 			foreach (var hub in hubs) {
@@ -82,7 +81,7 @@ namespace Rosie.Harmony
 					var globalActivityId = GetActivityId(hub.Info, activity);
 
 					// See if the device exists yet
-					var oldDevice = existingActivities.FirstOrDefault(cw => cw.ServiceDeviceId == globalActivityId);
+                    var oldDevice = _deviceManager.GetDevice(ServiceIdentifier, globalActivityId);
 					if (oldDevice != null)
 						return;
 
@@ -105,7 +104,6 @@ namespace Rosie.Harmony
 
                     // Add the device
                     DeviceAdded?.Invoke(this, device);
-					var added = await _deviceManager.AddDevice(device);
 				}
 			}
 		}
