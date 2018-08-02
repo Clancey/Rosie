@@ -76,7 +76,7 @@ namespace Rosie.Harmony
 
 					// Create an id with the hub account/remoteid and the activity id
 					// in case of multiple hubs, so the id is guaranteed to be unique
-					var globalActivityId = $"{hub.Info.AccountId}-{hub.Info.RemoteId}-{activity.Id}";
+					var globalActivityId = GetActivityId(hub.Info, activity);
 
 					// See if the device exists yet
 					var oldDevice = existingActivities.FirstOrDefault(cw => cw.ServiceDeviceId == globalActivityId);
@@ -170,7 +170,7 @@ namespace Rosie.Harmony
 
 				// Look through each hub to find a matching activity
 				foreach (var hub in hubs) {
-					activity = hub.Activities.FirstOrDefault(a => hub.Info.AccountId + hub.Info.RemoteId + a.Id == device.ServiceDeviceId);
+					activity = hub.Activities.FirstOrDefault(a => GetActivityId(hub.Info, a) == device.ServiceDeviceId);
 					if (activity != null) {
 						hubForActivity = hub;
 						break;
@@ -194,6 +194,9 @@ namespace Rosie.Harmony
 			}
 			return false;
 		}
+
+		string GetActivityId(HubInfo hubInfo, Activity activity)
+			=> $"{hubInfo.AccountId}-{hubInfo.RemoteId}-{activity.Id}";
 
 		class OneShotHubDiscovery
 		{
