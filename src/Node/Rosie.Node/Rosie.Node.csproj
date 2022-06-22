@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Clancey.SimpleAuth" Version="1.0.49" />
     <PackageReference Include="SocketIoClientDotNet" Version="1.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
