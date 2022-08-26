@@ -8,7 +8,7 @@
         <Folder Include="wwwroot\" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.22" />
         <PackageReference Include="Xam.Plugins.Settings" Version="4.0.0.10-beta" />
         <PackageReference Include="Ooui.AspNetCore" Version="0.10.222" />
         <PackageReference Include="Xamarin.IoT.Sdk" Version="1.0.0" />
